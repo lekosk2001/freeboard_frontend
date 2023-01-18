@@ -11,9 +11,11 @@ const CREATE_BOARD = gql`
 `
 
 import { 
+    Main,
     Form, 
     InputWrapper,
-    SubmitButton
+    SubmitButton,
+    Title
 } from '../../../styles/emotion'
 import { useState } from 'react'
 
@@ -84,31 +86,36 @@ export default function index() {
         if(!contents){setContentsError(true)}
 
         if(writer&&password&&title&&contents){
-            const result = await createBoard({
-                variables: {
-                    createBoardInput: {
-                        writer,
-                        contents,
-                        password,
-                        title,
-                        contents,
-                        youtubeUrl,
-                        boardAddress:{
-                            zipcode,
-                            address,
-                            addressDetail,
-                        },
-                        images
+            try {
+                const result = await createBoard({
+                    variables: {
+                        createBoardInput: {
+                            writer,
+                            contents,
+                            password,
+                            title,
+                            contents,
+                            youtubeUrl,
+                            images,
+                            boardAddress:{
+                                zipcode,
+                                address,
+                                addressDetail,
+                            }
+                        }
                     }
-                }
-            })
-            console.log(result)
+                })
+                console.log(result)
+            } catch(error) {
+                alert(error.message)
+            }
         }
     }
 
     return (
-        <Form>
-            <h1>게시물 등록</h1>
+        <Main>
+            <Form>
+            <Title>게시물 등록</Title>
             <div className='writer'>
                 <InputWrapper>
                     <label>작성자</label>
@@ -184,6 +191,8 @@ export default function index() {
                     </div>
                 </InputWrapper>
                 <SubmitButton onClick={onSubmit}>등록하기</SubmitButton>
-        </Form>
+            </Form>
+        </Main>
+
     )
 }

@@ -1,5 +1,172 @@
 import styled from '@emotion/styled'
 
+export const Main = styled.main`
+    border: 1px solid #4F4F4F;
+    display: flex;
+    margin: 0px auto;
+    padding: 60px 101px 100px 100px;
+    justify-content: center;
+    max-width: 1200px;
+    font-size: 16px;
+    font-weight: 500;
+    flex-direction: column;
+
+    input,textarea{
+        margin: 0px;
+        padding-left: 16px;
+        border: 1px solid #BDBDBD;
+    }
+
+    h1,h2,h3,h4,p{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    h1{
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    h2{
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    h3{
+        font-size:18px;
+        line-height: 26px;
+    }
+
+    h4{
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    p{
+        font-size: 12px;
+        color: #4F4F4F;
+        line-height: 18px;
+    }
+`
+
+
+export const ContentHead = styled.section`
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #BDBDBD;
+    padding-bottom: 24px;
+    flex-wrap: wrap;
+    gap:30px;
+`
+
+export const Profile = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+    span{
+        display: flex;
+        flex-direction: column;
+    }
+
+    h4{
+        color: #828282;
+    }
+`
+
+export const ContentHeadButtons = styled.div`
+    display: flex;
+    gap: 30px;
+    align-items: center;
+`
+
+export const ContentBody = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+    gap:40px;
+
+    h1{
+        display: flex;
+        align-self: flex-start;
+    }
+`
+
+export const LikeButtons = styled.div`
+    display: flex;
+    margin-top: 120px;
+    gap:80px;
+
+`
+
+export const LikeButton = styled.span`
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    h3{
+        font-weight: 400;
+        color: #FFD600;
+    }
+`
+
+export const DislikeButton = styled.span`
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    h3{
+        font-weight: 400;
+        color: #828282;
+    }
+`
+
+export const TextBox = styled.h4`
+    font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+    margin-bottom: 120px;
+    align-self: flex-start;
+`
+
+export const ImageBox = styled.div`
+    background-color: #BDBDBD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 480px;
+    overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+        }
+    margin-bottom: 40px;
+`
+
+export const YoutubeBox = styled.div`
+    width: 100%;
+    max-width: 480px;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+`
+
+export const PlayButton = styled.div`
+`
+
+
+export const Title = styled.h1`
+`
+
 export const SubmitButton = styled.button`
     font-size: 16px;
     font-weight: 500;
@@ -10,40 +177,15 @@ export const SubmitButton = styled.button`
     border: 0px;
     background-color: #FFD600;
 `
+
 export const Form = styled.form`
-    border: 1px solid #4F4F4F;
-    margin: 0px auto;
-    font-size: 16px;
-    font-weight: 500;
-    display: flex;
-    padding: 60px 101px 100px 100px;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 1200px;
-
-    input,textarea{
-        margin: 0px;
-        padding: 0px;
-        border: 1px solid #BDBDBD;
-    }
-
-    h1,h2,h3,p{
-        margin: 0px;
-        padding: 0px;
-    }
-
     h1{
-        font-size: 36px;
-        align-self: center;
+        text-align: center;
         margin-bottom: 80px;
-        font-weight: 700;
     }
-
-    p{
-        font-size: 12px;
-        color: #4F4F4F;
-        line-height: 18px;
-    }
+    display: flex;
+    width: 100%;
+    flex-direction: column;
 
     .writer{
         display: flex;
@@ -89,7 +231,6 @@ export const InputWrapper = styled.div`
         box-sizing:border-box;
         font-size: 16px;
         height: 52px;
-        padding-left: 16px;
     }
 
     textarea{
