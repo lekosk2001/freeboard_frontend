@@ -1,15 +1,14 @@
 import styled from '@emotion/styled'
 
 export const Main = styled.main`
-    border: 1px solid #4F4F4F;
     display: flex;
     margin: 0px auto;
-    padding: 60px 101px 100px 100px;
-    justify-content: center;
     max-width: 1200px;
+    justify-content: center;
     font-size: 16px;
     font-weight: 500;
     flex-direction: column;
+    padding: 48px 60px 280px 60px;
 
     input,textarea{
         margin: 0px;
@@ -49,8 +48,36 @@ export const Main = styled.main`
     }
 `
 
+export const ContentsWrapper = styled.section`
+    display: flex;
+    max-width: 1200px;
+    padding: 60px 101px 100px 100px;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    flex-direction: column;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+`
 
-export const ContentHead = styled.section`
+export const Button = styled.button`
+    cursor: pointer;
+    width: 179px;
+    height: 45px;
+    border: 1px solid #BDBDBD;
+`
+
+export const BottomWrapper = styled.section`
+
+    padding-top: 101px;
+    padding-bottom: 87px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    border-bottom: 1px solid #BDBDBD;
+`
+
+export const ContentHead = styled.div`
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
@@ -79,9 +106,14 @@ export const ContentHeadButtons = styled.div`
     display: flex;
     gap: 30px;
     align-items: center;
+    svg{
+        cursor: pointer;
+    }
 `
 
-export const ContentBody = styled.section`
+export const ContentFooter = styled.div``
+
+export const ContentBody = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,6 +135,7 @@ export const LikeButtons = styled.div`
 `
 
 export const LikeButton = styled.span`
+    cursor: pointer;
     width: 40px;
     display: flex;
     flex-direction: column;
@@ -115,6 +148,7 @@ export const LikeButton = styled.span`
 `
 
 export const DislikeButton = styled.span`
+    cursor: pointer;
     width: 40px;
     display: flex;
     flex-direction: column;
@@ -151,13 +185,11 @@ export const ImageBox = styled.div`
 `
 
 export const YoutubeBox = styled.div`
+    height: 600px;
     width: 100%;
-    max-width: 480px;
-    height: 240px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gray;
 `
 
 export const PlayButton = styled.div`

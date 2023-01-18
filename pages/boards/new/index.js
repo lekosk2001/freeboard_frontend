@@ -3,9 +3,7 @@ import { useMutation, gql } from '@apollo/client'
 const CREATE_BOARD = gql`
     mutation createBoard($createBoardInput: CreateBoardInput!){
         createBoard(createBoardInput: $createBoardInput){
-            writer title contents youtubeUrl likeCount dislikeCount 
-            images boardAddress{_id zipcode address addressDetail createdAt updatedAt deletedAt}
-            user{ _id name email picture createdAt updatedAt deletedAt} createdAt updatedAt deletedAt
+            _id
         }
     }
 `
@@ -18,10 +16,12 @@ import {
     Title
 } from '../../../styles/emotion'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function index() {
 
     const [createBoard] = useMutation(CREATE_BOARD)
+    const router = useRouter();
 
     const [writer,setWriter] = useState('')
     const [password,setPassword] = useState('')
@@ -106,6 +106,7 @@ export default function index() {
                     }
                 })
                 console.log(result)
+                router.push(`/boards/${result.data.createBoard._id}`)
             } catch(error) {
                 alert(error.message)
             }
