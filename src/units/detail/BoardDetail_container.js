@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { FETCH_BOARD } from './BoardDetail_queries'
 
-export default function BoardWrite_container() {
+export default function BoardDetail_container() {
     const router = useRouter();
     const boardId = router.query.boardId;
     

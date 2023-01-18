@@ -23,7 +23,7 @@ import {
 
 
 
-export default function BoardWrite_presenter(props) {
+export default function BoardDetail_presenter(props) {
 
     const data = props.data
     const date = new Date(data?.fetchBoard.createdAt);

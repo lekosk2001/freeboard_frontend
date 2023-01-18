@@ -2,11 +2,7 @@ import styled from '@emotion/styled'
 
 export const ContentsWrapper = styled.section`
     display: flex;
-    max-width: 1200px;
     padding: 60px 101px 100px 100px;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 500;
     flex-direction: column;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 `
@@ -20,7 +16,6 @@ export const ContentHead = styled.div`
     flex-wrap: wrap;
     gap:30px;
 `
-
 
 export const ContentHeadButtons = styled.div`
     display: flex;
