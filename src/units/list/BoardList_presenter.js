@@ -1,5 +1,5 @@
 import { Main, Title } from "@/styles/emotion"
-import { ListsWrapper,BestWrapper,BestCards,Card,ListsHead,SearchBarBox,Lists,Pagenation,PageButtons,CreateBotton,DateInputBox,SearchButton,Tab,Column,Row } from "./BoardList_styles"
+import { ListsWrapper,BestWrapper,BestCards,Card,ListsHead,SearchBarBox,Lists,Pagenation,PageButtons,CreateBotton,DateInputBox,SearchButton,Tab,Column,Row,ArrowButton,PageButton } from "./BoardList_styles"
 
 export default function BoardList_presenter() {
 	return (
@@ -47,24 +47,41 @@ export default function BoardList_presenter() {
 					<Row>
 						<Column>1</Column>
 						<Column>1222</Column>
-						<Column>1222</Column>
+						<Column>122sdfsdsdfsd2</Column>
 						<Column>1314234</Column>
 					</Row>
 					<Row>
 						<Column>1</Column>
-						<Column>1222</Column>
+						<Column>122fffffff2</Column>
 						<Column>1222</Column>
 						<Column>1314234</Column>
 					</Row>
 				</Lists>
 				
 				<Pagenation>
-					<PageButtons></PageButtons>
+					<PageButtons>
+						<ArrowButton>
+							<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M7.41 1.41L6 0L0 6L6 12L7.41 10.59L2.83 6L7.41 1.41Z" fill="black"/>
+							</svg>
+						</ArrowButton>
+						
+						<PageButton>1</PageButton>
+						<PageButton active={true}>2</PageButton>
+
+						<ArrowButton>
+							<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M2.00003 0L0.590027 1.41L5.17003 6L0.590027 10.59L2.00003 12L8.00003 6L2.00003 0Z" fill="black"/>
+							</svg>
+						</ArrowButton>
+					</PageButtons>
+
 					<CreateBotton>
 						<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 15.2501V19.0001H3.75L14.81 7.94006L11.06 4.19006L0 15.2501ZM17.71 5.04006C18.1 4.65006 18.1 4.02006 17.71 3.63006L15.37 1.29006C14.98 0.900059 14.35 0.900059 13.96 1.29006L12.13 3.12006L15.88 6.87006L17.71 5.04006Z" fill="black"/>
 						</svg>
-						게시물 등록하기</CreateBotton>
+						게시물 등록하기
+					</CreateBotton>
 				</Pagenation>
 			</ListsWrapper>
 		</Main>

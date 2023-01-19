@@ -48,6 +48,10 @@ export const Main = styled.main`
         color: #4F4F4F;
         line-height: 18px;
     }
+    button{
+        margin: 0px;
+        padding: 0px;
+    }
 `
 
 export const Button = styled.button`
