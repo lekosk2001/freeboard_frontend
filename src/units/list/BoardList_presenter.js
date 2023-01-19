@@ -1,7 +1,20 @@
 import { Main, Title } from "@/styles/emotion"
 import { ListsWrapper,BestWrapper,BestCards,Card,ListsHead,SearchBarBox,Lists,Pagenation,PageButtons,CreateBotton,DateInputBox,SearchButton,Tab,Column,Row,ArrowButton,PageButton } from "./BoardList_styles"
+import { useRouter } from 'next/router'
 
-export default function BoardList_presenter() {
+export default function BoardList_presenter(props) {
+	const router = useRouter();
+	const lists = props.data?.fetchBoards.map((list,i)=>{
+		return(
+		<Row key={i} onClick={()=>{router.push(`/boards/${list._id}`)}}>
+			<Column>{list._id}</Column>
+			<Column>{list.title}</Column>
+			<Column>{list.writer}</Column>
+			<Column>{new Intl.DateTimeFormat('kr-KO').format(new Date(list.createdAt))}</Column>
+		</Row>
+		)
+	})
+
 	return (
 		<Main>
 			<BestWrapper>
@@ -38,24 +51,7 @@ export default function BoardList_presenter() {
 						<Column>작성자</Column>
 						<Column>날짜</Column>
 					</Tab>
-					<Row>
-						<Column>1</Column>
-						<Column>1222</Column>
-						<Column>1222</Column>
-						<Column>13234</Column>
-					</Row>
-					<Row>
-						<Column>1</Column>
-						<Column>1222</Column>
-						<Column>122sdfsdsdfsd2</Column>
-						<Column>1314234</Column>
-					</Row>
-					<Row>
-						<Column>1</Column>
-						<Column>122fffffff2</Column>
-						<Column>1222</Column>
-						<Column>1314234</Column>
-					</Row>
+					{lists}
 				</Lists>
 				
 				<Pagenation>

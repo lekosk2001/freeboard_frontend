@@ -85,6 +85,8 @@ export const Lists = styled.div`
 `
 
 export const Column = styled.h4`
+    white-space:nowrap;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,6 +125,10 @@ export const Tab = styled.div`
 `
 
 export const Row = styled.div`
+    &:hover{
+        background-color: #BDBDBD;
+    }
+    cursor: pointer;
     color: #4F4F4F;
     display: flex;
     padding: 0px 10px;

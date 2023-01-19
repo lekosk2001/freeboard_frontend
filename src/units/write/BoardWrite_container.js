@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
 import { CREATE_BOARD } from './BoardWrite_queries';
