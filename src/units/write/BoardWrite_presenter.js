@@ -27,6 +27,7 @@ export default function BoardWrite_presenter(props) {
     const contentsError=props.contentsError;
 
     const onSubmit=props.onSubmit;
+    const valid=props.valid;
 
     return (
         <Main>
@@ -106,7 +107,7 @@ export default function BoardWrite_presenter(props) {
                         </span>
                     </div>
                 </InputWrapper>
-                <SubmitButton onClick={onSubmit}>등록하기</SubmitButton>
+                <SubmitButton onClick={onSubmit} valid={valid} disabled={!valid}>등록하기</SubmitButton>
             </Form>
         </Main>
     )

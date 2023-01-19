@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
 import { CREATE_BOARD } from './BoardWrite_queries';
@@ -23,25 +23,36 @@ export default function BoardWrite_container() {
     const [passwordError,setPasswordError] = useState(false)
     const [titleError,setTitleError] = useState(false)
     const [contentsError,setContentsError] = useState(false)
+    
+    const [valid,setValid] = useState(false);
+
 
     const onChangeWriter = (e)=>{
         setWriter(e.target.value)
         setWriterError(false)
+        if(e.target.value&&password&&title&&contents){ setValid(true) }
+        else setValid(false)
     }
 
     const onChangePassword = (e)=>{
         setPassword(e.target.value)
         setPasswordError(false)
+        if(writer&&e.target.value&&title&&contents){ setValid(true) }
+        else setValid(false)
     }
 
     const onChangeTitle = (e)=>{
         setTitle(e.target.value)
         setTitleError(false)
+        if(writer&&password&&e.target.value&&contents){ setValid(true) }
+        else setValid(false)
     }
 
     const onChangeContents = (e)=>{
         setContents(e.target.value)
         setContentsError(false)
+        if(writer&&password&&title&&e.target.value){ setValid(true) }
+        else setValid(false)
     }
 
     const onChangeZipcode = (e)=>{
@@ -117,6 +128,7 @@ export default function BoardWrite_container() {
             contentsError={contentsError}
 
             onSubmit={onSubmit}
+            valid={valid}
         />
     )
 }

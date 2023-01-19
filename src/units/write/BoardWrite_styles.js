@@ -35,9 +35,9 @@ export const SubmitButton = styled.button`
     width: 179px;
     height: 52px;
     align-self: center;
-    cursor: pointer;
+    cursor:${props=>props.valid?"pointer":"default"};
     border: 0px;
-    background-color: #FFD600;
+    background-color:${props=>props.valid?"#FFD600":"gray"};
 `
 
 export const InputWrapper = styled.div`
@@ -66,6 +66,7 @@ export const InputWrapper = styled.div`
         box-sizing:border-box;
         font-size: 16px;
         height: 52px;
+        border: 1px solid #BDBDBD;
     }
 
     textarea{
@@ -73,6 +74,7 @@ export const InputWrapper = styled.div`
         padding: 14px 16px;
         height: 480px;
         resize: none;
+        border: 1px solid #BDBDBD;
     }
 
     .zipcode{

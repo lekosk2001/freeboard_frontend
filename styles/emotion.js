@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 
 export const Main = styled.main`
+    font-family: 'NotoSansKR', sans-serif;
     max-width: 1200px;
     width: 100%;
     margin: 0px auto 100px auto;
@@ -14,7 +15,7 @@ export const Main = styled.main`
     input,textarea{
         margin: 0px;
         padding-left: 16px;
-        border: 1px solid #BDBDBD;
+        border: 0px;
     }
 
     h1,h2,h3,h4,p{
