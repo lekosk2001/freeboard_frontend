@@ -20,13 +20,16 @@ import {
     LikeButton,
     DislikeButton,
 } from './BoardDetail_styles';
+import { useRouter } from 'next/router'
 
 
 
 export default function BoardDetail_presenter(props) {
-
+    
+    const router = useRouter();
     const data = props.data
     const date = new Date(data?.fetchBoard.createdAt);
+    const onCLickDeleteBoard = props.onCLickDeleteBoard;
     
     return (
         <Main>
@@ -102,9 +105,9 @@ export default function BoardDetail_presenter(props) {
                 </ContentBody>
             </ContentsWrapper>
         <BottomWrapper>
-            <Button>목록으로</Button>
+            <Button onClick={()=>{router.push(`/boards`)}}>목록으로</Button>
             <Button>수정하기</Button>
-            <Button>삭제하기</Button>
+            <Button onClick={()=>{onCLickDeleteBoard(data.fetchBoard._id)}}>삭제하기</Button>
         </BottomWrapper>
     </Main>
     )
