@@ -1,4 +1,4 @@
-import BoardWrite_presenter from './BoardDetail_presenter'
+import BoardDetail_presenter from './BoardDetail_presenter'
 import { useQuery,useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { DELETE_BOARDS, FETCH_BOARD } from './BoardDetail_queries'
@@ -30,8 +30,9 @@ export default function BoardDetail_container() {
         }
     }
 
+
     return (
-        <BoardWrite_presenter
+        <BoardDetail_presenter
             data={data}
             onCLickDeleteBoard={onCLickDeleteBoard}
         />
