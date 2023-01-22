@@ -27,12 +27,15 @@ export default function BoardWrite_presenter(props) {
     const contentsError=props.contentsError;
 
     const onSubmit=props.onSubmit;
+    const onUpdate=props.onUpdate;
+
     const valid=props.valid;
+    const isEditing=props.isEditing;
 
     return (
         <Main>
             <Form>
-                <Title>게시물 등록</Title>
+                <Title>게시물 {isEditing?"수정":"등록"}</Title>
                 <div className='writer'>
                     <InputWrapper>
                         <label>작성자</label>
@@ -107,7 +110,10 @@ export default function BoardWrite_presenter(props) {
                         </span>
                     </div>
                 </InputWrapper>
-                <SubmitButton onClick={onSubmit} valid={valid} disabled={!valid}>등록하기</SubmitButton>
+                <SubmitButton onClick={
+                    isEditing?onUpdate:onSubmit} valid={valid} disabled={!valid}>
+                    {isEditing?"수정하기":"등록하기"}
+                </SubmitButton>
             </Form>
         </Main>
     )

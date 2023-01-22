@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
-import { CREATE_BOARD } from './BoardWrite_queries';
+import { CREATE_BOARD,UPDATE_BOARD } from './BoardWrite_queries';
 import { useMutation } from '@apollo/client'
 
-export default function BoardWrite_container() {
+export default function BoardWrite_container(props) {
+    
+
 
     const [createBoard] = useMutation(CREATE_BOARD)
+    const [updateBoard] = useMutation(UPDATE_BOARD)
+
     const router = useRouter();
-    const [isEditing,setIsEditing] = useState(false);
+    const boardId = router.query.boardId;
 
     const [writer,setWriter] = useState('')
     const [password,setPassword] = useState('')
@@ -92,7 +96,6 @@ export default function BoardWrite_container() {
                             contents,
                             password,
                             title,
-                            contents,
                             youtubeUrl,
                             images,
                             boardAddress:{
@@ -105,6 +108,40 @@ export default function BoardWrite_container() {
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.createBoard._id}`)
+            } catch(error) {
+                alert(error.message)
+            }
+        }
+    }
+
+    const onUpdate = async (e)=>{
+        e.preventDefault()
+        if(!writer){setWriterError(true)}
+        if(!password){setPasswordError(true)}
+        if(!title){setTitleError(true)}
+        if(!contents){setContentsError(true)}
+
+        if(writer&&password&&title&&contents){
+            try {
+                const result = await updateBoard({
+                    variables: {
+                        boardId,
+                        password,
+                        updateBoardInput: {
+                            contents,
+                            title,
+                            youtubeUrl,
+                            images,
+                            boardAddress:{
+                                zipcode,
+                                address,
+                                addressDetail,
+                            }
+                        }
+                    }
+                })
+                console.log(result)
+                router.push(`/boards/${result.data.updateBoard._id}`)
             } catch(error) {
                 alert(error.message)
             }
@@ -129,8 +166,11 @@ export default function BoardWrite_container() {
             contentsError={contentsError}
 
             onSubmit={onSubmit}
+            onUpdate={onUpdate}
+
             valid={valid}
-            isEditing={isEditing}
+
+            isEditing={props.isEditing}
         />
     )
 }

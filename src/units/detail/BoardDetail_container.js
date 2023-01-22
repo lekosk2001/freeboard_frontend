@@ -34,6 +34,7 @@ export default function BoardDetail_container() {
     return (
         <BoardDetail_presenter
             data={data}
+            router={router}
             onCLickDeleteBoard={onCLickDeleteBoard}
         />
     )
