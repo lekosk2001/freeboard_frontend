@@ -31,6 +31,7 @@ export default function BoardWrite_presenter(props) {
 
     const valid=props.valid;
     const isEditing=props.isEditing;
+    const data = props.data?.fetchBoard;
 
     return (
         <Main>
@@ -39,39 +40,75 @@ export default function BoardWrite_presenter(props) {
                 <div className='writer'>
                     <InputWrapper>
                         <label>작성자</label>
-                        <input onChange={onChangeWriter} type="text" placeholder='이름을 입력해주세요.'/>
+                        <input 
+                            onChange={onChangeWriter}
+                            type="text" 
+                            placeholder='이름을 입력해주세요.'
+                            defaultValue={data?.writer}
+                        />
                         {writerError && <p className='alert'>이름을 입력해주세요.</p>}
                     </InputWrapper>
                     <InputWrapper>
                         <label>비밀번호</label>
-                        <input onChange={onChangePassword}  autoComplete="off" type="password" placeholder='비밀번호를 입력해주세요.'/>
+                        <input onChange={onChangePassword}
+                            autoComplete="off" type="password" placeholder='비밀번호를 입력해주세요.'
+                            defaultValue={``}
+                        />
                         {passwordError && <p className='alert'>비밀번호를 입력해주세요.</p>}
                     </InputWrapper>
                 </div>
                 <InputWrapper>
                     <label>제목</label>
-                    <input onChange={onChangeTitle} type="text" placeholder='제목을 작성해주세요.'/>
+                    <input onChange={onChangeTitle}
+                        type="text" 
+                        placeholder='제목을 작성해주세요.'
+                        defaultValue={data?.title}
+                    />
                     {titleError && <p className='alert'>제목을 작성해주세요.</p>}
                 </InputWrapper>
 
                 <InputWrapper>
                     <label>내용</label>
-                    <textarea onChange={onChangeContents} type="text" placeholder='내용을 작성해주세요.'/>
+                    <textarea
+                        onChange={onChangeContents}
+                        type="text" 
+                        placeholder='내용을 작성해주세요.'
+                        defaultValue={data?.contents}
+                    />
                     {contentsError && <p className='alert'>내용을 작성해주세요.</p>}
                 </InputWrapper>
                 <InputWrapper>
                     <label>주소</label>
                     <div className='zipcode'>
-                        <input onChange={onChangeZipcode} type="text" placeholder='07250'/>
+                        <input
+                            onChange={onChangeZipcode}
+                            type="text" 
+                            placeholder='07250'
+                            defaultValue={data?.zipcode}
+                        />
                         <button onClick={(e)=>{e.preventDefault()}}>우편번호 검색</button>
                     </div>
-                    <input onChange={onChangeAddress} className='address' type="text"/>
-                    <input onChange={onChangeAddressDetail} type="text"/>
+                    <input
+                        onChange={onChangeAddress}
+                        className='address'
+                        type="text"
+                        defaultValue={data?.address}
+                    />
+                    <input
+                        onChange={onChangeAddressDetail}
+                        type="text"
+                        defaultValue={data?.addressDetail}
+                    />
                 </InputWrapper>
 
                 <InputWrapper>
                     <label>유튜브</label>
-                    <input onChange={onChangeYoutubeUrl} type="text" placeholder='링크를 복사해주세요.'/>
+                    <input 
+                        onChange={onChangeYoutubeUrl}
+                        type="text" 
+                        placeholder='링크를 복사해주세요.'
+                        defaultValue={data?.youtubeUrl}
+                    />
                 </InputWrapper>
 
                 <InputWrapper>
@@ -101,11 +138,25 @@ export default function BoardWrite_presenter(props) {
                 <InputWrapper>
                     <div className='radios'>
                         <span>
-                            <input type="radio" id="youtube" name="radios" value="youtube" defaultChecked onChange={onChangeImages}/>
+                            <input type="radio" 
+                                id="youtube" 
+                                name="radios" 
+                                value="youtube" 
+                                defaultChecked 
+                                onChange={onChangeImages}
+                                defaultValue={data?.youtubeUrl}
+                            />
                             <label htmlFor="youtube">유튜브</label>
                         </span>
                         <span>
-                            <input type="radio" id="image" name="radios" value="image" onChange={onChangeImages}/>
+                            <input
+                                type="radio" 
+                                id="image" 
+                                name="radios" 
+                                value="image" 
+                                onChange={onChangeImages}
+                                defaultValue={data?.images}
+                            />
                             <label htmlFor="image">사진</label>
                         </span>
                     </div>

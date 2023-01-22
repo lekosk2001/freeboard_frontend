@@ -1,18 +1,15 @@
-import { useState } from 'react'
+import {  useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
 import { CREATE_BOARD,UPDATE_BOARD } from './BoardWrite_queries';
-import { useMutation } from '@apollo/client'
+import { useMutation} from '@apollo/client'
 
 export default function BoardWrite_container(props) {
+
+    const [createBoard] = useMutation(CREATE_BOARD);
+    const [updateBoard] = useMutation(UPDATE_BOARD);
     
-
-
-    const [createBoard] = useMutation(CREATE_BOARD)
-    const [updateBoard] = useMutation(UPDATE_BOARD)
-
     const router = useRouter();
-    const boardId = router.query.boardId;
 
     const [writer,setWriter] = useState('')
     const [password,setPassword] = useState('')
@@ -30,7 +27,6 @@ export default function BoardWrite_container(props) {
     const [contentsError,setContentsError] = useState(false)
     
     const [valid,setValid] = useState(false);
-
 
     const onChangeWriter = (e)=>{
         setWriter(e.target.value)
@@ -125,7 +121,7 @@ export default function BoardWrite_container(props) {
             try {
                 const result = await updateBoard({
                     variables: {
-                        boardId,
+                        boardId : props.boardId,
                         password,
                         updateBoardInput: {
                             contents,
@@ -171,6 +167,7 @@ export default function BoardWrite_container(props) {
             valid={valid}
 
             isEditing={props.isEditing}
+            data={props.data}
         />
     )
 }

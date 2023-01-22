@@ -90,19 +90,19 @@ export const Column = styled.h4`
     display: flex;
     justify-content: center;
     align-items: center;
-        &:nth-child(1){
+        &:nth-of-type(1){
             display: flex;
             width: 50px;
         }
-        &:nth-child(2){
+        &:nth-of-type(2){
             display: flex;
             flex-grow: 1;
         }
-        &:nth-child(3){
+        &:nth-of-type(3){
             display: flex;
             width: 100px;
         }
-        &:nth-child(4){
+        &:nth-of-type(4){
             display: flex;
             width: 100px;
     }
