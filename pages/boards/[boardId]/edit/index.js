@@ -13,6 +13,7 @@ export default function index() {
             }
         });
     
+        console.log(data)
 
     return (
         <BoardWrite_container 

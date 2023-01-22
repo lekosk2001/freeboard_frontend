@@ -45,6 +45,7 @@ export default function BoardWrite_presenter(props) {
                             type="text" 
                             placeholder='이름을 입력해주세요.'
                             defaultValue={data?.writer}
+                            readOnly={isEditing}
                         />
                         {writerError && <p className='alert'>이름을 입력해주세요.</p>}
                     </InputWrapper>
@@ -84,7 +85,7 @@ export default function BoardWrite_presenter(props) {
                             onChange={onChangeZipcode}
                             type="text" 
                             placeholder='07250'
-                            defaultValue={data?.zipcode}
+                            defaultValue={data?.boardAddress?.zipcode}
                         />
                         <button onClick={(e)=>{e.preventDefault()}}>우편번호 검색</button>
                     </div>
@@ -92,12 +93,12 @@ export default function BoardWrite_presenter(props) {
                         onChange={onChangeAddress}
                         className='address'
                         type="text"
-                        defaultValue={data?.address}
+                        defaultValue={data?.boardAddress?.address}
                     />
                     <input
                         onChange={onChangeAddressDetail}
                         type="text"
-                        defaultValue={data?.addressDetail}
+                        defaultValue={data?.boardAddress?.addressDetail}
                     />
                 </InputWrapper>
 

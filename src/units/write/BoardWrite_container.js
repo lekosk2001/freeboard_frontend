@@ -38,21 +38,21 @@ export default function BoardWrite_container(props) {
     const onChangePassword = (e)=>{
         setPassword(e.target.value)
         setPasswordError(false)
-        if(writer&&e.target.value&&title&&contents){ setValid(true) }
+        if((props.isEditing??writer)&&e.target.value&&title&&contents){ setValid(true) }
         else setValid(false)
     }
 
     const onChangeTitle = (e)=>{
         setTitle(e.target.value)
         setTitleError(false)
-        if(writer&&password&&e.target.value&&contents){ setValid(true) }
+        if((props.isEditing??writer)&&password&&e.target.value&&contents){ setValid(true) }
         else setValid(false)
     }
 
     const onChangeContents = (e)=>{
         setContents(e.target.value)
         setContentsError(false)
-        if(writer&&password&&title&&e.target.value){ setValid(true) }
+        if((props.isEditing??writer)&&password&&title&&e.target.value){ setValid(true) }
         else setValid(false)
     }
 
@@ -112,29 +112,32 @@ export default function BoardWrite_container(props) {
 
     const onUpdate = async (e)=>{
         e.preventDefault()
-        if(!writer){setWriterError(true)}
+
+        const updatedVariables = {
+            boardId : props.boardId,
+            password,
+            updateBoardInput: {
+                boardAddress:{
+                }
+            }
+        }
+
+        if(contents) updatedVariables.updateBoardInput.contents=contents;
+        if(title) updatedVariables.updateBoardInput.title=title;
+        if(youtubeUrl) updatedVariables.updateBoardInput.youtubeUrl=youtubeUrl;
+        if(images) updatedVariables.updateBoardInput.images=images;
+        if(zipcode) updatedVariables.updateBoardInput.boardAddress.zipcode=zipcode;
+        if(address) updatedVariables.updateBoardInput.boardAddress.address=address;
+        if(addressDetail) updatedVariables.updateBoardInput.boardAddress.addressDetail=addressDetail;
+
         if(!password){setPasswordError(true)}
         if(!title){setTitleError(true)}
         if(!contents){setContentsError(true)}
 
-        if(writer&&password&&title&&contents){
+        if(password&&title&&contents){
             try {
                 const result = await updateBoard({
-                    variables: {
-                        boardId : props.boardId,
-                        password,
-                        updateBoardInput: {
-                            contents,
-                            title,
-                            youtubeUrl,
-                            images,
-                            boardAddress:{
-                                zipcode,
-                                address,
-                                addressDetail,
-                            }
-                        }
-                    }
+                    variables: updatedVariables
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.updateBoard._id}`)
