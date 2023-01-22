@@ -8,6 +8,7 @@ export default function BoardWrite_container() {
 
     const [createBoard] = useMutation(CREATE_BOARD)
     const router = useRouter();
+    const [isEditing,setIsEditing] = useState(false);
 
     const [writer,setWriter] = useState('')
     const [password,setPassword] = useState('')
@@ -129,6 +130,7 @@ export default function BoardWrite_container() {
 
             onSubmit={onSubmit}
             valid={valid}
+            isEditing={isEditing}
         />
     )
 }
