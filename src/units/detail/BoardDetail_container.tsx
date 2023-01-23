@@ -1,20 +1,33 @@
+import {useEffect,useState} from 'react';
 import BoardDetail_presenter from './BoardDetail_presenter'
 import { useQuery,useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { DELETE_BOARDS, FETCH_BOARD } from './BoardDetail_queries'
+import { DELETE_BOARDS, FETCH_BOARD, FETCH_BOARD_COMMENT } from './BoardDetail_queries'
+
 
 export default function BoardDetail_container() {
 
     const [deleteBoard] = useMutation(DELETE_BOARDS);
-
+    const [boardId,setBoardId] = useState('')
     const router = useRouter();
-    const boardId = router.query.boardId;
-    
+
+    useEffect(() => {
+        if(!router.isReady) return;
+        setBoardId(String(router.query.boardId))
+    }, [router.isReady])
+
     const {data} = useQuery(FETCH_BOARD,{
         variables:{
             boardId
         }
     });
+
+    const {data:CommentsData} = useQuery(FETCH_BOARD_COMMENT,{
+        variables:{
+            boardId,
+            page:1
+        }
+    })
 
     const onCLickDeleteBoard = async (boardId) => {
         try {
@@ -30,12 +43,14 @@ export default function BoardDetail_container() {
         }
     }
 
-
     return (
-        <BoardDetail_presenter
-            data={data}
-            router={router}
-            onCLickDeleteBoard={onCLickDeleteBoard}
-        />
+        <>
+            {router.isReady&&<BoardDetail_presenter
+                data={data}
+                router={router}
+                onCLickDeleteBoard={onCLickDeleteBoard}
+                CommentsData={CommentsData}
+            />}
+        </>
     )
 }
