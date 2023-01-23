@@ -67,6 +67,10 @@ export const InputWrapper = styled.div`
         font-size: 16px;
         height: 52px;
         border: 1px solid #BDBDBD;
+        padding-left: 16px;
+        &::placeholder {
+        color:#BDBDBD;
+    }
     }
 
     textarea{

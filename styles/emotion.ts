@@ -12,12 +12,6 @@ export const Main = styled.main`
     flex-direction: column;
     word-break: break-all;
 
-    input,textarea{
-        margin: 0px;
-        padding-left: 16px;
-        border: 0px;
-    }
-
     h1,h2,h3,h4,p{
         margin: 0px;
         padding: 0px;
@@ -40,7 +34,6 @@ export const Main = styled.main`
 
     h4{
         font-size: 16px;
-        font-weight: 400;
     }
 
     p{
@@ -72,4 +65,7 @@ export const BottomWrapper = styled.section`
 `
 
 export const Title = styled.h1`
+`
+
+export const Line = styled.hr`
 `
