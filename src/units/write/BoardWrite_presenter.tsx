@@ -72,7 +72,6 @@ export default function BoardWrite_presenter(props) {
                     <label>내용</label>
                     <textarea
                         onChange={onChangeContents}
-                        type="text" 
                         placeholder='내용을 작성해주세요.'
                         defaultValue={data?.contents}
                     />

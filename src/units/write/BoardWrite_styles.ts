@@ -29,7 +29,7 @@ export const Form = styled.form`
     } 
 `
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{valid:boolean}>`
     font-size: 16px;
     font-weight: 500;
     width: 179px;

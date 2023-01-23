@@ -1,4 +1,4 @@
-import BoardDetail_container from '@/src/units/detail/BoardDetail_container'
+import BoardDetail_container from "@/src/units/detail/BoardDetail_container";
 
 export default function index() {
     return (

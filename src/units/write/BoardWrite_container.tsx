@@ -1,8 +1,24 @@
-import {  useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
 import { CREATE_BOARD,UPDATE_BOARD } from './BoardWrite_queries';
 import { useMutation} from '@apollo/client'
+
+interface IUpdatedVariables {
+    boardId : string
+    password : string,
+    updateBoardInput: {
+        contents:string,
+        title:string,
+        youtubeUrl:string,
+        images:string,
+        boardAddress:{
+            zipcode:string,
+            address:string,
+            addressDetail:string
+        }
+    }
+}
 
 export default function BoardWrite_container(props) {
 
@@ -113,22 +129,21 @@ export default function BoardWrite_container(props) {
     const onUpdate = async (e)=>{
         e.preventDefault()
 
-        const updatedVariables = {
+        let updatedVariables:IUpdatedVariables = {
             boardId : props.boardId,
             password,
             updateBoardInput: {
+                contents,
+                title,
+                youtubeUrl,
+                images,
                 boardAddress:{
+                    zipcode,
+                    address,
+                    addressDetail,
                 }
             }
         }
-
-        if(contents) updatedVariables.updateBoardInput.contents=contents;
-        if(title) updatedVariables.updateBoardInput.title=title;
-        if(youtubeUrl) updatedVariables.updateBoardInput.youtubeUrl=youtubeUrl;
-        if(images) updatedVariables.updateBoardInput.images=images;
-        if(zipcode) updatedVariables.updateBoardInput.boardAddress.zipcode=zipcode;
-        if(address) updatedVariables.updateBoardInput.boardAddress.address=address;
-        if(addressDetail) updatedVariables.updateBoardInput.boardAddress.addressDetail=addressDetail;
 
         if(!password){setPasswordError(true)}
         if(!title){setTitleError(true)}
