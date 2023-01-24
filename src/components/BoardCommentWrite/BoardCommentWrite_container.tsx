@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import BoardCommentWrite_presenter from './BoardCommentWrite_presenter'
 import { useMutation } from '@apollo/client'
 import { CREATE_BOARD_COMMENT } from './BoardCommentWrite_queries'
-import { FETCH_BOARD_COMMENT } from '../BoardCommentList/BoardCommentList_queries'
+import { FETCH_BOARD_COMMENT, UPDATE_BOARD_COMMENT } from '../BoardCommentList/BoardCommentList_queries'
 
 type Props = {
-    boardId:string
+    boardId:string,
+    isEditing:boolean,
+    setIsEditing
 }
 
 const BoardCommentWrite_container = (props: Props) => {
@@ -82,12 +84,41 @@ const BoardCommentWrite_container = (props: Props) => {
             }
         }
     }
+    
+    const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
+    const onCLickEditBoardComment = async (boardCommentId,password,contents,rating) => {
+        try {
+            await updateBoardComment({
+                variables: {
+                    password,
+                    boardCommentId,
+                    updateBoardCommentInput:{
+                        contents,
+                        rating,
+
+                    }
+                },
+                refetchQueries:[
+                    {
+                        query: FETCH_BOARD_COMMENT,
+                        variables: {
+                            boardId:props.boardId,
+                            page:1
+                        }
+                    }
+                ]
+            })
+        } catch(error) {
+            alert(error.message)
+        }
+    }
 
     const maxText = 100;
 
     return (
         <BoardCommentWrite_presenter
             onClickSumit={onClickSumit}
+            onCLickEditBoardComment={onCLickEditBoardComment}
             onChangeWriter={onChangeWriter}
             onChangePassword={onChangePassword}
             onChangeRating={onChangeRating}
@@ -98,6 +129,8 @@ const BoardCommentWrite_container = (props: Props) => {
             contents={contents}
             maxText={maxText}
             valid={valid}
+            setIsEditing={props.setIsEditing}
+            isEditing={props.isEditing}
         />
     )
 }

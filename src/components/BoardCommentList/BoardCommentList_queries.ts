@@ -9,6 +9,14 @@ export const FETCH_BOARD_COMMENT = gql`
     }
 `
 
+export const UPDATE_BOARD_COMMENT = gql`
+    mutation updateBoardComment($updateBoardCommentInput: UpdateBoardCommentInput!,$boardCommentId:ID!,$password:String){
+        updateBoardComment(updateBoardCommentInput: $updateBoardCommentInput,boardCommentId:$boardCommentId,password:$password){
+            _id
+        }
+    }
+`
+
 export const DELETE_BOARDS_COMMNET = gql`
     mutation deleteBoardComment ($boardCommentId:ID!,$password:String){
         deleteBoardComment(boardCommentId:$boardCommentId,password:$password)

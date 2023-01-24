@@ -18,7 +18,7 @@ export default function index() {
     return (
         <>
             <BoardDetail_container boardId={boardId} router={router}/>
-            <BoardCommentWrite_container boardId={boardId}/>
+            <BoardCommentWrite_container boardId={boardId} isEditing={false}/>
             <BoardCommentList_container boardId={boardId}/>
         </>
     )

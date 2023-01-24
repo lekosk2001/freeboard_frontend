@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BoardCommentList_presenter from './BoardCommentList_presenter'
 import { useQuery, useMutation } from '@apollo/client'
 import { DELETE_BOARDS_COMMNET, FETCH_BOARD_COMMENT } from "@/src/components/BoardCommentList/BoardCommentList_queries";
@@ -40,10 +40,10 @@ export default function BoardCommentList_container (props: Props) {
             alert(error.message)
         }
     }
-
-
+    
     return (
         <BoardCommentList_presenter
+            boardId={props.boardId}
             CommentsData={CommentsData}
             onCLickDeleteBoardComment={onCLickDeleteBoardComment}
         />
