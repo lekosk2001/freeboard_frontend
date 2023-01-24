@@ -1,4 +1,4 @@
-import * as C from '../../../styles/emotion'
+import * as C from '@/styles/emotion'
 import * as S from './BoardDetail_styles';
 import { dateFormat } from '@/src/commons/utils/utils';
 

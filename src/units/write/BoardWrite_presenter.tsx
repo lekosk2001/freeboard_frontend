@@ -161,8 +161,11 @@ export default function BoardWrite_presenter(props) {
                         </span>
                     </div>
                 </InputWrapper>
-                <SubmitButton onClick={
-                    isEditing?onUpdate:onSubmit} valid={valid} disabled={!valid}>
+                <SubmitButton
+                    onClick={isEditing?onUpdate:onSubmit}
+                    valid={valid}
+                    disabled={!valid}
+                >
                     {isEditing?"수정하기":"등록하기"}
                 </SubmitButton>
             </Form>

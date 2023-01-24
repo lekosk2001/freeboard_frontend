@@ -78,11 +78,11 @@ export const CommentLength = styled.h4`
 
 
 
-export const CommentSubmitButton = styled.button`
+export const CommentSubmitButton = styled.button<{valid:boolean}>`
     height: 52px;
-    cursor: pointer;
+    cursor:${props=>props.valid?"pointer":"default"};
     background-color: #000;
-    color: #fff;
+    color:${props=>props.valid?"#ffffff":"gray"};
     width: 91px;
 `
 

@@ -2,32 +2,24 @@ import BoardCommentList_container from "@/src/components/BoardCommentList/BoardC
 import BoardCommentWrite_container from "@/src/components/BoardCommentWrite/BoardCommentWrite_container";
 import BoardDetail_container from "@/src/units/detail/BoardDetail_container";
 import {useEffect,useState} from 'react';
-import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { FETCH_BOARD_COMMENT } from "@/src/components/BoardCommentList/BoardCommentList_queries";
 
 export default function index() {
     
-    const [boardId,setBoardId] = useState('')
+    // const [boardId,setBoardId] = useState('')
     const router = useRouter();
+    const boardId = String(router.query.boardId)
     
-    useEffect(() => {
-        if(!router.isReady) return;
-        setBoardId(String(router.query.boardId))
-    }, [router.isReady])
-
-    const {data:CommentsData} = useQuery(FETCH_BOARD_COMMENT,{
-        variables:{
-            boardId,
-            page:1
-        }
-    })
+    // useEffect(() => {
+    //     if(!router.isReady) return;
+    //     setBoardId(String(router.query.boardId))
+    // }, [router.isReady])
 
     return (
         <>
             <BoardDetail_container boardId={boardId} router={router}/>
-            <BoardCommentWrite_container boardId={boardId} router={router}/>
-            <BoardCommentList_container CommentsData={CommentsData}/>
+            <BoardCommentWrite_container boardId={boardId}/>
+            <BoardCommentList_container boardId={boardId}/>
         </>
     )
 }
