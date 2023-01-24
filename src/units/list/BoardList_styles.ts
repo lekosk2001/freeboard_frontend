@@ -2,11 +2,9 @@ import styled from '@emotion/styled'
 
 export const BestWrapper = styled.section`
     h1{text-align: center;}
-    margin-top: 80px;
     display: flex;
     flex-direction: column;
     gap: 40px;
-    margin-bottom: 80px;
 `
 
 export const BestCards = styled.div`
@@ -27,7 +25,6 @@ export const ListsWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 40px;
-    margin-bottom: 300px;
 `
 export const ListsHead = styled.div`
     display: flex;
@@ -45,6 +42,7 @@ export const SearchBarBox = styled.div`
     padding-left: 20px;
     gap:11px;
     input{
+        font-size: 16px;
         height: 100%;
         width: 100%;
         padding: 0px 10px;
@@ -62,12 +60,7 @@ export const DateInputBox = styled.div`
     align-items: center;
     padding: 0px 16px;
     gap:8px;
-    /* width: 244px; */
     color: #BDBDBD;
-    input{
-        padding: 0px;
-        border: 0px;
-    }
 `
 
 export const SearchButton = styled.button`
@@ -84,12 +77,13 @@ export const Lists = styled.div`
     border-bottom:1px solid #000 ;
 `
 
-export const Column = styled.h4`
+export const Column = styled.p`
     white-space:nowrap;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
         &:nth-of-type(1){
             display: flex;
             width: 50px;
@@ -116,7 +110,7 @@ export const Tab = styled.div`
     border-bottom: 1px solid #BDBDBD;
     justify-content: space-between;
     height: 52px;
-    h4{
+    p{
         font-size: 18px;
         font-weight: 500;
         align-items: center;

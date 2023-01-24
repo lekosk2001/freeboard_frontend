@@ -7,7 +7,7 @@ export default function BoardList_presenter(props) {
 	const onClickBoardDetail =props.onClickBoardDetail;
 	const onClickBoardNew = props.onClickBoardNew;
 
-	return (
+	return ( 
 		<Main>
 			<S.BestWrapper>
 				<Title>베스트 게시글</Title>

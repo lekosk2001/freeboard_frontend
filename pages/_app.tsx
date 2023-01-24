@@ -1,4 +1,6 @@
+import { global } from '@/styles/global'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { css,Global } from '@emotion/react'
 import "../public/static/fonts/style.css"
 
 export default function App({ Component, pageProps }) {
@@ -10,6 +12,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ApolloProvider client={client}>
+        <Global
+          styles={css`
+            ${global}
+          `}
+        />
       <Component {...pageProps} />
     </ApolloProvider>)
 }

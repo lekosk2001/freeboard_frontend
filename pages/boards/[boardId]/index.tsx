@@ -1,11 +1,10 @@
-import BoardCommentList_container from "@/src/components/comment/BoardCommentList_container";
-import BoardCommentWrite_container from "@/src/components/comment/BoardCommentWrite_container";
+import BoardCommentList_container from "@/src/components/BoardCommentList/BoardCommentList_container";
+import BoardCommentWrite_container from "@/src/components/BoardCommentWrite/BoardCommentWrite_container";
 import BoardDetail_container from "@/src/units/detail/BoardDetail_container";
 import {useEffect,useState} from 'react';
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { FETCH_BOARD_COMMENT } from "@/src/components/comment/BoardCommentList_queries";
-
+import { FETCH_BOARD_COMMENT } from "@/src/components/BoardCommentList/BoardCommentList_queries";
 
 export default function index() {
     
@@ -24,11 +23,10 @@ export default function index() {
         }
     })
 
-
     return (
         <>
             <BoardDetail_container boardId={boardId} router={router}/>
-            <BoardCommentWrite_container/>
+            <BoardCommentWrite_container boardId={boardId} router={router}/>
             <BoardCommentList_container CommentsData={CommentsData}/>
         </>
     )
