@@ -8,3 +8,9 @@ export const FETCH_BOARD_COMMENT = gql`
         }
     }
 `
+
+export const DELETE_BOARDS_COMMNET = gql`
+    mutation deleteBoardComment ($boardCommentId:ID!,$password:String){
+        deleteBoardComment(boardCommentId:$boardCommentId,password:$password)
+    }
+`

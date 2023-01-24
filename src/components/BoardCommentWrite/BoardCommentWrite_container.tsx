@@ -33,7 +33,6 @@ const BoardCommentWrite_container = (props: Props) => {
 
     const onChangeRating = (e)=>{
         setRating(e.target.value)
-        
     }
 
     const onChangeContents = (e)=>{
@@ -73,6 +72,10 @@ const BoardCommentWrite_container = (props: Props) => {
                         }
                     ]
                 })
+                setWriter('')
+                setPassword('')
+                setRating(0)
+                setContents('')
                 console.log(result)
             } catch(error) {
                 alert(error.message)
@@ -82,7 +85,6 @@ const BoardCommentWrite_container = (props: Props) => {
 
     const maxText = 100;
 
-
     return (
         <BoardCommentWrite_presenter
             onClickSumit={onClickSumit}
@@ -90,12 +92,14 @@ const BoardCommentWrite_container = (props: Props) => {
             onChangePassword={onChangePassword}
             onChangeRating={onChangeRating}
             onChangeContents={onChangeContents}
+            writer={writer}
+            password={password}
+            rating={rating}
             contents={contents}
             maxText={maxText}
             valid={valid}
         />
     )
 }
-
 
 export default BoardCommentWrite_container

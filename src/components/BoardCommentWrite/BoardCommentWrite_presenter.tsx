@@ -9,9 +9,12 @@ type Props = {
     onChangeRating:(e)=>void,
     onChangeContents:(e)=>void,
 
-    contents:string,
     maxText:number,
     valid:boolean,
+    writer:string,
+    password:string,
+    rating:number,
+    contents:string,
 }
 
 const BoardCommentWrite_presenter = (props: Props) => {
@@ -24,8 +27,8 @@ const BoardCommentWrite_presenter = (props: Props) => {
                     <h4>댓글</h4>
                 </S.CommetLabel>
                 <S.CommnetWriteHead>
-                    <S.Input placeholder='작성자' onChange={props.onChangeWriter}></S.Input>
-                    <S.Input placeholder='비밀번호' onChange={props.onChangePassword}></S.Input>
+                    <S.Input placeholder='작성자' onChange={props.onChangeWriter} value={props.writer}></S.Input>
+                    <S.Input placeholder='비밀번호' onChange={props.onChangePassword} value={props.password}></S.Input>
                     <S.RateStars>
                         <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z" fill="#BDBDBD"/>
