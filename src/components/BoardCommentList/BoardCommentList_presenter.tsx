@@ -14,7 +14,6 @@ type Props = {
 export default function BoardCommentList_presenter(props: Props) {
     
     const CommentsData = props.CommentsData;
-    console.log(CommentsData?.fetchBoardComments)
     return (
         <S.CommentsList>
             {CommentsData?.fetchBoardComments.map((comment)=>{ return (

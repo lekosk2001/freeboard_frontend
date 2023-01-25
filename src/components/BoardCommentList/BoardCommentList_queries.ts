@@ -12,7 +12,7 @@ export const FETCH_BOARD_COMMENT = gql`
 export const UPDATE_BOARD_COMMENT = gql`
     mutation updateBoardComment($updateBoardCommentInput: UpdateBoardCommentInput!,$boardCommentId:ID!,$password:String){
         updateBoardComment(updateBoardCommentInput: $updateBoardCommentInput,boardCommentId:$boardCommentId,password:$password){
-            _id
+            _id writer contents rating  createdAt updatedAt deletedAt
         }
     }
 `

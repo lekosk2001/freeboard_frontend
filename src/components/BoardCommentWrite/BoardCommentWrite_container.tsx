@@ -1,16 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BoardCommentWrite_presenter from './BoardCommentWrite_presenter'
 import { useMutation } from '@apollo/client'
 import { CREATE_BOARD_COMMENT } from './BoardCommentWrite_queries'
 import { FETCH_BOARD_COMMENT, UPDATE_BOARD_COMMENT } from '../BoardCommentList/BoardCommentList_queries'
+import { useRouter } from 'next/router'
 
 type Props = {
-    boardId:string,
     isEditing:boolean,
-    setIsEditing
+    setIsEditing,
+    comment
 }
 
 const BoardCommentWrite_container = (props: Props) => {
+    const router = useRouter();
+    const boardId = String(router.query.boardId);
+
+    const comment = props.comment;
+
+    useEffect(() => {
+        if(props.isEditing&&comment){
+            setWriter(comment.writer)
+            setRating(comment.rating)
+            setContents(comment.contents)
+        }
+    }, [])
 
     const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
 
@@ -51,12 +64,13 @@ const BoardCommentWrite_container = (props: Props) => {
         }
     }
 
-    const onClickSumit = async () => {
+    const onClickSumit = async (e) => {
+        e.preventDefault();
         if(writer&&password&&contents){
             try {
-                const result = await createBoardComment({
+                await createBoardComment({
                     variables: {
-                        boardId:props.boardId,
+                        boardId,
                         createBoardCommentInput: {
                             writer,
                             contents,
@@ -68,7 +82,7 @@ const BoardCommentWrite_container = (props: Props) => {
                         {
                             query: FETCH_BOARD_COMMENT,
                             variables: {
-                                boardId:props.boardId,
+                                boardId,
                                 page:1
                             }
                         }
@@ -78,36 +92,37 @@ const BoardCommentWrite_container = (props: Props) => {
                 setPassword('')
                 setRating(0)
                 setContents('')
-                console.log(result)
             } catch(error) {
                 alert(error.message)
             }
         }
     }
-    
+
     const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
-    const onCLickEditBoardComment = async (boardCommentId,password,contents,rating) => {
+    const onCLickEditBoardComment = async (e) => {
+        e.preventDefault();
+
+        if(!comment?._id){return}
         try {
             await updateBoardComment({
                 variables: {
                     password,
-                    boardCommentId,
+                    boardCommentId:comment._id,
                     updateBoardCommentInput:{
                         contents,
                         rating,
-
                     }
                 },
                 refetchQueries:[
                     {
                         query: FETCH_BOARD_COMMENT,
                         variables: {
-                            boardId:props.boardId,
-                            page:1
+                            boardId:boardId
                         }
                     }
                 ]
             })
+        props.setIsEditing(false)
         } catch(error) {
             alert(error.message)
         }
@@ -119,17 +134,20 @@ const BoardCommentWrite_container = (props: Props) => {
         <BoardCommentWrite_presenter
             onClickSumit={onClickSumit}
             onCLickEditBoardComment={onCLickEditBoardComment}
+
             onChangeWriter={onChangeWriter}
             onChangePassword={onChangePassword}
             onChangeRating={onChangeRating}
             onChangeContents={onChangeContents}
+
             writer={writer}
             password={password}
             rating={rating}
             contents={contents}
+            
             maxText={maxText}
             valid={valid}
-            setIsEditing={props.setIsEditing}
+            
             isEditing={props.isEditing}
         />
     )

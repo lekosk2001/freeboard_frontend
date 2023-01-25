@@ -6,19 +6,13 @@ import { useRouter } from 'next/router'
 
 export default function index() {
     
-    // const [boardId,setBoardId] = useState('')
     const router = useRouter();
     const boardId = String(router.query.boardId)
     
-    // useEffect(() => {
-    //     if(!router.isReady) return;
-    //     setBoardId(String(router.query.boardId))
-    // }, [router.isReady])
-
     return (
         <>
             <BoardDetail_container boardId={boardId} router={router}/>
-            <BoardCommentWrite_container boardId={boardId} isEditing={false}/>
+            <BoardCommentWrite_container isEditing={false} setIsEditing={null} comment={null}/>
             <BoardCommentList_container boardId={boardId}/>
         </>
     )

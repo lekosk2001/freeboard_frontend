@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-export const WriteComment = styled.section`
+export const WriteComment = styled.form`
     display: flex;
     flex-direction: column;
     gap: 0px;

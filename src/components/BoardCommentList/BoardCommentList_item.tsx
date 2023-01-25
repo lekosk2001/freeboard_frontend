@@ -77,7 +77,7 @@ const BoardCommentList_item = (props: Props) => {
                     </S.CommentFooter>
                 </S.CommentContents>
             </S.CommentBox>)}
-            {isEditing&&(<BoardCommentWrite_container boardId={props.boardId} isEditing={true} setIsEditing={setIsEditing}/> )}
+            {isEditing&&(<BoardCommentWrite_container comment={comment} boardId={props.boardId} isEditing={true} setIsEditing={setIsEditing}/> )}
         </>
     )
 }

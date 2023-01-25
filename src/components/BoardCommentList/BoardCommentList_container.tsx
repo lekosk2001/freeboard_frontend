@@ -9,6 +9,7 @@ type Props = {
 
 export default function BoardCommentList_container (props: Props) {
 
+    console.log(props.boardId)
     const {data:CommentsData} = useQuery(FETCH_BOARD_COMMENT,{
         variables:{
             boardId:props.boardId,
