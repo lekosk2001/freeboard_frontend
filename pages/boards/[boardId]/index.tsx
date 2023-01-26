@@ -10,8 +10,8 @@ export default function index() {
     
     return (
         <>
-            <BoardDetail_container boardId={boardId} router={router}/>
-            <BoardCommentWrite_container isEditing={false} setIsEditing={null} comment={null}/>
+            {<BoardDetail_container boardId={boardId} router={router}/>}
+            <BoardCommentWrite_container isEditing={false} setIsEditing={()=>null} comment={null}/>
             <BoardCommentList_container boardId={boardId}/>
         </>
     )

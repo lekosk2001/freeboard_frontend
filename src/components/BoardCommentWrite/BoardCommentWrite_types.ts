@@ -2,8 +2,8 @@ import { IBoardComment,IQueryFetchBoardCommentsArgs } from "@/src/commons/types/
 import { ChangeEvent } from 'react'
 export interface BoardCommentWrite_container_Props{
     isEditing:boolean,
-    setIsEditing:(arg:boolean)=>void,
-    comment:IBoardComment
+    setIsEditing:((arg:boolean)=>void) | (()=>void),
+    comment:IBoardComment | null
 }
 
 export interface BoardCommentWrite_presenter_Props{

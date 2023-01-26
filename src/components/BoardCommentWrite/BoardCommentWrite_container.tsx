@@ -5,6 +5,7 @@ import { CREATE_BOARD_COMMENT } from './BoardCommentWrite_queries'
 import { FETCH_BOARD_COMMENT, UPDATE_BOARD_COMMENT } from '../BoardCommentList/BoardCommentList_queries'
 import { useRouter } from 'next/router'
 import { BoardCommentWrite_container_Props } from './BoardCommentWrite_types'
+import { IMutation, IMutationCreateBoardCommentArgs, IMutationUpdateBoardCommentArgs } from '@/src/commons/types/generated/types'
 
 const BoardCommentWrite_container = (props: BoardCommentWrite_container_Props) => {
     const router = useRouter();
@@ -20,7 +21,7 @@ const BoardCommentWrite_container = (props: BoardCommentWrite_container_Props) =
         }
     }, [])
 
-    const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
+    const [createBoardComment] = useMutation<Pick<IMutation,'createBoardComment'>,IMutationCreateBoardCommentArgs>(CREATE_BOARD_COMMENT);
 
     const [writer,setWriter] = useState('');
     const [password,setPassword] = useState('');
@@ -93,7 +94,7 @@ const BoardCommentWrite_container = (props: BoardCommentWrite_container_Props) =
         }
     }
 
-    const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
+    const [updateBoardComment] = useMutation<Pick<IMutation,'updateBoardComment'>,IMutationUpdateBoardCommentArgs>(UPDATE_BOARD_COMMENT);
     const onCLickEditBoardComment = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
