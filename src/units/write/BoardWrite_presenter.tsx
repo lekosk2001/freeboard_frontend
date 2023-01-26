@@ -1,7 +1,7 @@
 import { Main, Title } from '../../../styles/emotion';
 
 import { Form, InputWrapper, SubmitButton } from './BoardWrite_styles';
-import { IBoardWrite_presenter_Props } from './BoardWrite_types';
+import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
 
 export default function BoardWrite_presenter(
   props: IBoardWrite_presenter_Props
@@ -39,7 +39,7 @@ export default function BoardWrite_presenter(
               onChange={onChangeWriter}
               type="text"
               placeholder="이름을 입력해주세요."
-              defaultValue={data ? String(data?.writer) : ''}
+              defaultValue={data != null ? String(data?.writer) : ''}
               readOnly={isEditing}
             />
             {writerError && <p className="alert">이름을 입력해주세요.</p>}
@@ -84,7 +84,9 @@ export default function BoardWrite_presenter(
               type="text"
               placeholder="07250"
               defaultValue={
-                data?.boardAddress ? String(data?.boardAddress?.zipcode) : ''
+                data?.boardAddress != null
+                  ? String(data?.boardAddress?.zipcode)
+                  : ''
               }
             />
             <button
@@ -100,14 +102,16 @@ export default function BoardWrite_presenter(
             className="address"
             type="text"
             defaultValue={
-              data?.boardAddress ? String(data?.boardAddress?.address) : ''
+              data?.boardAddress != null
+                ? String(data?.boardAddress?.address)
+                : ''
             }
           />
           <input
             onChange={onChangeAddressDetail}
             type="text"
             defaultValue={
-              data?.boardAddress
+              data?.boardAddress != null
                 ? String(data?.boardAddress?.addressDetail)
                 : ''
             }
@@ -120,7 +124,9 @@ export default function BoardWrite_presenter(
             onChange={onChangeYoutubeUrl}
             type="text"
             placeholder="링크를 복사해주세요."
-            defaultValue={data?.youtubeUrl ? String(data?.youtubeUrl) : ''}
+            defaultValue={
+              data?.youtubeUrl != null ? String(data?.youtubeUrl) : ''
+            }
           />
         </InputWrapper>
 

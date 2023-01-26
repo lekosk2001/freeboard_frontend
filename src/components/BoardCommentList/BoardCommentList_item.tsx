@@ -2,7 +2,7 @@ import * as S from './BoardCommentList_styles';
 import { dateFormat } from '@/src/commons/utils/utils';
 import BoardCommentWrite_container from '../BoardCommentWrite/BoardCommentWrite_container';
 import React, { useState } from 'react';
-import { BoardCommentList_item_Props } from './BoardCommentList_types';
+import { type BoardCommentList_item_Props } from './BoardCommentList_types';
 
 const BoardCommentList_item = (props: BoardCommentList_item_Props) => {
   const comment = props.comment;

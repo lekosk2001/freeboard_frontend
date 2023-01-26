@@ -1,8 +1,8 @@
 import React from 'react';
 import BoardCommentList_item from './BoardCommentList_item';
 import * as S from './BoardCommentList_styles';
-import { IBoardComment } from '@/src/commons/types/generated/types';
-import { BoardCommentList_presenter_Props } from './BoardCommentList_types';
+import { type IBoardComment } from '@/src/commons/types/generated/types';
+import { type BoardCommentList_presenter_Props } from './BoardCommentList_types';
 
 export default function BoardCommentList_presenter(
   props: BoardCommentList_presenter_Props

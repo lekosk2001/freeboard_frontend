@@ -157,7 +157,7 @@ export const ArrowButton = styled.div`
 export const PageButton = styled.div<{ active?: boolean }>`
   padding: 10px;
   cursor: pointer;
-  color: ${(props) => (props.active ? '#FFD600' : 'default')};
+  color: ${(props) => ((props.active ?? false) ? '#FFD600' : 'default')};
 `;
 
 export const CreateBotton = styled.button`

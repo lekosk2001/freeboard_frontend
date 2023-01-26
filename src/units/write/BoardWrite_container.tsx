@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite_queries';
 import { useMutation } from '@apollo/client';
 import {
-  IBoardWrite_container_Props,
-  IUpdatedVariables,
+  type IBoardWrite_container_Props,
+  type IUpdatedVariables,
 } from './BoardWrite_types';
 
 export default function BoardWrite_container(
@@ -36,7 +36,12 @@ export default function BoardWrite_container(
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
     setWriterError(false);
-    if (e.target.value && password && title && contents) {
+    if (
+      e.target.value !== '' &&
+      password !== '' &&
+      title !== '' &&
+      contents !== ''
+    ) {
       setValid(true);
     } else setValid(false);
   };
@@ -44,7 +49,12 @@ export default function BoardWrite_container(
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setPasswordError(false);
-    if ((props.isEditing ?? writer) && e.target.value && title && contents) {
+    if (
+      (props.isEditing ?? writer) &&
+      e.target.value !== '' &&
+      title !== '' &&
+      contents !== ''
+    ) {
       setValid(true);
     } else setValid(false);
   };
@@ -52,7 +62,12 @@ export default function BoardWrite_container(
   const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     setTitleError(false);
-    if ((props.isEditing ?? writer) && password && e.target.value && contents) {
+    if (
+      (props.isEditing ?? writer) &&
+      password !== '' &&
+      e.target.value !== '' &&
+      contents !== ''
+    ) {
       setValid(true);
     } else setValid(false);
   };
@@ -60,7 +75,12 @@ export default function BoardWrite_container(
   const onChangeContents = (e: ChangeEvent<HTMLInputElement>) => {
     setContents(e.target.value);
     setContentsError(false);
-    if ((props.isEditing ?? writer) && password && title && e.target.value) {
+    if (
+      (props.isEditing ?? writer) &&
+      password !== '' &&
+      title !== '' &&
+      e.target.value !== ''
+    ) {
       setValid(true);
     } else setValid(false);
   };
@@ -87,20 +107,20 @@ export default function BoardWrite_container(
 
   const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (!writer) {
+    if (writer === '') {
       setWriterError(true);
     }
-    if (!password) {
+    if (password === '') {
       setPasswordError(true);
     }
-    if (!title) {
+    if (title === '') {
       setTitleError(true);
     }
-    if (!contents) {
+    if (contents === '') {
       setContentsError(true);
     }
 
-    if (writer && password && title && contents) {
+    if (writer !== '' && password !== '' && title !== '' && contents !== '') {
       try {
         const result = await createBoard({
           variables: {
@@ -120,7 +140,7 @@ export default function BoardWrite_container(
           },
         });
         console.log(result);
-        router.push(`/boards/${result.data.createBoard._id}`);
+        void router.push(`/boards/${result.data.createBoard._id}`);
       } catch (error) {
         if (error instanceof Error) alert(error.message);
       }
@@ -130,7 +150,7 @@ export default function BoardWrite_container(
   const onUpdate = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    let updatedVariables: IUpdatedVariables = {
+    const updatedVariables: IUpdatedVariables = {
       boardId: props.boardId,
       password,
       updateBoardInput: {
@@ -146,23 +166,23 @@ export default function BoardWrite_container(
       },
     };
 
-    if (!password) {
+    if (password === '') {
       setPasswordError(true);
     }
-    if (!title) {
+    if (title === '') {
       setTitleError(true);
     }
-    if (!contents) {
+    if (contents === '') {
       setContentsError(true);
     }
 
-    if (password && title && contents) {
+    if (password !== '' && title !== '' && contents !== '') {
       try {
         const result = await updateBoard({
           variables: updatedVariables,
         });
         console.log(result);
-        router.push(`/boards/${result.data.updateBoard._id}`);
+        void router.push(`/boards/${result.data.updateBoard._id}`);
       } catch (error) {
         if (error instanceof Error) alert(error.message);
       }

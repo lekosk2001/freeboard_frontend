@@ -1,5 +1,5 @@
-import { IQuery } from '@/src/commons/types/generated/types';
-import { ChangeEvent } from 'react';
+import { type IQuery } from '@/src/commons/types/generated/types';
+import { type ChangeEvent } from 'react';
 
 export interface IBoardWrite_container_Props {
   isEditing: boolean;

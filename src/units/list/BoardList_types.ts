@@ -1,4 +1,4 @@
-import { IQuery } from '@/src/commons/types/generated/types';
+import { type IQuery } from '@/src/commons/types/generated/types';
 
 export interface IBoardList_presenter_Props {
   onClickBoardDetail: (arg: string) => void;

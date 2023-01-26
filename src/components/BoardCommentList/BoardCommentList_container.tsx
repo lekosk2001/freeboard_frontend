@@ -4,12 +4,12 @@ import {
   DELETE_BOARDS_COMMNET,
   FETCH_BOARD_COMMENT,
 } from '@/src/components/BoardCommentList/BoardCommentList_queries';
-import { BoardCommentList_container_Props } from './BoardCommentList_types';
+import { type BoardCommentList_container_Props } from './BoardCommentList_types';
 import {
-  IMutation,
-  IMutationDeleteBoardCommentArgs,
-  IQuery,
-  IQueryFetchBoardCommentsArgs,
+  type IMutation,
+  type IMutationDeleteBoardCommentArgs,
+  type IQuery,
+  type IQueryFetchBoardCommentsArgs,
 } from '@/src/commons/types/generated/types';
 
 export default function BoardCommentList_container(

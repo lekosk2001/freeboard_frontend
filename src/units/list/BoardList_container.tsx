@@ -3,8 +3,8 @@ import BoardList_presenter from './BoardList_presenter';
 import { FETCH_BOARDS } from './BoardList_queries';
 import { useRouter } from 'next/router';
 import {
-  IQuery,
-  IQueryFetchBoardsArgs,
+  type IQuery,
+  type IQueryFetchBoardsArgs,
 } from '@/src/commons/types/generated/types';
 
 export default function BoardList_container() {
@@ -20,11 +20,11 @@ export default function BoardList_container() {
   );
 
   const onClickBoardNew = () => {
-    router.push(`/boards/new`);
+    void router.push(`/boards/new`);
   };
 
   const onClickBoardDetail = (id: string) => {
-    router.push(`/boards/${id}`);
+    void router.push(`/boards/${id}`);
   };
 
   return (

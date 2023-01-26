@@ -1,4 +1,4 @@
-import { IQuery } from '@/src/commons/types/generated/types';
+import { type IQuery } from '@/src/commons/types/generated/types';
 import { FETCH_BOARD } from '@/src/units/detail/BoardDetail_queries';
 import BoardWrite_container from '@/src/units/write/BoardWrite_container';
 import { useQuery } from '@apollo/client';

@@ -1,4 +1,4 @@
-import { IBoard, IQuery } from '@/src/commons/types/generated/types';
+import { type IQuery } from '@/src/commons/types/generated/types';
 
 export interface IBoardDetail_container_Props {
   router: { push: (arg: string) => void; isReady?: boolean };

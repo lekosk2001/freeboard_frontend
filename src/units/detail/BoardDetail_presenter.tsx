@@ -1,7 +1,7 @@
 import * as C from '@/styles/emotion';
 import * as S from './BoardDetail_styles';
 import { dateFormat } from '@/src/commons/utils/utils';
-import { IBoardDetail_presenter_Props } from './BoardDetail_types';
+import { type IBoardDetail_presenter_Props } from './BoardDetail_types';
 
 export default function BoardDetail_presenter(
   props: IBoardDetail_presenter_Props
@@ -29,7 +29,7 @@ export default function BoardDetail_presenter(
             </svg>
             <span>
               <h2>{data?.fetchBoard.writer}</h2>
-              <h4>{data && dateFormat(data?.fetchBoard.createdAt)}</h4>
+              <h4>{data != null && dateFormat(data?.fetchBoard.createdAt)}</h4>
             </span>
           </S.Profile>
           <S.ContentHeadButtons>
@@ -81,7 +81,7 @@ export default function BoardDetail_presenter(
         <S.ContentBody>
           <C.Title>{data?.fetchBoard.title}</C.Title>
 
-          {data?.fetchBoard.images && (
+          {data?.fetchBoard.images != null && (
             <S.ImageBox>
               <img src="/image.png"></img>
             </S.ImageBox>
@@ -89,7 +89,7 @@ export default function BoardDetail_presenter(
 
           <S.TextBox>{data?.fetchBoard.contents}</S.TextBox>
 
-          {data?.fetchBoard.youtubeUrl && (
+          {data?.fetchBoard.youtubeUrl != null && (
             <S.YoutubeBox>
               {/* <PlayButton>
                             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +162,9 @@ export default function BoardDetail_presenter(
         </C.Button>
         <C.Button
           onClick={() => {
-            onCLickDeleteBoard(data?.fetchBoard ? data?.fetchBoard._id : '');
+            onCLickDeleteBoard(
+              data?.fetchBoard != null ? data?.fetchBoard._id : ''
+            );
           }}
         >
           삭제하기

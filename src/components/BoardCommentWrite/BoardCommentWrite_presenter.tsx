@@ -1,5 +1,5 @@
 import * as S from './BoardCommentWrite_styles';
-import { BoardCommentWrite_presenter_Props } from './BoardCommentWrite_types';
+import { type BoardCommentWrite_presenter_Props } from './BoardCommentWrite_types';
 
 const BoardCommentWrite_presenter = (
   props: BoardCommentWrite_presenter_Props
