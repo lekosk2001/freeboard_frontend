@@ -2,16 +2,10 @@ import * as S from './BoardCommentList_styles'
 import { dateFormat } from '@/src/commons/utils/utils'
 import BoardCommentWrite_container from '../BoardCommentWrite/BoardCommentWrite_container'
 import React, { useState } from 'react'
+import { BoardCommentList_item_Props } from './BoardCommentList_types'
 
-type Props = {
-    comment,
-    onCLickDeleteBoardComment:(
-        boardCommentId:string
-    )=>{},
-    boardId:string
-}
 
-const BoardCommentList_item = (props: Props) => {
+const BoardCommentList_item = (props: BoardCommentList_item_Props) => {
     const comment = props.comment;
     
     const [isEditing,setIsEditing] = useState(false);

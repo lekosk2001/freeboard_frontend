@@ -1,26 +1,11 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useRouter } from 'next/router'
 import BoardWrite_presenter from './BoardWrite_presenter'
 import { CREATE_BOARD,UPDATE_BOARD } from './BoardWrite_queries';
 import { useMutation} from '@apollo/client'
+import { IBoardWrite_container_Props, IUpdatedVariables } from './BoardWrite_types';
 
-interface IUpdatedVariables {
-    boardId : string
-    password : string,
-    updateBoardInput: {
-        contents:string,
-        title:string,
-        youtubeUrl:string,
-        images:string,
-        boardAddress:{
-            zipcode:string,
-            address:string,
-            addressDetail:string
-        }
-    }
-}
-
-export default function BoardWrite_container(props) {
+export default function BoardWrite_container(props:IBoardWrite_container_Props) {
 
     const [createBoard] = useMutation(CREATE_BOARD);
     const [updateBoard] = useMutation(UPDATE_BOARD);
@@ -44,55 +29,55 @@ export default function BoardWrite_container(props) {
     
     const [valid,setValid] = useState(false);
 
-    const onChangeWriter = (e)=>{
+    const onChangeWriter = (e:ChangeEvent<HTMLInputElement>)=>{
         setWriter(e.target.value)
         setWriterError(false)
         if(e.target.value&&password&&title&&contents){ setValid(true) }
         else setValid(false)
     }
 
-    const onChangePassword = (e)=>{
+    const onChangePassword = (e:ChangeEvent<HTMLInputElement>)=>{
         setPassword(e.target.value)
         setPasswordError(false)
         if((props.isEditing??writer)&&e.target.value&&title&&contents){ setValid(true) }
         else setValid(false)
     }
 
-    const onChangeTitle = (e)=>{
+    const onChangeTitle = (e:ChangeEvent<HTMLInputElement>)=>{
         setTitle(e.target.value)
         setTitleError(false)
         if((props.isEditing??writer)&&password&&e.target.value&&contents){ setValid(true) }
         else setValid(false)
     }
 
-    const onChangeContents = (e)=>{
+    const onChangeContents = (e:ChangeEvent<HTMLInputElement>)=>{
         setContents(e.target.value)
         setContentsError(false)
         if((props.isEditing??writer)&&password&&title&&e.target.value){ setValid(true) }
         else setValid(false)
     }
 
-    const onChangeZipcode = (e)=>{
+    const onChangeZipcode = (e:ChangeEvent<HTMLInputElement>)=>{
         setZipcode(e.target.value)
     }
 
-    const onChangeAddress = (e)=>{
+    const onChangeAddress = (e:ChangeEvent<HTMLInputElement>)=>{
         setAddress(e.target.value)
     }
 
-    const onChangeAddressDetail = (e)=>{
+    const onChangeAddressDetail = (e:ChangeEvent<HTMLInputElement>)=>{
         setAddressDetail(e.target.value)
     }
 
-    const onChangeYoutubeUrl = (e)=>{
+    const onChangeYoutubeUrl = (e:ChangeEvent<HTMLInputElement>)=>{
         setYoutubeUrl(e.target.value)
     }
 
-    const onChangeImages = (e)=>{
+    const onChangeImages = (e:ChangeEvent<HTMLInputElement>)=>{
         setImages(e.target.value)
     }
 
-    const onSubmit = async (e)=>{
+    const onSubmit = async (e: { preventDefault: () => void; })=>{
         e.preventDefault()
         if(!writer){setWriterError(true)}
         if(!password){setPasswordError(true)}
@@ -120,13 +105,13 @@ export default function BoardWrite_container(props) {
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.createBoard._id}`)
-            } catch(error) {
+            } catch(error:any) {
                 alert(error.message)
             }
         }
     }
 
-    const onUpdate = async (e)=>{
+    const onUpdate = async (e: { preventDefault: () => void; })=>{
         e.preventDefault()
 
         let updatedVariables:IUpdatedVariables = {
@@ -156,7 +141,7 @@ export default function BoardWrite_container(props) {
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.updateBoard._id}`)
-            } catch(error) {
+            } catch(error:any) {
                 alert(error.message)
             }
         }
@@ -173,7 +158,7 @@ export default function BoardWrite_container(props) {
             onChangeAddressDetail={onChangeAddressDetail}
             onChangeYoutubeUrl={onChangeYoutubeUrl}
             onChangeImages={onChangeImages}
-            
+
             writerError={writerError}
             passwordError={passwordError}
             titleError={titleError}

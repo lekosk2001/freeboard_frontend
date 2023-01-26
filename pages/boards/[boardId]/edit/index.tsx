@@ -1,3 +1,4 @@
+import { IQuery } from '@/src/commons/types/generated/types';
 import { FETCH_BOARD } from '@/src/units/detail/BoardDetail_queries';
 import BoardWrite_container from '@/src/units/write/BoardWrite_container';
 import { useQuery } from '@apollo/client';
@@ -6,16 +7,14 @@ export default function index() {
     const router = useRouter();
     const boardId = router.query.boardId;
     
-    const {data} = useQuery(FETCH_BOARD,{
+    const {data} = useQuery<Pick<IQuery,'fetchBoard'>>(FETCH_BOARD,{
             variables:{
                 boardId
             }
         });
-    
-        console.log(data)
-
+        
     return (
-        <BoardWrite_container 
+        <BoardWrite_container
             isEditing={true} data={data} boardId={boardId}
         />
     )

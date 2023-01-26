@@ -18,7 +18,7 @@ export default function BoardList_container() {
     router.push(`/boards/new`)
   }
 
-  const onClickBoardDetail = (id) =>{
+  const onClickBoardDetail = (id:string) =>{
     router.push(`/boards/${id}`)
   }
 

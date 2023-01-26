@@ -8,8 +8,9 @@ import {
     InputWrapper,
     SubmitButton
 } from './BoardWrite_styles'
+import { IBoardWrite_presenter_Props } from './BoardWrite_types';
 
-export default function BoardWrite_presenter(props) {
+export default function BoardWrite_presenter(props:IBoardWrite_presenter_Props) {
 
     const onChangeWriter=props.onChangeWriter;
     const onChangePassword=props.onChangePassword;
@@ -44,7 +45,7 @@ export default function BoardWrite_presenter(props) {
                             onChange={onChangeWriter}
                             type="text" 
                             placeholder='이름을 입력해주세요.'
-                            defaultValue={data?.writer}
+                            defaultValue={data?String(data?.writer):''}
                             readOnly={isEditing}
                         />
                         {writerError && <p className='alert'>이름을 입력해주세요.</p>}
@@ -71,7 +72,7 @@ export default function BoardWrite_presenter(props) {
                 <InputWrapper>
                     <label>내용</label>
                     <textarea
-                        onChange={onChangeContents}
+                        onChange={()=>onChangeContents}
                         placeholder='내용을 작성해주세요.'
                         defaultValue={data?.contents}
                     />
@@ -84,7 +85,7 @@ export default function BoardWrite_presenter(props) {
                             onChange={onChangeZipcode}
                             type="text" 
                             placeholder='07250'
-                            defaultValue={data?.boardAddress?.zipcode}
+                            defaultValue={data?.boardAddress?String(data?.boardAddress?.zipcode):''}
                         />
                         <button onClick={(e)=>{e.preventDefault()}}>우편번호 검색</button>
                     </div>
@@ -92,12 +93,12 @@ export default function BoardWrite_presenter(props) {
                         onChange={onChangeAddress}
                         className='address'
                         type="text"
-                        defaultValue={data?.boardAddress?.address}
+                        defaultValue={data?.boardAddress?String(data?.boardAddress?.address):''}
                     />
                     <input
                         onChange={onChangeAddressDetail}
                         type="text"
-                        defaultValue={data?.boardAddress?.addressDetail}
+                        defaultValue={data?.boardAddress?String(data?.boardAddress?.addressDetail):''}
                     />
                 </InputWrapper>
 
@@ -107,7 +108,7 @@ export default function BoardWrite_presenter(props) {
                         onChange={onChangeYoutubeUrl}
                         type="text" 
                         placeholder='링크를 복사해주세요.'
-                        defaultValue={data?.youtubeUrl}
+                        defaultValue={data?.youtubeUrl?String(data?.youtubeUrl):''}
                     />
                 </InputWrapper>
 
@@ -144,7 +145,6 @@ export default function BoardWrite_presenter(props) {
                                 value="youtube" 
                                 defaultChecked 
                                 onChange={onChangeImages}
-                                defaultValue={data?.youtubeUrl}
                             />
                             <label htmlFor="youtube">유튜브</label>
                         </span>
@@ -155,7 +155,6 @@ export default function BoardWrite_presenter(props) {
                                 name="radios" 
                                 value="image" 
                                 onChange={onChangeImages}
-                                defaultValue={data?.images}
                             />
                             <label htmlFor="image">사진</label>
                         </span>

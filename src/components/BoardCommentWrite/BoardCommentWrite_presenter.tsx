@@ -1,25 +1,8 @@
-import React from 'react'
 import * as S from './BoardCommentWrite_styles'
+import { BoardCommentWrite_presenter_Props } from './BoardCommentWrite_types'
 
-type Props = {
-    onClickSumit:(e)=>Promise<void>,
-    onCLickEditBoardComment:(e)=>Promise<void>,
-    isEditing:boolean
 
-    onChangeWriter:(e)=>void,
-    onChangePassword:(e)=>void,
-    onChangeRating:(e)=>void,
-    onChangeContents:(e)=>void,
-
-    maxText:number,
-    valid:boolean,
-    writer:string,
-    password:string,
-    rating:number,
-    contents:string,
-}
-
-const BoardCommentWrite_presenter = (props: Props) => {
+const BoardCommentWrite_presenter = (props: BoardCommentWrite_presenter_Props) => {
     return (
             <S.WriteComment>
                 {!props.isEditing&&(<S.CommetLabel>

@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
 import BoardCommentList_presenter from './BoardCommentList_presenter'
 import { useQuery, useMutation } from '@apollo/client'
 import { DELETE_BOARDS_COMMNET, FETCH_BOARD_COMMENT } from "@/src/components/BoardCommentList/BoardCommentList_queries";
+import { BoardCommentList_container_Props } from './BoardCommentList_types';
 
-type Props = {
-    boardId:string
-}
 
-export default function BoardCommentList_container (props: Props) {
+export default function BoardCommentList_container (props: BoardCommentList_container_Props) {
 
-    console.log(props.boardId)
     const {data:CommentsData} = useQuery(FETCH_BOARD_COMMENT,{
         variables:{
             boardId:props.boardId,
@@ -18,8 +14,8 @@ export default function BoardCommentList_container (props: Props) {
     })
 
     const [deleteBoardComment] = useMutation(DELETE_BOARDS_COMMNET);
-
-    const onCLickDeleteBoardComment = async (boardCommentId) => {
+    
+    const onCLickDeleteBoardComment = async (boardCommentId:string) => {
         const myPassword = prompt("비밀번호를 입력하세요.");
         try {
             await deleteBoardComment({
@@ -37,7 +33,7 @@ export default function BoardCommentList_container (props: Props) {
                     }
                 ]
             })
-        } catch(error) {
+        } catch(error:any) {
             alert(error.message)
         }
     }

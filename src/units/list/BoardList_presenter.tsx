@@ -1,8 +1,10 @@
 import { dateFormat } from "@/src/commons/utils/utils";
 import { Main, Title } from "@/styles/emotion"
 import * as S from "./BoardList_styles"
+import { IBoardList_presenter_Props } from "./BoardList_types";
+import { IBoard } from "@/src/commons/types/generated/types";
 
-export default function BoardList_presenter(props) {
+export default function BoardList_presenter(props:IBoardList_presenter_Props) {
 
 	const onClickBoardDetail =props.onClickBoardDetail;
 	const onClickBoardNew = props.onClickBoardNew;

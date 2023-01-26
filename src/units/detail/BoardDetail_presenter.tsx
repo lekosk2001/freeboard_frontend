@@ -1,13 +1,12 @@
 import * as C from '@/styles/emotion'
 import * as S from './BoardDetail_styles';
 import { dateFormat } from '@/src/commons/utils/utils';
+import { IBoardDetail_presenter_Props } from './BoardDetail_types';
 
-export default function BoardDetail_presenter(props) {
+export default function BoardDetail_presenter(props:IBoardDetail_presenter_Props) {
     const router = props.router;
     const data = props.data?.fetchBoard;
     const onCLickDeleteBoard = props.onCLickDeleteBoard;
-    const CommentsData = props.CommentsData;
-
 
     return (
         <C.Main>

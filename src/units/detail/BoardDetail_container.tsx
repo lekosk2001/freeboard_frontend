@@ -1,19 +1,20 @@
 import BoardDetail_presenter from './BoardDetail_presenter'
 import { useQuery,useMutation } from '@apollo/client'
 import { DELETE_BOARDS, FETCH_BOARD } from './BoardDetail_queries'
+import { IQuery,IQueryFetchBoardArgs } from '@/src/commons/types/generated/types';
+import { IBoardDetail_container_Props } from './BoardDetail_types';
 
-
-export default function BoardDetail_container(props) {
+export default function BoardDetail_container(props:IBoardDetail_container_Props) {
 
     const [deleteBoard] = useMutation(DELETE_BOARDS);
 
-    const {data} = useQuery(FETCH_BOARD,{
+    const {data} = useQuery<Pick<IQuery,"fetchBoard">,IQueryFetchBoardArgs>(FETCH_BOARD,{
         variables:{
             boardId:props.boardId
         }
     });
 
-    const onCLickDeleteBoard = async (boardId) => {
+    const onCLickDeleteBoard = async (boardId?:string) => {
         try {
             if (confirm("정말 삭제하시겠습니까?") === true){
                 await deleteBoard({variables: {boardId}})
@@ -22,7 +23,7 @@ export default function BoardDetail_container(props) {
                 return
             }
 
-        } catch(error) {
+        } catch(error:any) {
             alert(error.message)
         }
     }
