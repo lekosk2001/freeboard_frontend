@@ -35,7 +35,6 @@ export default function BoardWrite_container(
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
-    console.log(e.target.value);
     setWriterError(false);
     if (
       e.target.value !== '' &&
@@ -49,7 +48,6 @@ export default function BoardWrite_container(
 
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    console.log(e.target.value);
     setPasswordError(false);
     if (
       (props.isEditing ?? writer) &&
@@ -63,7 +61,6 @@ export default function BoardWrite_container(
 
   const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    console.log(e.target.value);
     setTitleError(false);
     if (
       (props.isEditing ?? writer) &&
@@ -77,7 +74,6 @@ export default function BoardWrite_container(
 
   const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
-    console.log(e.target.value);
     setContentsError(false);
     if (
       (props.isEditing ?? writer) &&

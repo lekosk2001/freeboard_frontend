@@ -9,9 +9,10 @@ export const WriteComment = styled.form`
 
 export const CommetLabel = styled.div`
   display: flex;
-  gap: 14px;
+  gap: 10px;
   justify-items: center;
   margin-bottom: 44px;
+  align-items: center;
   h4 {
     font-weight: 500;
   }

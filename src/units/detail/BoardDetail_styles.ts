@@ -19,7 +19,7 @@ export const ContentHead = styled.div`
 
 export const ContentHeadButtons = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 20px;
   align-items: center;
   svg {
     cursor: pointer;
@@ -59,33 +59,54 @@ export const Profile = styled.div`
 export const LikeButtons = styled.div`
   display: flex;
   margin-top: 120px;
-  gap: 80px;
+  gap: 40px;
 `;
 
-export const LikeButton = styled.span`
+export const LikeButton = styled.button`
   cursor: pointer;
-  width: 40px;
+  background-color: inherit;
+  border: 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   h3 {
     font-weight: 400;
-    color: #ffd600;
+    color: #1677ff;
+  }
+  span{
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    :hover{
+      color: #fff;
+      background-color: #1677ff;
+    }
   }
 `;
 
-export const DislikeButton = styled.span`
+export const DislikeButton = styled.button`
   cursor: pointer;
+  background-color: inherit;
+  border: 0px;
   width: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  
   h3 {
     font-weight: 400;
     color: #828282;
   }
+  span{
+    transition: all 0.05s ease;
+    border-radius: 4px;
+    :hover{
+      color: #fff;
+      background-color: #1677ff;
+    }
+  }
+  
 `;
 
 export const TextBox = styled.h4`

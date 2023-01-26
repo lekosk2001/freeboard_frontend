@@ -17,6 +17,13 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
+"@ant-design/colors@^7.0.0":
+  "integrity" "sha512-iVm/9PfGCbC0dSMBrz7oiEXZaaGH7ceU40OJEfKmyuzR9R5CRimJYPlRiFtMQGQcbNMea/ePcoIebi4ASGYXtg=="
+  "resolved" "https://registry.npmjs.org/@ant-design/colors/-/colors-7.0.0.tgz"
+  "version" "7.0.0"
+  dependencies:
+    "@ctrl/tinycolor" "^3.4.0"
+
 "@ant-design/cssinjs@^1.4.0":
   "integrity" "sha512-siFyX5VyiJWKBQAffI8zE0WZ4OWfI35QnqesbtHaVg49QxHFAcFN9VbJ+Qoos24JxABcxfopEwMWe2joZ2QVBQ=="
   "resolved" "https://registry.npmjs.org/@ant-design/cssinjs/-/cssinjs-1.4.0.tgz"
@@ -41,6 +48,17 @@
   "version" "4.8.0"
   dependencies:
     "@ant-design/colors" "^6.0.0"
+    "@ant-design/icons-svg" "^4.2.1"
+    "@babel/runtime" "^7.11.2"
+    "classnames" "^2.2.6"
+    "rc-util" "^5.9.4"
+
+"@ant-design/icons@^5.0.1":
+  "integrity" "sha512-ZyF4ksXCcdtwA/1PLlnFLcF/q8/MhwxXhKHh4oCHDA4Ip+ZzAHoICtyp4wZWfiCVDP0yuz3HsjyvuldHFb3wjA=="
+  "resolved" "https://registry.npmjs.org/@ant-design/icons/-/icons-5.0.1.tgz"
+  "version" "5.0.1"
+  dependencies:
+    "@ant-design/colors" "^7.0.0"
     "@ant-design/icons-svg" "^4.2.1"
     "@babel/runtime" "^7.11.2"
     "classnames" "^2.2.6"

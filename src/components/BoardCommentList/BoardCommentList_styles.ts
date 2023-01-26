@@ -16,11 +16,6 @@ export const CommetLabel = styled.div`
   margin-bottom: 44px;
 `;
 
-export const RateStars = styled.div`
-  display: flex;
-  gap: 4px;
-`;
-
 export const CommentBox = styled.div`
   width: inherit;
   display: flex;
@@ -44,7 +39,8 @@ export const CommentHead = styled.div`
 export const CommentHeadLeftside = styled.div`
   flex-wrap: wrap;
   display: flex;
-  gap: 18px;
+  gap: 20px;
+  align-items: center;
 `;
 
 export const CommentButtons = styled.div`

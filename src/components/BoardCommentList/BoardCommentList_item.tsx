@@ -3,7 +3,7 @@ import { dateFormat } from '@/src/commons/utils/utils';
 import BoardCommentWrite_container from '../BoardCommentWrite/BoardCommentWrite_container';
 import React, { useState } from 'react';
 import { type BoardCommentList_item_Props } from './BoardCommentList_types';
-
+import { Rate } from 'antd';
 const BoardCommentList_item = (props: BoardCommentList_item_Props) => {
   const comment = props.comment;
 
@@ -31,68 +31,7 @@ const BoardCommentList_item = (props: BoardCommentList_item_Props) => {
             <S.CommentHead>
               <S.CommentHeadLeftside>
                 <S.CommentWriter>{comment.writer}</S.CommentWriter>
-                <S.RateStars>
-                  <svg
-                    width="20"
-                    height="19"
-                    viewBox="0 0 20 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-                      fill="#BDBDBD"
-                    />
-                  </svg>
-                  <svg
-                    width="20"
-                    height="19"
-                    viewBox="0 0 20 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-                      fill="#BDBDBD"
-                    />
-                  </svg>
-                  <svg
-                    width="20"
-                    height="19"
-                    viewBox="0 0 20 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-                      fill="#BDBDBD"
-                    />
-                  </svg>
-                  <svg
-                    width="20"
-                    height="19"
-                    viewBox="0 0 20 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-                      fill="#BDBDBD"
-                    />
-                  </svg>
-                  <svg
-                    width="20"
-                    height="19"
-                    viewBox="0 0 20 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-                      fill="#BDBDBD"
-                    />
-                  </svg>
-                </S.RateStars>
+                <Rate />
               </S.CommentHeadLeftside>
 
               <S.CommentButtons>
