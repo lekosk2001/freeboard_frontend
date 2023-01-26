@@ -70,7 +70,7 @@ export default function BoardWrite_presenter(
         <InputWrapper>
           <label>내용</label>
           <textarea
-            onChange={() => onChangeContents}
+            onChange={onChangeContents}
             placeholder="내용을 작성해주세요."
             defaultValue={data?.contents}
           />

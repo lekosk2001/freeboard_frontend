@@ -27,7 +27,7 @@ export interface IBoardWrite_presenter_Props {
   onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeZipcode: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeAddress: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
