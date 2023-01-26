@@ -105,8 +105,8 @@ export default function BoardWrite_container(props:IBoardWrite_container_Props) 
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.createBoard._id}`)
-            } catch(error:any) {
-                alert(error.message)
+            } catch(error) {
+                if (error instanceof Error) alert(error.message);
             }
         }
     }
@@ -141,8 +141,8 @@ export default function BoardWrite_container(props:IBoardWrite_container_Props) 
                 })
                 console.log(result)
                 router.push(`/boards/${result.data.updateBoard._id}`)
-            } catch(error:any) {
-                alert(error.message)
+            } catch(error) {
+                if (error instanceof Error) alert(error.message);
             }
         }
     }

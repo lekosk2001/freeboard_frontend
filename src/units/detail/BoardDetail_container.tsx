@@ -23,8 +23,8 @@ export default function BoardDetail_container(props:IBoardDetail_container_Props
                 return
             }
 
-        } catch(error:any) {
-            alert(error.message)
+        } catch(error) {
+            if (error instanceof Error) alert(error.message);
         }
     }
 

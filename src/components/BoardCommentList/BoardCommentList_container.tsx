@@ -2,12 +2,12 @@ import BoardCommentList_presenter from './BoardCommentList_presenter'
 import { useQuery, useMutation } from '@apollo/client'
 import { DELETE_BOARDS_COMMNET, FETCH_BOARD_COMMENT } from "@/src/components/BoardCommentList/BoardCommentList_queries";
 import { BoardCommentList_container_Props } from './BoardCommentList_types';
-import { IMutation, IMutationDeleteBoardCommentArgs } from '@/src/commons/types/generated/types';
+import { IMutation, IMutationDeleteBoardCommentArgs, IQuery, IQueryFetchBoardCommentsArgs } from '@/src/commons/types/generated/types';
 
 
 export default function BoardCommentList_container (props: BoardCommentList_container_Props) {
 
-    const {data:CommentsData} = useQuery(FETCH_BOARD_COMMENT,{
+    const {data:CommentsData} = useQuery<Pick<IQuery,"fetchBoardComments">,IQueryFetchBoardCommentsArgs>(FETCH_BOARD_COMMENT,{
         variables:{
             boardId:props.boardId,
             page:1
@@ -34,8 +34,8 @@ export default function BoardCommentList_container (props: BoardCommentList_cont
                     }
                 ]
             })
-        } catch(error:any) {
-            alert(error.message)
+        } catch(error) {
+            if (error instanceof Error) alert(error.message);
         }
     }
     

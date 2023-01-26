@@ -88,8 +88,8 @@ const BoardCommentWrite_container = (props: BoardCommentWrite_container_Props) =
                 setPassword('')
                 setRating(0)
                 setContents('')
-            } catch(error:any) {
-                alert(error.message)
+            } catch(error) {
+                if (error instanceof Error) alert(error.message);
             }
         }
     }
@@ -119,8 +119,8 @@ const BoardCommentWrite_container = (props: BoardCommentWrite_container_Props) =
                 ]
             })
         props.setIsEditing(false)
-        } catch(error:any) {
-            alert(error.message)
+        } catch(error) {
+            if (error instanceof Error) alert(error.message);
         }
     }
 

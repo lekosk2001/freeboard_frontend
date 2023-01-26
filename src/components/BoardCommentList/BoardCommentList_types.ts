@@ -5,7 +5,7 @@ export interface BoardCommentList_container_Props {
 }
 
 export interface BoardCommentList_presenter_Props{
-    CommentsData :Pick<IQuery,'fetchBoardComments'>;
+    CommentsData? :Pick<IQuery,'fetchBoardComments'>;
     onCLickDeleteBoardComment: (arg0: string) => void
 }
 export interface BoardCommentList_item_Props{

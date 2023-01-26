@@ -7,7 +7,6 @@ export const WriteComment = styled.form`
     margin-bottom: 40px;
 `
 
-
 export const CommetLabel = styled.div`
     display: flex;
     gap: 14px;
@@ -22,7 +21,6 @@ export const CommnetWriteHead = styled.div`
     margin-bottom: 20px;
     flex-wrap: wrap;
 `
-
 
 export const Input = styled.input`
     border: 1px solid #BDBDBD;
@@ -40,7 +38,6 @@ export const RateStars = styled.div`
     gap: 4px;
 `
 
-
 export const CommetWriteBox = styled.textarea`
     border: 1px solid #BDBDBD;
     width: 100%;
@@ -57,8 +54,6 @@ export const CommetWriteBox = styled.textarea`
     
 `
 
-
-
 export const CommentSubmitBox = styled.div`
     display: flex;
     justify-content: space-between;
@@ -69,14 +64,10 @@ export const CommentSubmitBox = styled.div`
 
 `
 
-
-
 export const CommentLength = styled.h4`
     font-weight: 400;
     color: #BDBDBD;
 `
-
-
 
 export const CommentSubmitButton = styled.button<{valid:boolean}>`
     height: 52px;
