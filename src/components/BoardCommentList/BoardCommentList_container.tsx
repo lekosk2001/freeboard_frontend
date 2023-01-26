@@ -40,7 +40,6 @@ export default function BoardCommentList_container (props: BoardCommentList_cont
     
     return (
         <BoardCommentList_presenter
-            boardId={props.boardId}
             CommentsData={CommentsData}
             onCLickDeleteBoardComment={onCLickDeleteBoardComment}
         />
