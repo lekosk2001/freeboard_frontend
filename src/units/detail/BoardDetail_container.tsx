@@ -1,40 +1,53 @@
-import BoardDetail_presenter from './BoardDetail_presenter'
-import { useQuery,useMutation } from '@apollo/client'
-import { DELETE_BOARDS, FETCH_BOARD } from './BoardDetail_queries'
-import { IMutation, IMutationDeleteBoardArgs, IQuery,IQueryFetchBoardArgs } from '@/src/commons/types/generated/types';
+import BoardDetail_presenter from './BoardDetail_presenter';
+import { useQuery, useMutation } from '@apollo/client';
+import { DELETE_BOARDS, FETCH_BOARD } from './BoardDetail_queries';
+import {
+  IMutation,
+  IMutationDeleteBoardArgs,
+  IQuery,
+  IQueryFetchBoardArgs,
+} from '@/src/commons/types/generated/types';
 import { IBoardDetail_container_Props } from './BoardDetail_types';
 
-export default function BoardDetail_container(props:IBoardDetail_container_Props) {
+export default function BoardDetail_container(
+  props: IBoardDetail_container_Props
+) {
+  const [deleteBoard] = useMutation<
+    Pick<IMutation, 'deleteBoard'>,
+    IMutationDeleteBoardArgs
+  >(DELETE_BOARDS);
 
-    const [deleteBoard] = useMutation<Pick<IMutation,'deleteBoard'>,IMutationDeleteBoardArgs>(DELETE_BOARDS);
-
-    const {data} = useQuery<Pick<IQuery,"fetchBoard">,IQueryFetchBoardArgs>(FETCH_BOARD,{
-        variables:{
-            boardId:props.boardId
-        }
-    });
-
-    const onCLickDeleteBoard = async (boardId:string) => {
-        try {
-            if (confirm("정말 삭제하시겠습니까?") === true){
-                await deleteBoard({variables: {boardId}})
-                props.router.push(`/boards`)
-            }else{
-                return
-            }
-
-        } catch(error) {
-            if (error instanceof Error) alert(error.message);
-        }
+  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: {
+        boardId: props.boardId,
+      },
     }
+  );
 
-    return (
-        <>
-            {props.router.isReady&&<BoardDetail_presenter
-                data={data}
-                router={props.router}
-                onCLickDeleteBoard={onCLickDeleteBoard}
-            />}
-        </>
-    )
+  const onCLickDeleteBoard = async (boardId: string) => {
+    try {
+      if (confirm('정말 삭제하시겠습니까?') === true) {
+        await deleteBoard({ variables: { boardId } });
+        props.router.push(`/boards`);
+      } else {
+        return;
+      }
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
+  return (
+    <>
+      {props.router.isReady && (
+        <BoardDetail_presenter
+          data={data}
+          router={props.router}
+          onCLickDeleteBoard={onCLickDeleteBoard}
+        />
+      )}
+    </>
+  );
 }
