@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite_queries';
@@ -12,6 +12,12 @@ import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 export default function BoardWrite_container(
   props: IBoardWrite_container_Props
 ) {
+  useEffect(() => {
+    setWriter(String(props.data?.fetchBoard.writer));
+    setTitle(String(props.data?.fetchBoard.title));
+    setContents(String(props.data?.fetchBoard.contents));
+  }, [props.data]);
+
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
@@ -38,12 +44,7 @@ export default function BoardWrite_container(
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
     setWriterError(false);
-    if (
-      e.target.value !== '' &&
-      password !== '' &&
-      title !== '' &&
-      contents !== ''
-    ) {
+    if (e.target.value && password && title && contents) {
       setValid(true);
     } else setValid(false);
   };
@@ -51,12 +52,7 @@ export default function BoardWrite_container(
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setPasswordError(false);
-    if (
-      (props.isEditing ?? writer) &&
-      e.target.value !== '' &&
-      title !== '' &&
-      contents !== ''
-    ) {
+    if (writer && e.target.value && title && contents) {
       setValid(true);
     } else setValid(false);
   };
@@ -64,12 +60,7 @@ export default function BoardWrite_container(
   const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     setTitleError(false);
-    if (
-      (props.isEditing ?? writer) &&
-      password !== '' &&
-      e.target.value !== '' &&
-      contents !== ''
-    ) {
+    if (writer && password && e.target.value && contents) {
       setValid(true);
     } else setValid(false);
   };
@@ -77,12 +68,7 @@ export default function BoardWrite_container(
   const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
     setContentsError(false);
-    if (
-      (props.isEditing ?? writer) &&
-      password !== '' &&
-      title !== '' &&
-      e.target.value !== ''
-    ) {
+    if (writer && password && title && e.target.value) {
       setValid(true);
     } else setValid(false);
   };
@@ -122,7 +108,7 @@ export default function BoardWrite_container(
       setContentsError(true);
     }
 
-    if (writer !== '' && password !== '' && title !== '' && contents !== '') {
+    if (writer && password && title && contents) {
       try {
         const result = await createBoard({
           variables: {

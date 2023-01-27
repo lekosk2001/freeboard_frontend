@@ -9,13 +9,14 @@ import {
   LinkOutlined,
   EnvironmentOutlined,
 } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Popover } from 'antd';
 
 export default function BoardDetail_presenter(
   props: IBoardDetail_presenter_Props
 ) {
   const router = props.router;
   const data = props.data;
+  const content = <p>{data?.fetchBoard.boardAddress?.address}</p>;
 
   return (
     <C.Main>
@@ -38,10 +39,11 @@ export default function BoardDetail_presenter(
           </S.Profile>
           <S.ContentHeadButtons>
             <LinkOutlined style={{ fontSize: '24px', color: '#FFD600' }} />
-
-            <EnvironmentOutlined
-              style={{ fontSize: '24px', color: '#FFD600' }}
-            />
+            <Popover content={content} placement="topRight">
+              <EnvironmentOutlined
+                style={{ fontSize: '24px', color: '#FFD600' }}
+              />
+            </Popover>
           </S.ContentHeadButtons>
         </S.ContentHead>
         <S.ContentBody>

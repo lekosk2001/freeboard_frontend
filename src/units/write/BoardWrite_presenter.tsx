@@ -23,7 +23,7 @@ export default function BoardWrite_presenter(
               onChange={props.onChangeWriter}
               type="text"
               placeholder="이름을 입력해주세요."
-              defaultValue={data != null ? String(data?.writer) : ''}
+              defaultValue={data ? String(data?.writer) : ''}
               readOnly={isEditing}
             />
             {props.writerError && <p className="alert">이름을 입력해주세요.</p>}
@@ -104,7 +104,7 @@ export default function BoardWrite_presenter(
             onChange={props.onChangeAddressDetail}
             type="text"
             defaultValue={
-              data?.boardAddress != null
+              data?.boardAddress
                 ? String(data?.boardAddress?.addressDetail)
                 : ''
             }
@@ -117,9 +117,7 @@ export default function BoardWrite_presenter(
             onChange={props.onChangeYoutubeUrl}
             type="text"
             placeholder="링크를 복사해주세요."
-            defaultValue={
-              data?.youtubeUrl != null ? String(data?.youtubeUrl) : ''
-            }
+            defaultValue={data?.youtubeUrl ? String(data?.youtubeUrl) : ''}
           />
         </S.InputWrapper>
 
