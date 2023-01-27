@@ -1,114 +1,107 @@
+import { Modal } from 'antd';
+import DaumPostcodeEmbed from 'react-daum-postcode';
 import { Main, Title } from '../../../styles/emotion';
 
-import { Form, InputWrapper, SubmitButton } from './BoardWrite_styles';
+import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
 
 export default function BoardWrite_presenter(
   props: IBoardWrite_presenter_Props
 ) {
-  const onChangeWriter = props.onChangeWriter;
-  const onChangePassword = props.onChangePassword;
-  const onChangeTitle = props.onChangeTitle;
-  const onChangeContents = props.onChangeContents;
-  const onChangeZipcode = props.onChangeZipcode;
-  const onChangeAddress = props.onChangeAddress;
-  const onChangeAddressDetail = props.onChangeAddressDetail;
-  const onChangeYoutubeUrl = props.onChangeYoutubeUrl;
-  const onChangeImages = props.onChangeImages;
-
-  const writerError = props.writerError;
-  const passwordError = props.passwordError;
-  const titleError = props.titleError;
-  const contentsError = props.contentsError;
-
-  const onSubmit = props.onSubmit;
-  const onUpdate = props.onUpdate;
-
   const valid = props.valid;
   const isEditing = props.isEditing;
   const data = props.data?.fetchBoard;
 
   return (
     <Main>
-      <Form>
+      <S.Form>
         <Title>게시물 {isEditing ? '수정' : '등록'}</Title>
         <div className="writer">
-          <InputWrapper>
+          <S.InputWrapper>
             <label>작성자</label>
             <input
-              onChange={onChangeWriter}
+              onChange={props.onChangeWriter}
               type="text"
               placeholder="이름을 입력해주세요."
               defaultValue={data != null ? String(data?.writer) : ''}
               readOnly={isEditing}
             />
-            {writerError && <p className="alert">이름을 입력해주세요.</p>}
-          </InputWrapper>
-          <InputWrapper>
+            {props.writerError && <p className="alert">이름을 입력해주세요.</p>}
+          </S.InputWrapper>
+          <S.InputWrapper>
             <label>비밀번호</label>
             <input
-              onChange={onChangePassword}
+              onChange={props.onChangePassword}
               autoComplete="off"
               type="password"
               placeholder="비밀번호를 입력해주세요."
               defaultValue={``}
             />
-            {passwordError && <p className="alert">비밀번호를 입력해주세요.</p>}
-          </InputWrapper>
+            {props.passwordError && (
+              <p className="alert">비밀번호를 입력해주세요.</p>
+            )}
+          </S.InputWrapper>
         </div>
-        <InputWrapper>
+        <S.InputWrapper>
           <label>제목</label>
           <input
-            onChange={onChangeTitle}
+            onChange={props.onChangeTitle}
             type="text"
             placeholder="제목을 작성해주세요."
             defaultValue={data?.title}
           />
-          {titleError && <p className="alert">제목을 작성해주세요.</p>}
-        </InputWrapper>
+          {props.titleError && <p className="alert">제목을 작성해주세요.</p>}
+        </S.InputWrapper>
 
-        <InputWrapper>
+        <S.InputWrapper>
           <label>내용</label>
           <textarea
-            onChange={onChangeContents}
+            onChange={props.onChangeContents}
             placeholder="내용을 작성해주세요."
             defaultValue={data?.contents}
           />
-          {contentsError && <p className="alert">내용을 작성해주세요.</p>}
-        </InputWrapper>
-        <InputWrapper>
+          {props.contentsError && <p className="alert">내용을 작성해주세요.</p>}
+        </S.InputWrapper>
+        <S.InputWrapper>
           <label>주소</label>
           <div className="zipcode">
             <input
-              onChange={onChangeZipcode}
+              disabled
+              onChange={props.onChangeZipcode}
               type="text"
-              placeholder="07250"
-              defaultValue={
-                data?.boardAddress != null
-                  ? String(data?.boardAddress?.zipcode)
-                  : ''
-              }
+              // placeholder="00000"
+              value={props.zipcode}
             />
             <button
               onClick={(e) => {
                 e.preventDefault();
+                props.onToggleModal();
               }}
             >
               우편번호 검색
             </button>
+            {props.isOpen && (
+              <Modal
+                title={'우편번호 검색'}
+                open={props.isOpen}
+                onOk={props.onToggleModal}
+                onCancel={props.onToggleModal}
+              >
+                <DaumPostcodeEmbed
+                  onComplete={props.handleComplete}
+                ></DaumPostcodeEmbed>
+              </Modal>
+            )}
           </div>
           <input
-            onChange={onChangeAddress}
+            onChange={props.onChangeAddress}
             className="address"
             type="text"
-            defaultValue={
-              data?.boardAddress != null
-                ? String(data?.boardAddress?.address)
-                : ''
-            }
+            disabled
+            value={props.address}
           />
           <input
-            onChange={onChangeAddressDetail}
+            onChange={props.onChangeAddressDetail}
             type="text"
             defaultValue={
               data?.boardAddress != null
@@ -116,21 +109,21 @@ export default function BoardWrite_presenter(
                 : ''
             }
           />
-        </InputWrapper>
+        </S.InputWrapper>
 
-        <InputWrapper>
+        <S.InputWrapper>
           <label>유튜브</label>
           <input
-            onChange={onChangeYoutubeUrl}
+            onChange={props.onChangeYoutubeUrl}
             type="text"
             placeholder="링크를 복사해주세요."
             defaultValue={
               data?.youtubeUrl != null ? String(data?.youtubeUrl) : ''
             }
           />
-        </InputWrapper>
+        </S.InputWrapper>
 
-        <InputWrapper>
+        <S.InputWrapper>
           <label>사진 첨부</label>
           <div className="uploadImages">
             <span className="uploadImage">
@@ -170,9 +163,9 @@ export default function BoardWrite_presenter(
               <p>Upload</p>
             </span>
           </div>
-        </InputWrapper>
+        </S.InputWrapper>
 
-        <InputWrapper>
+        <S.InputWrapper>
           <div className="radios">
             <span>
               <input
@@ -181,7 +174,7 @@ export default function BoardWrite_presenter(
                 name="radios"
                 value="youtube"
                 defaultChecked
-                onChange={onChangeImages}
+                onChange={props.onChangeImages}
               />
               <label htmlFor="youtube">유튜브</label>
             </span>
@@ -191,20 +184,20 @@ export default function BoardWrite_presenter(
                 id="image"
                 name="radios"
                 value="image"
-                onChange={onChangeImages}
+                onChange={props.onChangeImages}
               />
               <label htmlFor="image">사진</label>
             </span>
           </div>
-        </InputWrapper>
-        <SubmitButton
-          onClick={isEditing ? onUpdate : onSubmit}
+        </S.InputWrapper>
+        <S.SubmitButton
+          onClick={isEditing ? props.onUpdate : props.onSubmit}
           valid={valid}
           disabled={!valid}
         >
           {isEditing ? '수정하기' : '등록하기'}
-        </SubmitButton>
-      </Form>
+        </S.SubmitButton>
+      </S.Form>
     </Main>
   );
 }

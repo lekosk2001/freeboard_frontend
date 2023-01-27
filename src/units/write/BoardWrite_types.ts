@@ -33,6 +33,7 @@ export interface IBoardWrite_presenter_Props {
   onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeYoutubeUrl: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeImages: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleComplete:any;
 
   writerError: boolean;
   passwordError: boolean;
@@ -45,4 +46,10 @@ export interface IBoardWrite_presenter_Props {
   valid: boolean;
   isEditing: boolean;
   data?: Pick<IQuery, 'fetchBoard'>;
+
+  isOpen:boolean;
+  onToggleModal:()=>void;
+
+  zipcode:string;
+  address:string;
 }

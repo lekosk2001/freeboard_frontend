@@ -5,10 +5,11 @@
 ## 사용 라이브러리
 
 - Next.js
-- axios
-- graphql
-- apollo
-- emotion / antd / material-ui
+- typescrript
+- eslint / prettier
+- apollo(graphql)
+- emotion / antd
+- react-daum-postcode
 
 ## 개발 중 스크린샷 (수정중)
 

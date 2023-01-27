@@ -7,6 +7,7 @@ import {
   type IBoardWrite_container_Props,
   type IUpdatedVariables,
 } from './BoardWrite_types';
+import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 
 export default function BoardWrite_container(
   props: IBoardWrite_container_Props
@@ -25,6 +26,7 @@ export default function BoardWrite_container(
   const [addressDetail, setAddressDetail] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [images, setImages] = useState('youtube');
+  const [isOpen, setIsOpen] = useState(false);
 
   const [writerError, setWriterError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -189,6 +191,29 @@ export default function BoardWrite_container(
     }
   };
 
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleComplete = (data: Address) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+    setAddress(fullAddress);
+    setZipcode(data.zonecode);
+    onToggleModal();
+  };
+
   return (
     <BoardWrite_presenter
       onChangeWriter={onChangeWriter}
@@ -209,6 +234,11 @@ export default function BoardWrite_container(
       valid={valid}
       isEditing={props.isEditing}
       data={props.data}
+      isOpen={isOpen}
+      handleComplete={handleComplete}
+      zipcode={zipcode}
+      address={address}
+      onToggleModal={onToggleModal}
     />
   );
 }
