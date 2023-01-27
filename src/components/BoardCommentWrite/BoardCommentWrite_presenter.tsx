@@ -1,5 +1,7 @@
-import { CommentOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, CommentOutlined } from '@ant-design/icons';
+import { Rate } from 'antd';
 import * as S from './BoardCommentWrite_styles';
+import * as SS from '@/src/components/BoardCommentList/BoardCommentList_styles';
 import { type BoardCommentWrite_presenter_Props } from './BoardCommentWrite_types';
 
 const BoardCommentWrite_presenter = (
@@ -28,66 +30,7 @@ const BoardCommentWrite_presenter = (
           type="password"
         ></S.Input>
         <S.RateStars>
-          <svg
-            width="20"
-            height="19"
-            viewBox="0 0 20 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-              fill="#BDBDBD"
-            />
-          </svg>
-          <svg
-            width="20"
-            height="19"
-            viewBox="0 0 20 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-              fill="#BDBDBD"
-            />
-          </svg>
-          <svg
-            width="20"
-            height="19"
-            viewBox="0 0 20 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-              fill="#BDBDBD"
-            />
-          </svg>
-          <svg
-            width="20"
-            height="19"
-            viewBox="0 0 20 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-              fill="#BDBDBD"
-            />
-          </svg>
-          <svg
-            width="20"
-            height="19"
-            viewBox="0 0 20 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0L12.2451 6.90983H19.5106L13.6327 11.1803L15.8779 18.0902L10 13.8197L4.12215 18.0902L6.36729 11.1803L0.489435 6.90983H7.75486L10 0Z"
-              fill="#BDBDBD"
-            />
-          </svg>
+          <Rate value={props.rating} onChange={props.onChangeRate} />
         </S.RateStars>
       </S.CommnetWriteHead>
       <S.CommetWriteBox
@@ -99,15 +42,32 @@ const BoardCommentWrite_presenter = (
         <S.CommentLength>
           {props.contents.length}/{props.maxText}
         </S.CommentLength>
-        <S.CommentSubmitButton
-          onClick={
-            props.isEditing ? props.onCLickEditBoardComment : props.onClickSumit
-          }
-          valid={props.valid}
-          disabled={!props.valid}
-        >
-          {props.isEditing ? '수정하기' : '등록하기'}
-        </S.CommentSubmitButton>
+        <S.CommentSubmitBoxRightside>
+          {props.isEditing && (
+            <SS.CommentButton
+              onClick={(e) => {
+                props.onClickCancleButton(e);
+              }}
+            >
+              {' '}
+              <CloseCircleOutlined
+                style={{ fontSize: '18px', color: '#bdbdbd' }}
+              />
+            </SS.CommentButton>
+          )}
+
+          <S.CommentSubmitButton
+            onClick={
+              props.isEditing
+                ? props.onCLickEditBoardComment
+                : props.onClickSumit
+            }
+            valid={props.valid}
+            disabled={!props.valid}
+          >
+            {props.isEditing ? '수정하기' : '등록하기'}
+          </S.CommentSubmitButton>
+        </S.CommentSubmitBoxRightside>
       </S.CommentSubmitBox>
     </S.WriteComment>
   );

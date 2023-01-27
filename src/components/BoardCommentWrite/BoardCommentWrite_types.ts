@@ -12,11 +12,14 @@ export interface BoardCommentWrite_presenter_Props {
   onClickSumit: MouseEventHandler<HTMLButtonElement> | undefined
   onCLickEditBoardComment: MouseEventHandler<HTMLButtonElement> | undefined
   isEditing: boolean;
+  onChangeRate:(args:number)=>void;
+  setIsEditing: ((arg: boolean) => void) | (() => void);
 
   onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeRating: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onClickCancleButton:(e: { preventDefault: () => void }) =>void;
 
   maxText: number;
   valid: boolean;

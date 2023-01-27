@@ -145,6 +145,15 @@ const BoardCommentWrite_container = (
 
   const maxText = 100;
 
+  const onChangeRate = (rate: number) => {
+    setRating(rate);
+  };
+
+  const onClickCancleButton = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    props.setIsEditing(false);
+  };
+
   return (
     <BoardCommentWrite_presenter
       onClickSumit={onClickSumit}
@@ -160,6 +169,9 @@ const BoardCommentWrite_container = (
       maxText={maxText}
       valid={valid}
       isEditing={props.isEditing}
+      onChangeRate={onChangeRate}
+      setIsEditing={props.setIsEditing}
+      onClickCancleButton={onClickCancleButton}
     />
   );
 };

@@ -77,3 +77,9 @@ export const CommentSubmitButton = styled.button<{ valid: boolean }>`
   color: ${(props) => (props.valid ? '#ffffff' : 'gray')};
   width: 91px;
 `;
+
+export const CommentSubmitBoxRightside = styled.div`
+  display: flex;
+  gap:20px;
+  align-items: center;
+`
