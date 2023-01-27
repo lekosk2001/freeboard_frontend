@@ -6,7 +6,7 @@ export interface IBoardDetail_container_Props {
 }
 
 export interface IBoardDetail_presenter_Props {
-  router: { push: (arg: string) => void };
+  router: { push: (arg: string) => void, asPath:string };
   data?: Pick<IQuery, 'fetchBoard'>;
   onCLickDeleteBoard: () => void;
   onClickLikeBoard:() => void;

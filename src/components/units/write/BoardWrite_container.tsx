@@ -16,6 +16,13 @@ export default function BoardWrite_container(
     setWriter(String(props.data?.fetchBoard.writer));
     setTitle(String(props.data?.fetchBoard.title));
     setContents(String(props.data?.fetchBoard.contents));
+    setZipcode(String(props.data?.fetchBoard.boardAddress?.zipcode));
+    setAddress(String(props.data?.fetchBoard.boardAddress?.address));
+    setAddressDetail(
+      String(props.data?.fetchBoard.boardAddress?.addressDetail)
+    );
+    setYoutubeUrl(String(props.data?.fetchBoard.youtubeUrl));
+    setImages(String(props.data?.fetchBoard.images));
   }, [props.data]);
 
   const [createBoard] = useMutation(CREATE_BOARD);
@@ -32,6 +39,7 @@ export default function BoardWrite_container(
   const [addressDetail, setAddressDetail] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [images, setImages] = useState('youtube');
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [writerError, setWriterError] = useState(false);

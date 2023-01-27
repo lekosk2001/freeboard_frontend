@@ -1,6 +1,6 @@
-import BoardCommentList_container from '@/src/components/BoardCommentList/BoardCommentList_container';
-import BoardCommentWrite_container from '@/src/components/BoardCommentWrite/BoardCommentWrite_container';
-import BoardDetail_container from '@/src/units/detail/BoardDetail_container';
+import BoardCommentList_container from '@/src/components/units/BoardCommentList/BoardCommentList_container';
+import BoardCommentWrite_container from '@/src/components/units/BoardCommentWrite/BoardCommentWrite_container';
+import BoardDetail_container from '@/src/components/units/detail/BoardDetail_container';
 import { useRouter } from 'next/router';
 
 export default function index() {

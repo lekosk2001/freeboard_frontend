@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import DaumPostcodeEmbed from 'react-daum-postcode';
-import { Main, Title } from '../../../styles/emotion';
+import { Main, Title } from '../../../commons/styles/emotion';
 
 import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';

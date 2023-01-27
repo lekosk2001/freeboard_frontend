@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import {
   DELETE_BOARDS_COMMNET,
   FETCH_BOARD_COMMENT,
-} from '@/src/components/BoardCommentList/BoardCommentList_queries';
+} from '@/src/components/units/BoardCommentList/BoardCommentList_queries';
 import { type BoardCommentList_container_Props } from './BoardCommentList_types';
 import {
   type IMutation,

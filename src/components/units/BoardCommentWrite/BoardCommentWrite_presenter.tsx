@@ -1,7 +1,7 @@
 import { CloseCircleOutlined, CommentOutlined } from '@ant-design/icons';
 import { Rate } from 'antd';
 import * as S from './BoardCommentWrite_styles';
-import * as SS from '@/src/components/BoardCommentList/BoardCommentList_styles';
+import * as SS from '@/src/components/units/BoardCommentList/BoardCommentList_styles';
 import { type BoardCommentWrite_presenter_Props } from './BoardCommentWrite_types';
 
 const BoardCommentWrite_presenter = (

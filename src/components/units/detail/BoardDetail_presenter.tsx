@@ -1,4 +1,4 @@
-import * as C from '@/styles/emotion';
+import * as C from '@/src/commons/styles/emotion';
 import * as S from './BoardDetail_styles';
 import { dateFormat } from '@/src/commons/utils/utils';
 import { type IBoardDetail_presenter_Props } from './BoardDetail_types';
@@ -38,12 +38,19 @@ export default function BoardDetail_presenter(
             </span>
           </S.Profile>
           <S.ContentHeadButtons>
-            <LinkOutlined style={{ fontSize: '24px', color: '#FFD600' }} />
-            <Popover content={content} placement="topRight">
-              <EnvironmentOutlined
-                style={{ fontSize: '24px', color: '#FFD600' }}
-              />
-            </Popover>
+            <LinkOutlined
+              onClick={() => {
+                console.log('http://localhost:3000/' + props.router.asPath);
+              }}
+              style={{ fontSize: '24px', color: '#FFD600' }}
+            />
+            {data?.fetchBoard.boardAddress?.address && (
+              <Popover content={content} placement="topRight">
+                <EnvironmentOutlined
+                  style={{ fontSize: '24px', color: '#FFD600' }}
+                />
+              </Popover>
+            )}
           </S.ContentHeadButtons>
         </S.ContentHead>
         <S.ContentBody>
