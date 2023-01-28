@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
 import BoardList_presenter from './BoardList_presenter';
-import { FETCH_BOARDS } from './BoardList_queries';
+import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from './BoardList_queries';
 import { useRouter } from 'next/router';
 import {
+  type IQueryFetchBoardsCountArgs,
   type IQuery,
   type IQueryFetchBoardsArgs,
 } from '@/src/commons/types/generated/types';
-import { useState } from 'react';
 
 export default function BoardList_container() {
   const router = useRouter();
@@ -16,6 +16,12 @@ export default function BoardList_container() {
     IQueryFetchBoardsArgs
   >(FETCH_BOARDS);
 
+  const { data: totalBoards } = useQuery<
+    Pick<IQuery, 'fetchBoardsCount'>,
+    IQueryFetchBoardsCountArgs
+  >(FETCH_BOARDS_COUNT);
+  console.log(totalBoards);
+
   const onClickBoardNew = () => {
     void router.push(`/boards/new`);
   };
@@ -24,33 +30,13 @@ export default function BoardList_container() {
     void router.push(`/boards/${id}`);
   };
 
-  const onClickPage = (e: React.MouseEvent<HTMLDivElement>) => {
-    void refetch({ page: Number(e.currentTarget.id) });
-  };
-
-  const [pageNumber] = useState(10);
-  const [startPage, setStartPage] = useState(1);
-
-  const onClickPrev = () => {
-    if (startPage > 1) {
-      setStartPage((prev) => prev - 10);
-    }
-  };
-
-  const onClickNext = () => {
-    setStartPage((prev) => prev + 10);
-  };
-
   return (
     <BoardList_presenter
       data={data}
       onClickBoardNew={onClickBoardNew}
       onClickBoardDetail={onClickBoardDetail}
-      onClickPage={onClickPage}
-      pageNumber={pageNumber}
-      startPage={startPage}
-      onClickPrev={onClickPrev}
-      onClickNext={onClickNext}
+      refetch={refetch}
+      count={totalBoards}
     />
   );
 }

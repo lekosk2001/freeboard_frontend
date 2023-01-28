@@ -2,7 +2,8 @@ import { dateFormat } from '@/src/commons/utils/utils';
 import { Main, Title } from '@/src/commons/styles/emotion';
 import * as S from './BoardList_styles';
 import { type IBoardList_presenter_Props } from './BoardList_types';
-import { FormOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { FormOutlined } from '@ant-design/icons';
+import Pagenation from '../../commons/pagenation/Pagenation';
 
 export default function BoardList_presenter(props: IBoardList_presenter_Props) {
   const onClickBoardDetail = props.onClickBoardDetail;
@@ -70,29 +71,7 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
         </S.Lists>
 
         <S.Pagenation>
-          <S.PageButtons>
-            <LeftOutlined
-              onClick={props.onClickPrev}
-              style={{ cursor: 'pointer', padding: '5px' }}
-            />
-
-            {new Array(props.pageNumber).fill(1).map((_, index) => {
-              return (
-                <S.PageButton
-                  key={props.startPage + index}
-                  onClick={props.onClickPage}
-                  id={String(props.startPage + index)}
-                >
-                  {props.startPage + index}
-                </S.PageButton>
-              );
-            })}
-
-            <RightOutlined
-              onClick={props.onClickNext}
-              style={{ cursor: 'pointer', padding: '5px' }}
-            />
-          </S.PageButtons>
+          <Pagenation count={props.count} refetch={props.refetch} />
           <S.CreateBotton
             onClick={() => {
               onClickBoardNew();

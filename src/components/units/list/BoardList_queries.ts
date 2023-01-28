@@ -20,3 +20,19 @@ export const FETCH_BOARDS = gql`
     }
   }
 `;
+
+;
+
+export const FETCH_BOARDS_COUNT = gql`
+  query fetchBoardsCount(
+    $search: String
+    $startDate: DateTime
+    $endDate: DateTime
+  ) {
+    fetchBoardsCount(
+      search: $search
+      startDate: $startDate
+      endDate: $endDate
+    )
+  }
+`;
