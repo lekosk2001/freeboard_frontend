@@ -6,17 +6,17 @@ import Layout from '@/src/components/commons/layout';
 
 export default function App({ Component, pageProps }: any) {
   return (
-    <>
-      <Global
-        styles={css`
-          ${global}
-        `}
-      />
-      <ApolloSetting>
+    <ApolloSetting>
+      <>
+        <Global
+          styles={css`
+            ${global}
+          `}
+        />
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </ApolloSetting>
-    </>
+      </>
+    </ApolloSetting>
   );
 }

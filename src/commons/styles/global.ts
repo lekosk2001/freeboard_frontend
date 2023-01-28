@@ -93,15 +93,17 @@ export const global = css`
   }
 
   body {
-    color: rgb(var(--foreground-rgb));
-    max-width: 1280px;
-    margin: 0px auto 100px auto;
-    padding: 80px 40px;
   }
 
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  button{
+    border: 0px;
+    background-color: inherit;
+    cursor: pointer;
   }
 
   @media (prefers-color-scheme: dark) {
