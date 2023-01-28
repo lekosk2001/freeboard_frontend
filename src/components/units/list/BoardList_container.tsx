@@ -6,18 +6,15 @@ import {
   type IQuery,
   type IQueryFetchBoardsArgs,
 } from '@/src/commons/types/generated/types';
+import { useState } from 'react';
 
 export default function BoardList_container() {
   const router = useRouter();
 
-  const { data } = useQuery<Pick<IQuery, 'fetchBoards'>, IQueryFetchBoardsArgs>(
-    FETCH_BOARDS,
-    {
-      variables: {
-        page: 1,
-      },
-    }
-  );
+  const { data, refetch } = useQuery<
+    Pick<IQuery, 'fetchBoards'>,
+    IQueryFetchBoardsArgs
+  >(FETCH_BOARDS);
 
   const onClickBoardNew = () => {
     void router.push(`/boards/new`);
@@ -27,11 +24,33 @@ export default function BoardList_container() {
     void router.push(`/boards/${id}`);
   };
 
+  const onClickPage = (e: React.MouseEvent<HTMLDivElement>) => {
+    void refetch({ page: Number(e.currentTarget.id) });
+  };
+
+  const [pageNumber] = useState(10);
+  const [startPage, setStartPage] = useState(1);
+
+  const onClickPrev = () => {
+    if (startPage > 1) {
+      setStartPage((prev) => prev - 10);
+    }
+  };
+
+  const onClickNext = () => {
+    setStartPage((prev) => prev + 10);
+  };
+
   return (
     <BoardList_presenter
       data={data}
       onClickBoardNew={onClickBoardNew}
       onClickBoardDetail={onClickBoardDetail}
+      onClickPage={onClickPage}
+      pageNumber={pageNumber}
+      startPage={startPage}
+      onClickPrev={onClickPrev}
+      onClickNext={onClickNext}
     />
   );
 }

@@ -91,10 +91,7 @@ export const global = css`
   body {
     overflow-x: hidden;
   }
-
-  body {
-  }
-
+  
   a {
     color: inherit;
     text-decoration: none;

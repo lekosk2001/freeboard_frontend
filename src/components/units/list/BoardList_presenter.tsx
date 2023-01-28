@@ -2,6 +2,7 @@ import { dateFormat } from '@/src/commons/utils/utils';
 import { Main, Title } from '@/src/commons/styles/emotion';
 import * as S from './BoardList_styles';
 import { type IBoardList_presenter_Props } from './BoardList_types';
+import { FormOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 export default function BoardList_presenter(props: IBoardList_presenter_Props) {
   const onClickBoardDetail = props.onClickBoardDetail;
@@ -70,57 +71,34 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 
         <S.Pagenation>
           <S.PageButtons>
-            <S.ArrowButton>
-              <svg
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.41 1.41L6 0L0 6L6 12L7.41 10.59L2.83 6L7.41 1.41Z"
-                  fill="black"
-                />
-              </svg>
-            </S.ArrowButton>
+            <LeftOutlined
+              onClick={props.onClickPrev}
+              style={{ cursor: 'pointer', padding: '5px' }}
+            />
 
-            <S.PageButton>1</S.PageButton>
-            <S.PageButton active={true}>2</S.PageButton>
+            {new Array(props.pageNumber).fill(1).map((_, index) => {
+              return (
+                <S.PageButton
+                  key={props.startPage + index}
+                  onClick={props.onClickPage}
+                  id={String(props.startPage + index)}
+                >
+                  {props.startPage + index}
+                </S.PageButton>
+              );
+            })}
 
-            <S.ArrowButton>
-              <svg
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.00003 0L0.590027 1.41L5.17003 6L0.590027 10.59L2.00003 12L8.00003 6L2.00003 0Z"
-                  fill="black"
-                />
-              </svg>
-            </S.ArrowButton>
+            <RightOutlined
+              onClick={props.onClickNext}
+              style={{ cursor: 'pointer', padding: '5px' }}
+            />
           </S.PageButtons>
-
           <S.CreateBotton
             onClick={() => {
               onClickBoardNew();
             }}
           >
-            <svg
-              width="19"
-              height="19"
-              viewBox="0 0 19 19"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 15.2501V19.0001H3.75L14.81 7.94006L11.06 4.19006L0 15.2501ZM17.71 5.04006C18.1 4.65006 18.1 4.02006 17.71 3.63006L15.37 1.29006C14.98 0.900059 14.35 0.900059 13.96 1.29006L12.13 3.12006L15.88 6.87006L17.71 5.04006Z"
-                fill="black"
-              />
-            </svg>
+            <FormOutlined />
             게시물 등록하기
           </S.CreateBotton>
         </S.Pagenation>
