@@ -37,7 +37,7 @@ const Pagenation_presenter = (props: Props) => {
             </PageButton>
           );
         } else {
-          return <></>;
+          return <div key={String(props.startPage + index)}></div>;
         }
       })}
 
