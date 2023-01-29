@@ -20,7 +20,6 @@ export default function BoardList_container() {
     Pick<IQuery, 'fetchBoardsCount'>,
     IQueryFetchBoardsCountArgs
   >(FETCH_BOARDS_COUNT);
-  console.log(totalBoards);
 
   const onClickBoardNew = () => {
     void router.push(`/boards/new`);
@@ -36,7 +35,7 @@ export default function BoardList_container() {
       onClickBoardNew={onClickBoardNew}
       onClickBoardDetail={onClickBoardDetail}
       refetch={refetch}
-      count={totalBoards}
+      count={totalBoards?.fetchBoardsCount}
     />
   );
 }

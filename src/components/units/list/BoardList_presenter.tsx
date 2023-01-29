@@ -3,7 +3,7 @@ import { Main, Title } from '@/src/commons/styles/emotion';
 import * as S from './BoardList_styles';
 import { type IBoardList_presenter_Props } from './BoardList_types';
 import { FormOutlined } from '@ant-design/icons';
-import Pagenation from '../../commons/pagenation/Pagenation';
+import Pagenation from '../../commons/pagenation/Pagenation_container';
 
 export default function BoardList_presenter(props: IBoardList_presenter_Props) {
   const onClickBoardDetail = props.onClickBoardDetail;

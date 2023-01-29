@@ -8,7 +8,10 @@ export const PageButtons = styled.div`
   `;
   
   export const PageButton = styled.div<{ active?: boolean }>`
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
   cursor: pointer;
   color: ${(props) => ((props.active ?? false) ? '#FFD600' : 'default')};
 `;
