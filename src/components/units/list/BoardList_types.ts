@@ -1,9 +1,9 @@
 import { type IQuery } from '@/src/commons/types/generated/types';
 
 export interface IBoardList_presenter_Props {
-  onClickBoardDetail: (arg: string) => void;
-  onClickBoardNew: () => void;
-  data?: Pick<IQuery, 'fetchBoards'>;
-  refetch: any;
-  count:any
+	onClickBoardDetail: (arg: string) => void;
+	onClickBoardNew: () => void;
+	data?: Pick<IQuery, 'fetchBoards'>;
+	refetch: any;
+	count: any;
 }

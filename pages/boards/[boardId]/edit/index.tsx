@@ -4,16 +4,15 @@ import BoardWrite_container from '@/src/components/units/write/BoardWrite_contai
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 export default function index() {
-  const router = useRouter();
-  const boardId = router.query.boardId;
+	const router = useRouter();
+	const boardId = router.query.boardId;
 
-  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>>(FETCH_BOARD, {
-    variables: {
-      boardId,
-    },
-  });
-
-  return (
-    <BoardWrite_container isEditing={true} data={data} boardId={boardId} />
-  );
+	const { data } = useQuery<Pick<IQuery, 'fetchBoard'>>(FETCH_BOARD, {
+		variables: {
+			boardId,
+		},
+	});
+	return (
+		<BoardWrite_container isEditing={true} data={data} boardId={boardId} />
+	);
 }
