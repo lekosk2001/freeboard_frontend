@@ -28,7 +28,7 @@ const Pagenation_presenter = (props: Props) => {
         if (props.startPage + index <= props.lastPage) {
           return (
             <PageButton
-              key={props.startPage + index}
+              key={String(props.startPage + index)}
               onClick={props.onClickPage}
               id={String(props.startPage + index)}
               active={index + props.startPage === props.currentPage}

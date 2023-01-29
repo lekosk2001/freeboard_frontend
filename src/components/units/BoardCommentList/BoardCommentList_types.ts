@@ -10,7 +10,9 @@ export interface BoardCommentList_container_Props {
 export interface BoardCommentList_presenter_Props {
   CommentsData?: Pick<IQuery, 'fetchBoardComments'>;
   onCLickDeleteBoardComment: (arg0: string) => void;
+  onLoadMore:any
 }
+
 export interface BoardCommentList_item_Props {
   onCLickDeleteBoardComment: (arg0: string) => void;
   comment: IBoardComment;
