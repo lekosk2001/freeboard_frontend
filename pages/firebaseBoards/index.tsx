@@ -37,8 +37,7 @@ const index = () => {
             const board = collection(getFirestore(app), "board")
 
             const result = await getDocs(query(board, orderBy("createdAt", "desc")))
-
-            const items = result.docs.map(item => item.data());
+            const items = result.docs.map(item => { return { ...item.data(), id: item.id } });
 
             setData(items)
 
@@ -54,8 +53,10 @@ const index = () => {
         <div>
             {data?.map((item: any, i: number) => {
                 return <Card key={item.createdAt} style={{ marginBottom: "20px" }}
-                    title={item.writer}>
-                    {item.title + " " + (i + 1)}
+                    title={item.title}>
+                    <h4>{item.writer}</h4>
+                    <p>{item.contents}</p>
+                    <p>{item.id}</p>
                 </Card>
             }
             )}
