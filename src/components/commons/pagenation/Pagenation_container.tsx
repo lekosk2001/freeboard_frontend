@@ -13,7 +13,7 @@ const Pagenation_container = (props: Props) => {
 
 	const lastPage = props.count ? Math.ceil(props.count / 10) : 0;
 
-	const onClickPage = (e: React.MouseEvent<HTMLDivElement>) => {
+	const onClickPage = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setCurrentPage(Number(e.currentTarget.id));
 		void props.refetch({ page: Number(e.currentTarget.id) });
 	};

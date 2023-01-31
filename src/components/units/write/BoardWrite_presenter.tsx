@@ -13,8 +13,6 @@ export default function BoardWrite_presenter(
 	const isEditing = props.isEditing;
 	const data = props.data?.fetchBoard;
 
-
-
 	const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => { props.setFileList(newFileList); };
 
 	const uploadButton = (
@@ -32,11 +30,12 @@ export default function BoardWrite_presenter(
 					<S.InputWrapper>
 						<label>작성자</label>
 						<input
-							onChange={props.onChangeWriter}
+							id="writer"
+							onChange={props.onChangeCoreInput}
 							type="text"
 							placeholder="이름을 입력해주세요."
-							defaultValue={data ? String(data?.writer) : ''}
-							readOnly={isEditing}
+							defaultValue={props.data?.fetchBoard.writer ?? ""}
+							readOnly={!!props.data?.fetchBoard.writer}
 						/>
 						{props.writerError && (
 							<p className="alert">이름을 입력해주세요.</p>
@@ -45,7 +44,8 @@ export default function BoardWrite_presenter(
 					<S.InputWrapper>
 						<label>비밀번호</label>
 						<input
-							onChange={props.onChangePassword}
+							id="password"
+							onChange={props.onChangeCoreInput}
 							autoComplete="off"
 							type="password"
 							placeholder="비밀번호를 입력해주세요."
@@ -56,10 +56,12 @@ export default function BoardWrite_presenter(
 						)}
 					</S.InputWrapper>
 				</div>
+
 				<S.InputWrapper>
 					<label>제목</label>
 					<input
-						onChange={props.onChangeTitle}
+						id='title'
+						onChange={props.onChangeCoreInput}
 						type="text"
 						placeholder="제목을 작성해주세요."
 						defaultValue={data?.title}
@@ -72,24 +74,29 @@ export default function BoardWrite_presenter(
 				<S.InputWrapper>
 					<label>내용</label>
 					<textarea
-						onChange={props.onChangeContents}
+						id='contents'
+						onChange={props.onChangeCoreInput}
 						placeholder="내용을 작성해주세요."
-						defaultValue={data?.contents}
+						defaultValue={props.data?.fetchBoard.contents}
 					/>
 					{props.contentsError && (
 						<p className="alert">내용을 작성해주세요.</p>
 					)}
 				</S.InputWrapper>
+
 				<S.InputWrapper>
 					<label>주소</label>
 					<div className="zipcode">
 						<input
 							id="zipcode"
-							disabled
 							onChange={props.onChangeInput}
 							type="text"
 							// placeholder="00000"
-							value={props.zipcode !== "undefined" ? props.zipcode : ""}
+							readOnly
+							value={
+								props.address ||
+								(props.data?.fetchBoard.boardAddress?.address ?? "")
+							}
 						/>
 						<button
 							onClick={(e) => {
@@ -117,7 +124,7 @@ export default function BoardWrite_presenter(
 						onChange={props.onChangeInput}
 						className="address"
 						type="text"
-						disabled
+						readOnly
 						value={props.address !== "undefined" ? props.address : ""}
 					/>
 					<input
@@ -125,8 +132,8 @@ export default function BoardWrite_presenter(
 						onChange={props.onChangeInput}
 						type="text"
 						defaultValue={
-							data?.boardAddress
-								? String(data?.boardAddress?.addressDetail)
+							data?.boardAddress?.addressDetail
+								? data?.boardAddress?.addressDetail
 								: ''
 						}
 					/>
@@ -140,7 +147,7 @@ export default function BoardWrite_presenter(
 						type="text"
 						placeholder="링크를 복사해주세요."
 						defaultValue={
-							data?.youtubeUrl ? String(data?.youtubeUrl) : ''
+							data?.youtubeUrl ? data?.youtubeUrl : ''
 						}
 					/>
 				</S.InputWrapper>

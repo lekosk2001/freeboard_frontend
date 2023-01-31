@@ -1,8 +1,8 @@
-import { type ChangeEvent, useState, useEffect, useRef } from 'react';
+import { type ChangeEvent, useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
 import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite_queries';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
 	type IBoardWrite_container_Props,
 	type IUpdatedVariables,
@@ -10,33 +10,44 @@ import {
 import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 
 import { checkFileValidation } from '../../commons/checkFileValidation';
-import { Modal } from 'antd';
+import { Modal, Spin } from 'antd';
 
 import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { getBase64 } from '@/src/commons/utils/utils';
+import { FETCH_BOARD } from '../detail/BoardDetail_queries';
+import { type IQuery } from '@/src/commons/types/generated/types';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 
 export default function BoardWrite_container(
 	props: IBoardWrite_container_Props
 ) {
-	useEffect(() => {
-		setWriter(String(props.data?.fetchBoard.writer));
-		setTitle(String(props.data?.fetchBoard.title));
-		setContents(String(props.data?.fetchBoard.contents));
-		setInput({ ...input, zipcode: String(props.data?.fetchBoard.boardAddress?.zipcode), address: String(props.data?.fetchBoard.boardAddress?.address), addressDetail: String(props.data?.fetchBoard.boardAddress?.addressDetail), youtubeUrl: (String(props.data?.fetchBoard.youtubeUrl)) });
+	const router = useRouter();
+	const boardId = router.query.boardId;
 
-		setImages(String(props.data?.fetchBoard.images));
-	}, [props.data]);
+
+	if (props.isEditing && !boardId) {
+		return (
+			<Spin indicator={<Loading3QuartersOutlined spin />} />
+		)
+	}
+
+	const { data } = useQuery<Pick<IQuery, 'fetchBoard'>>(FETCH_BOARD, {
+		variables: {
+			boardId,
+		},
+	});
+
+	const fetchBoard = data?.fetchBoard;
+
+	if (props.isEditing && !boardId && !fetchBoard) {
+		return (
+			<Spin indicator={<Loading3QuartersOutlined spin />} />
+		)
+	}
 
 	const [createBoard] = useMutation(CREATE_BOARD);
 	const [updateBoard] = useMutation(UPDATE_BOARD);
-
-	const router = useRouter();
-
-	const [writer, setWriter] = useState('');
-	const [password, setPassword] = useState('');
-	const [title, setTitle] = useState('');
-	const [contents, setContents] = useState('');
 
 	const [images, setImages] = useState('youtube');
 
@@ -49,38 +60,62 @@ export default function BoardWrite_container(
 
 	const [valid, setValid] = useState(false);
 
-	const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
-		setWriter(e.target.value);
-		setWriterError(false);
-		if (e.target.value && password && title && contents) {
+	interface ICoreInput {
+		[key: string]: string
+		writer: string
+		password: string
+		title: string
+		contents: string
+	}
+
+	const [coreInput, setCoreInput] = useState<ICoreInput>({
+		writer: fetchBoard?.writer ?? '',
+		password: '',
+		title: fetchBoard?.title ?? '',
+		contents: fetchBoard?.contents ?? ''
+	})
+
+	const [coreInputErorr, setCoreInputErorr] = useState({
+		writer: false,
+		password: false,
+		title: false,
+		contents: false
+	})
+
+	useEffect(() => {
+		if (fetchBoard) {
+			setCoreInput({
+				...coreInput,
+				writer: String(fetchBoard.writer),
+				title: String(fetchBoard.title),
+				contents: String(fetchBoard.contents),
+			})
+		}
+
+	}, [data])
+
+
+	const onChangeCoreInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
+		setCoreInput({ ...coreInput, [e.currentTarget.id]: e.currentTarget.value });
+		setCoreInputErorr({ ...coreInputErorr, [e.currentTarget.id]: false });
+
+		const AllInputs: string[] = [];
+
+		for (const prop in coreInput) {
+			if (prop !== e.currentTarget.id) {
+				AllInputs.push(coreInput[prop])
+			}
+			else {
+				AllInputs.push(e.currentTarget.value)
+			}
+		}
+		console.log("AllInputs : " + AllInputs)
+
+		if (!AllInputs.includes('' && "undefined")) {
 			setValid(true);
 		} else setValid(false);
 	};
-
-	const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
-		setPasswordError(false);
-		if (writer && e.target.value && title && contents) {
-			setValid(true);
-		} else setValid(false);
-	};
-
-	const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-		setTitle(e.target.value);
-		setTitleError(false);
-		if (writer && password && e.target.value && contents) {
-			setValid(true);
-		} else setValid(false);
-	};
-
-	const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		setContents(e.target.value);
-		setContentsError(false);
-		if (writer && password && title && e.target.value) {
-			setValid(true);
-		} else setValid(false);
-	};
-
 
 	const onChangeImages = (e: ChangeEvent<HTMLInputElement>) => {
 		setImages(e.target.value);
@@ -97,31 +132,30 @@ export default function BoardWrite_container(
 		setInput({ ...input, [e.target.id]: e.target.value });
 	};
 
-
 	const onSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		if (writer === '') {
+		if (coreInput.writer === '') {
 			setWriterError(true);
 		}
-		if (password === '') {
+		if (coreInput.password === '') {
 			setPasswordError(true);
 		}
-		if (title === '') {
+		if (coreInput.title === '') {
 			setTitleError(true);
 		}
-		if (contents === '') {
+		if (coreInput.contents === '') {
 			setContentsError(true);
 		}
 
-		if (writer && password && title && contents) {
+		if (coreInput.writer && coreInput.password && coreInput.title && coreInput.contents) {
 			try {
 				const result = await createBoard({
 					variables: {
 						createBoardInput: {
-							writer,
-							contents,
-							password,
-							title,
+							writer: coreInput.writer,
+							contents: coreInput.contents,
+							password: coreInput.password,
+							title: coreInput.title,
 							youtubeUrl: input.youtubeUrl,
 							images,
 							boardAddress: {
@@ -132,7 +166,6 @@ export default function BoardWrite_container(
 						},
 					},
 				});
-				console.log(result);
 				void router.push(`/boards/${result.data.createBoard._id}`);
 			} catch (error) {
 				if (error instanceof Error) alert(error.message);
@@ -144,11 +177,11 @@ export default function BoardWrite_container(
 		e.preventDefault();
 
 		const updatedVariables: IUpdatedVariables = {
-			boardId: props.boardId,
-			password,
+			boardId,
+			password: coreInput.password,
 			updateBoardInput: {
-				contents,
-				title,
+				contents: coreInput.contents,
+				title: coreInput.title,
 				youtubeUrl: input.youtubeUrl,
 				images,
 				boardAddress: {
@@ -159,22 +192,21 @@ export default function BoardWrite_container(
 			},
 		};
 
-		if (!password) {
+		if (!coreInput.password) {
 			setPasswordError(true);
 		}
-		if (!title) {
+		if (!coreInput.title) {
 			setTitleError(true);
 		}
-		if (!contents) {
+		if (!coreInput.contents) {
 			setContentsError(true);
 		}
 
-		if (password !== '' && title !== '' && contents !== '') {
+		if (!coreInput.password && !coreInput.title && !coreInput.contents) {
 			try {
 				const result = await updateBoard({
 					variables: updatedVariables,
 				});
-				console.log(result);
 				void router.push(`/boards/${result.data.updateBoard._id}`);
 			} catch (error) {
 				if (error instanceof Error) alert(error.message);
@@ -217,7 +249,6 @@ export default function BoardWrite_container(
 
 	const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
-		console.log(file)
 
 		const isValid = checkFileValidation(file);
 		if (!isValid) { return }
@@ -230,7 +261,6 @@ export default function BoardWrite_container(
 						file
 					}
 				})
-				console.log(result.data?.uploadFile.url)
 
 				setImgUrl(result.data?.uploadFile.url)
 
@@ -261,12 +291,8 @@ export default function BoardWrite_container(
 
 	return (
 		<BoardWrite_presenter
-
-			onChangeWriter={onChangeWriter}
-			onChangePassword={onChangePassword}
-			onChangeTitle={onChangeTitle}
-			onChangeContents={onChangeContents}
 			onChangeInput={onChangeInput}
+			onChangeCoreInput={onChangeCoreInput}
 
 			onChangeImages={onChangeImages}
 
@@ -283,7 +309,7 @@ export default function BoardWrite_container(
 
 			valid={valid}
 			isEditing={props.isEditing}
-			data={props.data}
+			data={data}
 
 			isOpen={isOpen}
 			handleComplete={handleComplete}

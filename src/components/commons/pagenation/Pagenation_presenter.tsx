@@ -7,7 +7,7 @@ interface Props {
 	currentPage: number;
 	pageNumber: number;
 	lastPage: number;
-	onClickPage: (e: React.MouseEvent<HTMLDivElement>) => void;
+	onClickPage: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	onClickNext: () => void;
 	onClickPrev: () => void;
 }

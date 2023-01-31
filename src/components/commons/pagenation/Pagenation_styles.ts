@@ -7,7 +7,7 @@ export const PageButtons = styled.div`
 	gap: 10px;
 `;
 
-export const PageButton = styled.div<{ active?: boolean }>`
+export const PageButton = styled.button<{ active?: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;

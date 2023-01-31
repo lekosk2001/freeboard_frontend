@@ -17,7 +17,7 @@ export default function BoardDetail_presenter(
 	const router = props.router;
 	const data = props.data;
 	const content = <p>{data?.fetchBoard.boardAddress?.address}</p>;
-
+	console.log(data?.fetchBoard.boardAddress?.address)
 	return (
 		<C.Main>
 			<S.ContentsWrapper>
@@ -45,12 +45,12 @@ export default function BoardDetail_presenter(
 							onClick={() => {
 								console.log(
 									'http://localhost:3000/' +
-										props.router.asPath
+									props.router.asPath
 								);
 							}}
 							style={{ fontSize: '24px', color: '#FFD600' }}
 						/>
-						{data?.fetchBoard.boardAddress?.address && (
+						{!data?.fetchBoard.boardAddress?.address === undefined || null ? (
 							<Popover content={content} placement="topRight">
 								<EnvironmentOutlined
 									style={{
@@ -59,7 +59,7 @@ export default function BoardDetail_presenter(
 									}}
 								/>
 							</Popover>
-						)}
+						) : <></>}
 					</S.ContentHeadButtons>
 				</S.ContentHead>
 				<S.ContentBody>

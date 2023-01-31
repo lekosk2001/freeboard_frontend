@@ -4,8 +4,6 @@ import { type RefObject, type ChangeEvent, type Dispatch, type SetStateAction } 
 
 export interface IBoardWrite_container_Props {
 	isEditing: boolean;
-	boardId?: string | string[];
-	data?: Pick<IQuery, 'fetchBoard'>;
 }
 
 export interface IUpdatedVariables {
@@ -25,10 +23,8 @@ export interface IUpdatedVariables {
 }
 
 export interface IBoardWrite_presenter_Props {
-	onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+
+	onChangeCoreInput: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 	
 	onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 
