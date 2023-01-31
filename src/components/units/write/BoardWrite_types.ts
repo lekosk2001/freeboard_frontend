@@ -1,5 +1,6 @@
 import { type IQuery } from '@/src/commons/types/generated/types';
-import { type RefObject, type ChangeEvent } from 'react';
+import { type UploadFile } from 'antd';
+import { type RefObject, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
 
 export interface IBoardWrite_container_Props {
 	isEditing: boolean;
@@ -28,10 +29,9 @@ export interface IBoardWrite_presenter_Props {
 	onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
 	onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
 	onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-	onChangeZipcode: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangeAddress: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
-	onChangeYoutubeUrl: (e: ChangeEvent<HTMLInputElement>) => void;
+	
+	onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
+
 	onChangeImages: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleComplete: any;
 
@@ -57,4 +57,12 @@ export interface IBoardWrite_presenter_Props {
 	onClickFile:()=>void
 	onChangeFile:(e: ChangeEvent<HTMLInputElement>)=>void
 	fileRef:RefObject<HTMLInputElement>
+
+	fileList:UploadFile[];
+	handlePreview:(file: UploadFile) => Promise<void>;
+	setFileList:Dispatch<SetStateAction<Array<UploadFile<any>>>>
+	previewOpen:boolean
+	previewTitle:string;
+	handleCancel:()=>void;
+	previewImage:string
 }

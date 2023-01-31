@@ -1,8 +1,10 @@
-import { Button, Image, Modal } from 'antd';
+import { Button, Image, Modal, Upload } from 'antd';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { Main, Title } from '../../../commons/styles/emotion';
 import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
+import type { UploadProps } from 'antd/es/upload';
+import { PlusOutlined } from '@ant-design/icons';
 
 export default function BoardWrite_presenter(
 	props: IBoardWrite_presenter_Props
@@ -10,6 +12,17 @@ export default function BoardWrite_presenter(
 	const valid = props.valid;
 	const isEditing = props.isEditing;
 	const data = props.data?.fetchBoard;
+
+
+
+	const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => { props.setFileList(newFileList); };
+
+	const uploadButton = (
+		<div>
+			<PlusOutlined />
+			<div style={{ marginTop: 8 }}>Upload</div>
+		</div>
+	);
 
 	return (
 		<Main>
@@ -71,8 +84,9 @@ export default function BoardWrite_presenter(
 					<label>주소</label>
 					<div className="zipcode">
 						<input
+							id="zipcode"
 							disabled
-							onChange={props.onChangeZipcode}
+							onChange={props.onChangeInput}
 							type="text"
 							// placeholder="00000"
 							value={props.zipcode !== "undefined" ? props.zipcode : ""}
@@ -99,14 +113,16 @@ export default function BoardWrite_presenter(
 						)}
 					</div>
 					<input
-						onChange={props.onChangeAddress}
+						id='address'
+						onChange={props.onChangeInput}
 						className="address"
 						type="text"
 						disabled
 						value={props.address !== "undefined" ? props.address : ""}
 					/>
 					<input
-						onChange={props.onChangeAddressDetail}
+						id='addressDetail'
+						onChange={props.onChangeInput}
 						type="text"
 						defaultValue={
 							data?.boardAddress
@@ -119,7 +135,8 @@ export default function BoardWrite_presenter(
 				<S.InputWrapper>
 					<label>유튜브</label>
 					<input
-						onChange={props.onChangeYoutubeUrl}
+						id='youtubeUrl'
+						onChange={props.onChangeInput}
 						type="text"
 						placeholder="링크를 복사해주세요."
 						defaultValue={
@@ -143,53 +160,18 @@ export default function BoardWrite_presenter(
 
 				<S.InputWrapper>
 					<label>사진 첨부</label>
-					<div className="uploadImages">
-						<span className="uploadImage">
-							<svg
-								width="14"
-								height="14"
-								viewBox="0 0 14 14"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z"
-									fill="#4F4F4F"
-								/>
-							</svg>
-							<p>Upload</p>
-						</span>
-						<span className="uploadImage">
-							<svg
-								width="14"
-								height="14"
-								viewBox="0 0 14 14"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z"
-									fill="#4F4F4F"
-								/>
-							</svg>
-							<p>Upload</p>
-						</span>
-						<span className="uploadImage">
-							<svg
-								width="14"
-								height="14"
-								viewBox="0 0 14 14"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z"
-									fill="#4F4F4F"
-								/>
-							</svg>
-							<p>Upload</p>
-						</span>
-					</div>
+					<Upload
+						// action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+						listType="picture-card"
+						fileList={props.fileList}
+						onPreview={props.handlePreview}
+						onChange={handleChange}
+					>
+						{props.fileList.length >= 8 ? null : uploadButton}
+					</Upload>
+					<Modal open={props.previewOpen} title={props.previewTitle} footer={null} onCancel={props.handleCancel}>
+						<img alt={props.previewTitle} style={{ width: '100%' }} src={props.previewImage} />
+					</Modal>
 				</S.InputWrapper>
 
 				<S.InputWrapper>

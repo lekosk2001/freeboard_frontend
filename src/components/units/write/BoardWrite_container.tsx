@@ -12,6 +12,10 @@ import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 import { checkFileValidation } from '../../commons/checkFileValidation';
 import { Modal } from 'antd';
 
+import type { RcFile } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
+import { getBase64 } from '@/src/commons/utils/utils';
+
 export default function BoardWrite_container(
 	props: IBoardWrite_container_Props
 ) {
@@ -19,12 +23,8 @@ export default function BoardWrite_container(
 		setWriter(String(props.data?.fetchBoard.writer));
 		setTitle(String(props.data?.fetchBoard.title));
 		setContents(String(props.data?.fetchBoard.contents));
-		setZipcode(String(props.data?.fetchBoard.boardAddress?.zipcode));
-		setAddress(String(props.data?.fetchBoard.boardAddress?.address));
-		setAddressDetail(
-			String(props.data?.fetchBoard.boardAddress?.addressDetail)
-		);
-		setYoutubeUrl(String(props.data?.fetchBoard.youtubeUrl));
+		setInput({ ...input, zipcode: String(props.data?.fetchBoard.boardAddress?.zipcode), address: String(props.data?.fetchBoard.boardAddress?.address), addressDetail: String(props.data?.fetchBoard.boardAddress?.addressDetail), youtubeUrl: (String(props.data?.fetchBoard.youtubeUrl)) });
+
 		setImages(String(props.data?.fetchBoard.images));
 	}, [props.data]);
 
@@ -37,10 +37,7 @@ export default function BoardWrite_container(
 	const [password, setPassword] = useState('');
 	const [title, setTitle] = useState('');
 	const [contents, setContents] = useState('');
-	const [zipcode, setZipcode] = useState('');
-	const [address, setAddress] = useState('');
-	const [addressDetail, setAddressDetail] = useState('');
-	const [youtubeUrl, setYoutubeUrl] = useState('');
+
 	const [images, setImages] = useState('youtube');
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -84,25 +81,22 @@ export default function BoardWrite_container(
 		} else setValid(false);
 	};
 
-	const onChangeZipcode = (e: ChangeEvent<HTMLInputElement>) => {
-		setZipcode(e.target.value);
-	};
-
-	const onChangeAddress = (e: ChangeEvent<HTMLInputElement>) => {
-		setAddress(e.target.value);
-	};
-
-	const onChangeAddressDetail = (e: ChangeEvent<HTMLInputElement>) => {
-		setAddressDetail(e.target.value);
-	};
-
-	const onChangeYoutubeUrl = (e: ChangeEvent<HTMLInputElement>) => {
-		setYoutubeUrl(e.target.value);
-	};
 
 	const onChangeImages = (e: ChangeEvent<HTMLInputElement>) => {
 		setImages(e.target.value);
 	};
+
+	const [input, setInput] = useState({
+		zipcode: "",
+		address: "",
+		addressDetail: "",
+		youtubeUrl: ""
+	})
+
+	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setInput({ ...input, [e.target.id]: e.target.value });
+	};
+
 
 	const onSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
@@ -128,12 +122,12 @@ export default function BoardWrite_container(
 							contents,
 							password,
 							title,
-							youtubeUrl,
+							youtubeUrl: input.youtubeUrl,
 							images,
 							boardAddress: {
-								zipcode,
-								address,
-								addressDetail,
+								zipcode: input.zipcode,
+								address: input.address,
+								addressDetail: input.addressDetail,
 							},
 						},
 					},
@@ -155,23 +149,23 @@ export default function BoardWrite_container(
 			updateBoardInput: {
 				contents,
 				title,
-				youtubeUrl,
+				youtubeUrl: input.youtubeUrl,
 				images,
 				boardAddress: {
-					zipcode,
-					address,
-					addressDetail,
+					zipcode: input.zipcode,
+					address: input.address,
+					addressDetail: input.addressDetail,
 				},
 			},
 		};
 
-		if (password === '') {
+		if (!password) {
 			setPasswordError(true);
 		}
-		if (title === '') {
+		if (!title) {
 			setTitleError(true);
 		}
-		if (contents === '') {
+		if (!contents) {
 			setContentsError(true);
 		}
 
@@ -208,8 +202,7 @@ export default function BoardWrite_container(
 			}
 			fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
 		}
-		setAddress(fullAddress);
-		setZipcode(data.zonecode);
+		setInput({ ...input, address: fullAddress, zipcode: data.zonecode });
 		onToggleModal();
 	};
 
@@ -249,21 +242,42 @@ export default function BoardWrite_container(
 		}
 	}
 
+	const [previewOpen, setPreviewOpen] = useState(false);
+	const [previewImage, setPreviewImage] = useState('');
+	const [previewTitle, setPreviewTitle] = useState('');
+	const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+	const handleCancel = () => { setPreviewOpen(false); };
+
+	const handlePreview = async (file: UploadFile) => {
+		if (!file.url && !file.preview) {
+			file.preview = await getBase64(file.originFileObj as RcFile);
+		}
+
+		setPreviewImage(file.url ?? (file.preview as string));
+		setPreviewOpen(true);
+		setPreviewTitle(file.url ? (file.name || file.url.substring(file.url.lastIndexOf('/') + 1)) : "");
+	};
+
 	return (
 		<BoardWrite_presenter
+
 			onChangeWriter={onChangeWriter}
 			onChangePassword={onChangePassword}
 			onChangeTitle={onChangeTitle}
 			onChangeContents={onChangeContents}
-			onChangeZipcode={onChangeZipcode}
-			onChangeAddress={onChangeAddress}
-			onChangeAddressDetail={onChangeAddressDetail}
-			onChangeYoutubeUrl={onChangeYoutubeUrl}
+			onChangeInput={onChangeInput}
+
 			onChangeImages={onChangeImages}
+
 			writerError={writerError}
 			passwordError={passwordError}
 			titleError={titleError}
 			contentsError={contentsError}
+
+			zipcode={input.zipcode}
+			address={input.address}
+
 			onSubmit={onSubmit}
 			onUpdate={onUpdate}
 
@@ -273,14 +287,22 @@ export default function BoardWrite_container(
 
 			isOpen={isOpen}
 			handleComplete={handleComplete}
-			zipcode={zipcode}
-			address={address}
+
 			onToggleModal={onToggleModal}
 
 			imgUrl={imgUrl}
 			onClickFile={onClickFile}
 			onChangeFile={onChangeFile}
 			fileRef={fileRef}
+
+
+			fileList={fileList}
+			handlePreview={handlePreview}
+			setFileList={setFileList}
+			previewOpen={previewOpen}
+			previewTitle={previewTitle}
+			handleCancel={handleCancel}
+			previewImage={previewImage}
 		/>
 	);
 }
