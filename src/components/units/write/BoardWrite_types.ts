@@ -1,5 +1,5 @@
 import { type IQuery } from '@/src/commons/types/generated/types';
-import { type ChangeEvent } from 'react';
+import { type RefObject, type ChangeEvent } from 'react';
 
 export interface IBoardWrite_container_Props {
 	isEditing: boolean;
@@ -52,4 +52,9 @@ export interface IBoardWrite_presenter_Props {
 
 	zipcode: string;
 	address: string;
+
+	imgUrl:string;
+	onClickFile:()=>void
+	onChangeFile:(e: ChangeEvent<HTMLInputElement>)=>void
+	fileRef:RefObject<HTMLInputElement>
 }

@@ -1,13 +1,16 @@
-import { type ChangeEvent, useState, useEffect } from 'react';
+import { type ChangeEvent, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
-import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite_queries';
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite_queries';
 import { useMutation } from '@apollo/client';
 import {
 	type IBoardWrite_container_Props,
 	type IUpdatedVariables,
 } from './BoardWrite_types';
 import { type Address } from 'react-daum-postcode/lib/loadPostcode';
+
+import { checkFileValidation } from '../../commons/checkFileValidation';
+import { Modal } from 'antd';
 
 export default function BoardWrite_container(
 	props: IBoardWrite_container_Props
@@ -210,6 +213,42 @@ export default function BoardWrite_container(
 		onToggleModal();
 	};
 
+	const [uploadFile] = useMutation(UPLOAD_FILE);
+
+	const [imgUrl, setImgUrl] = useState("")
+	const fileRef = useRef<HTMLInputElement>(null)
+
+	const onClickFile = () => {
+		fileRef.current?.click()
+	}
+
+	const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		console.log(file)
+
+		const isValid = checkFileValidation(file);
+		if (!isValid) { return }
+
+		if (isValid) {
+
+			try {
+				const result = await uploadFile({
+					variables: {
+						file
+					}
+				})
+				console.log(result.data?.uploadFile.url)
+
+				setImgUrl(result.data?.uploadFile.url)
+
+			} catch (error) {
+				if (error instanceof Error) {
+					Modal.error({ content: error.message })
+				}
+			}
+		}
+	}
+
 	return (
 		<BoardWrite_presenter
 			onChangeWriter={onChangeWriter}
@@ -227,14 +266,21 @@ export default function BoardWrite_container(
 			contentsError={contentsError}
 			onSubmit={onSubmit}
 			onUpdate={onUpdate}
+
 			valid={valid}
 			isEditing={props.isEditing}
 			data={props.data}
+
 			isOpen={isOpen}
 			handleComplete={handleComplete}
 			zipcode={zipcode}
 			address={address}
 			onToggleModal={onToggleModal}
+
+			imgUrl={imgUrl}
+			onClickFile={onClickFile}
+			onChangeFile={onChangeFile}
+			fileRef={fileRef}
 		/>
 	);
 }

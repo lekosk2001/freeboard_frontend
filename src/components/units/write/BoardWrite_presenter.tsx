@@ -1,19 +1,8 @@
-import { gql, useMutation } from '@apollo/client';
-import { Image, Modal } from 'antd';
-import { useState, type ChangeEvent } from 'react';
+import { Button, Image, Modal } from 'antd';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { Main, Title } from '../../../commons/styles/emotion';
-
 import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
-
-const UPLOAD_FILE = gql`
-	mutation uploadFile ($file:Upload!){
-		uploadFile(file:$file){
-			url
-		}
-	}
-`
 
 export default function BoardWrite_presenter(
 	props: IBoardWrite_presenter_Props
@@ -21,34 +10,6 @@ export default function BoardWrite_presenter(
 	const valid = props.valid;
 	const isEditing = props.isEditing;
 	const data = props.data?.fetchBoard;
-
-	const [uploadFile] = useMutation(UPLOAD_FILE);
-
-	const [imgUrl, setImgUrl] = useState("")
-	const onchangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		console.log(file)
-
-		if (file) {
-
-			try {
-				const result = await uploadFile({
-					variables: {
-						file
-					}
-				})
-				console.log(result.data?.uploadFile.url)
-
-				setImgUrl(result.data?.uploadFile.url)
-
-			} catch (error) {
-				if (error instanceof Error) {
-					Modal.error({ content: error.message })
-				}
-			}
-		}
-
-	}
 
 	return (
 		<Main>
@@ -169,13 +130,16 @@ export default function BoardWrite_presenter(
 
 				<S.InputWrapper>
 					<label>사진업로드</label>
+					<Button onClick={props.onClickFile}>사진 업로드</Button>
 					<input
-						onChange={onchangeFile}
+						style={{ display: "none" }}
+						ref={props.fileRef}
+						onChange={props.onChangeFile}
 						type="file"
 
 					/>
 				</S.InputWrapper>
-				<Image src={`https://storage.googleapis.com/${imgUrl}`}></Image>
+				{props.imgUrl && <Image src={`https://storage.googleapis.com/${props.imgUrl}`}></Image>}
 
 				<S.InputWrapper>
 					<label>사진 첨부</label>
