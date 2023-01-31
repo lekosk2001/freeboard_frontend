@@ -1,9 +1,19 @@
-import { Modal } from 'antd';
+import { gql, useMutation } from '@apollo/client';
+import { Image, Modal } from 'antd';
+import { useState, type ChangeEvent } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { Main, Title } from '../../../commons/styles/emotion';
 
 import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
+
+const UPLOAD_FILE = gql`
+	mutation uploadFile ($file:Upload!){
+		uploadFile(file:$file){
+			url
+		}
+	}
+`
 
 export default function BoardWrite_presenter(
 	props: IBoardWrite_presenter_Props
@@ -11,6 +21,34 @@ export default function BoardWrite_presenter(
 	const valid = props.valid;
 	const isEditing = props.isEditing;
 	const data = props.data?.fetchBoard;
+
+	const [uploadFile] = useMutation(UPLOAD_FILE);
+
+	const [imgUrl, setImgUrl] = useState("")
+	const onchangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		console.log(file)
+
+		if (file) {
+
+			try {
+				const result = await uploadFile({
+					variables: {
+						file
+					}
+				})
+				console.log(result.data?.uploadFile.url)
+
+				setImgUrl(result.data?.uploadFile.url)
+
+			} catch (error) {
+				if (error instanceof Error) {
+					Modal.error({ content: error.message })
+				}
+			}
+		}
+
+	}
 
 	return (
 		<Main>
@@ -76,7 +114,7 @@ export default function BoardWrite_presenter(
 							onChange={props.onChangeZipcode}
 							type="text"
 							// placeholder="00000"
-							value={props.zipcode}
+							value={props.zipcode !== "undefined" ? props.zipcode : ""}
 						/>
 						<button
 							onClick={(e) => {
@@ -104,7 +142,7 @@ export default function BoardWrite_presenter(
 						className="address"
 						type="text"
 						disabled
-						value={props.address}
+						value={props.address !== "undefined" ? props.address : ""}
 					/>
 					<input
 						onChange={props.onChangeAddressDetail}
@@ -128,6 +166,16 @@ export default function BoardWrite_presenter(
 						}
 					/>
 				</S.InputWrapper>
+
+				<S.InputWrapper>
+					<label>사진업로드</label>
+					<input
+						onChange={onchangeFile}
+						type="file"
+
+					/>
+				</S.InputWrapper>
+				<Image src={`https://storage.googleapis.com/${imgUrl}`}></Image>
 
 				<S.InputWrapper>
 					<label>사진 첨부</label>

@@ -1,13 +1,21 @@
 import React from 'react';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloLink, ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import {
+	createUploadLink
+} from 'apollo-upload-client'
 
 interface Props {
 	children: JSX.Element;
 }
 
 const ApolloSetting = (props: Props) => {
+
+	const uplodLink = createUploadLink({
+		uri: "http://backendonline.codebootcamp.co.kr/graphql"
+	})
+
 	const client = new ApolloClient({
-		uri: 'http://backendonline.codebootcamp.co.kr/graphql',
+		link: ApolloLink.from([uplodLink as unknown as ApolloLink]),
 		cache: new InMemoryCache(),
 	});
 
@@ -15,3 +23,4 @@ const ApolloSetting = (props: Props) => {
 };
 
 export default ApolloSetting;
+
