@@ -1,6 +1,5 @@
 import { type IQuery } from '@/src/commons/types/generated/types';
-import { type UploadFile } from 'antd';
-import { type RefObject, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
 
 export interface IBoardWrite_container_Props {
 	isEditing: boolean;
@@ -13,7 +12,7 @@ export interface IUpdatedVariables {
 		contents: string;
 		title: string;
 		youtubeUrl: string;
-		images: string;
+		images: string[];
 		boardAddress: {
 			zipcode: string;
 			address: string;
@@ -23,12 +22,17 @@ export interface IUpdatedVariables {
 }
 
 export interface IBoardWrite_presenter_Props {
+	images:string;
+	imgUrls:string[];
+	onChangeFileUrls:(fileUrl: string, index: number)=>void;
+	
+	setImgUrls:Dispatch<SetStateAction<string[]>>
 
 	onChangeCoreInput: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 	
 	onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 
-	onChangeImages: (e: ChangeEvent<HTMLInputElement>) => void;
+	onChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleComplete: any;
 
 	writerError: boolean;
@@ -48,17 +52,4 @@ export interface IBoardWrite_presenter_Props {
 
 	zipcode: string;
 	address: string;
-
-	imgUrl:string;
-	onClickFile:()=>void
-	onChangeFile:(e: ChangeEvent<HTMLInputElement>)=>void
-	fileRef:RefObject<HTMLInputElement>
-
-	fileList:UploadFile[];
-	handlePreview:(file: UploadFile) => Promise<void>;
-	setFileList:Dispatch<SetStateAction<Array<UploadFile<any>>>>
-	previewOpen:boolean
-	previewTitle:string;
-	handleCancel:()=>void;
-	previewImage:string
 }

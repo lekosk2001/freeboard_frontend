@@ -1,7 +1,7 @@
-import { type ChangeEvent, useState, useRef, useEffect } from 'react';
+import { type ChangeEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite_queries';
+import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite_queries';
 import { useMutation, useQuery } from '@apollo/client';
 import {
 	type IBoardWrite_container_Props,
@@ -9,12 +9,8 @@ import {
 } from './BoardWrite_types';
 import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 
-import { checkFileValidation } from '../../commons/checkFileValidation';
-import { Modal, Spin } from 'antd';
+import { Spin } from 'antd';
 
-import type { RcFile } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { getBase64 } from '@/src/commons/utils/utils';
 import { FETCH_BOARD } from '../detail/BoardDetail_queries';
 import { type IQuery } from '@/src/commons/types/generated/types';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
@@ -50,7 +46,6 @@ export default function BoardWrite_container(
 	const [updateBoard] = useMutation(UPDATE_BOARD);
 
 	const [images, setImages] = useState('youtube');
-
 	const [isOpen, setIsOpen] = useState(false);
 
 	const [writerError, setWriterError] = useState(false);
@@ -90,16 +85,17 @@ export default function BoardWrite_container(
 				title: String(fetchBoard.title),
 				contents: String(fetchBoard.contents),
 			})
+			if (fetchBoard.images) { setImgUrls(fetchBoard.images) }
 		}
-
 	}, [data])
-
 
 	const onChangeCoreInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
 		setCoreInput({ ...coreInput, [e.currentTarget.id]: e.currentTarget.value });
 		setCoreInputErorr({ ...coreInputErorr, [e.currentTarget.id]: false });
+		const value = (document.getElementById(e.target.id) as HTMLInputElement)?.value;
 
+		console.log(value)
 		const AllInputs: string[] = [];
 
 		for (const prop in coreInput) {
@@ -110,14 +106,23 @@ export default function BoardWrite_container(
 				AllInputs.push(e.currentTarget.value)
 			}
 		}
-		console.log("AllInputs : " + AllInputs)
+		// console.log("AllInputs : " + AllInputs)
 
 		if (!AllInputs.includes('' && "undefined")) {
 			setValid(true);
 		} else setValid(false);
 	};
 
-	const onChangeImages = (e: ChangeEvent<HTMLInputElement>) => {
+
+	const [imgUrls, setImgUrls] = useState(["", "", ""])
+
+	const onChangeFileUrls = (fileUrl: string, index: number) => {
+		const newFileUrls = [...imgUrls];
+		newFileUrls[index] = fileUrl;
+		setImgUrls(newFileUrls);
+	};
+
+	const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 		setImages(e.target.value);
 	};
 
@@ -157,7 +162,7 @@ export default function BoardWrite_container(
 							password: coreInput.password,
 							title: coreInput.title,
 							youtubeUrl: input.youtubeUrl,
-							images,
+							images: imgUrls,
 							boardAddress: {
 								zipcode: input.zipcode,
 								address: input.address,
@@ -183,7 +188,7 @@ export default function BoardWrite_container(
 				contents: coreInput.contents,
 				title: coreInput.title,
 				youtubeUrl: input.youtubeUrl,
-				images,
+				images: imgUrls,
 				boardAddress: {
 					zipcode: input.zipcode,
 					address: input.address,
@@ -238,63 +243,13 @@ export default function BoardWrite_container(
 		onToggleModal();
 	};
 
-	const [uploadFile] = useMutation(UPLOAD_FILE);
-
-	const [imgUrl, setImgUrl] = useState("")
-	const fileRef = useRef<HTMLInputElement>(null)
-
-	const onClickFile = () => {
-		fileRef.current?.click()
-	}
-
-	const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-
-		const isValid = checkFileValidation(file);
-		if (!isValid) { return }
-
-		if (isValid) {
-
-			try {
-				const result = await uploadFile({
-					variables: {
-						file
-					}
-				})
-
-				setImgUrl(result.data?.uploadFile.url)
-
-			} catch (error) {
-				if (error instanceof Error) {
-					Modal.error({ content: error.message })
-				}
-			}
-		}
-	}
-
-	const [previewOpen, setPreviewOpen] = useState(false);
-	const [previewImage, setPreviewImage] = useState('');
-	const [previewTitle, setPreviewTitle] = useState('');
-	const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-	const handleCancel = () => { setPreviewOpen(false); };
-
-	const handlePreview = async (file: UploadFile) => {
-		if (!file.url && !file.preview) {
-			file.preview = await getBase64(file.originFileObj as RcFile);
-		}
-
-		setPreviewImage(file.url ?? (file.preview as string));
-		setPreviewOpen(true);
-		setPreviewTitle(file.url ? (file.name || file.url.substring(file.url.lastIndexOf('/') + 1)) : "");
-	};
-
 	return (
 		<BoardWrite_presenter
+
 			onChangeInput={onChangeInput}
 			onChangeCoreInput={onChangeCoreInput}
 
-			onChangeImages={onChangeImages}
+			onChangeRadio={onChangeRadio}
 
 			writerError={writerError}
 			passwordError={passwordError}
@@ -316,19 +271,11 @@ export default function BoardWrite_container(
 
 			onToggleModal={onToggleModal}
 
-			imgUrl={imgUrl}
-			onClickFile={onClickFile}
-			onChangeFile={onChangeFile}
-			fileRef={fileRef}
+			images={images}
 
-
-			fileList={fileList}
-			handlePreview={handlePreview}
-			setFileList={setFileList}
-			previewOpen={previewOpen}
-			previewTitle={previewTitle}
-			handleCancel={handleCancel}
-			previewImage={previewImage}
+			imgUrls={imgUrls}
+			setImgUrls={setImgUrls}
+			onChangeFileUrls={onChangeFileUrls}
 		/>
 	);
 }

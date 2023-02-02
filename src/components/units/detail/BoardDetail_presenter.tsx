@@ -95,6 +95,16 @@ export default function BoardDetail_presenter(
 							></iframe>
 						</S.YoutubeBox>
 					)}
+					<S.ImageWrapper>
+						{props.data?.fetchBoard.images
+							?.filter((el: string) => el)
+							.map((el: string) => (
+								<S.Image
+									key={el}
+									src={`https://storage.googleapis.com/${el}`}
+								/>
+							))}
+					</S.ImageWrapper>
 
 					<S.LikeButtons>
 						<S.LikeButton>
@@ -129,6 +139,7 @@ export default function BoardDetail_presenter(
 				</S.ContentBody>
 			</S.ContentsWrapper>
 			<C.BottomWrapper>
+
 				<C.Button
 					onClick={() => {
 						router.push(`/boards`);
@@ -136,6 +147,7 @@ export default function BoardDetail_presenter(
 				>
 					목록으로
 				</C.Button>
+
 				<C.Button
 					onClick={() => {
 						router.push(`/boards/${data?.fetchBoard._id}/edit`);
@@ -143,7 +155,12 @@ export default function BoardDetail_presenter(
 				>
 					수정하기
 				</C.Button>
-				<C.Button onClick={props.onCLickDeleteBoard}>삭제하기</C.Button>
+
+				<C.Button
+					onClick={props.onCLickDeleteBoard}
+				>
+					삭제하기
+				</C.Button>
 			</C.BottomWrapper>
 		</C.Main>
 	);

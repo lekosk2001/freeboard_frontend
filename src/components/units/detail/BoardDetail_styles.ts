@@ -56,6 +56,11 @@ export const Profile = styled.div`
 	}
 `;
 
+export const ImageWrapper = styled.div`
+`
+
+export const Image = styled.img``
+
 export const LikeButtons = styled.div`
 	display: flex;
 	margin-top: 120px;

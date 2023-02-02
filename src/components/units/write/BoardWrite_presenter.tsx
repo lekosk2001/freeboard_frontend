@@ -1,10 +1,10 @@
-import { Button, Image, Modal, Upload } from 'antd';
+import { Modal } from 'antd';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import { Main, Title } from '../../../commons/styles/emotion';
 import * as S from './BoardWrite_styles';
 import { type IBoardWrite_presenter_Props } from './BoardWrite_types';
-import type { UploadProps } from 'antd/es/upload';
-import { PlusOutlined } from '@ant-design/icons';
+
+import CustomUplaod from '../../commons/upload/CustomUplaod';
 
 export default function BoardWrite_presenter(
 	props: IBoardWrite_presenter_Props
@@ -12,15 +12,6 @@ export default function BoardWrite_presenter(
 	const valid = props.valid;
 	const isEditing = props.isEditing;
 	const data = props.data?.fetchBoard;
-
-	const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => { props.setFileList(newFileList); };
-
-	const uploadButton = (
-		<div>
-			<PlusOutlined />
-			<div style={{ marginTop: 8 }}>Upload</div>
-		</div>
-	);
 
 	return (
 		<Main>
@@ -41,6 +32,7 @@ export default function BoardWrite_presenter(
 							<p className="alert">이름을 입력해주세요.</p>
 						)}
 					</S.InputWrapper>
+
 					<S.InputWrapper>
 						<label>비밀번호</label>
 						<input
@@ -154,31 +146,18 @@ export default function BoardWrite_presenter(
 
 				<S.InputWrapper>
 					<label>사진업로드</label>
-					<Button onClick={props.onClickFile}>사진 업로드</Button>
-					<input
-						style={{ display: "none" }}
-						ref={props.fileRef}
-						onChange={props.onChangeFile}
-						type="file"
-
-					/>
-				</S.InputWrapper>
-				{props.imgUrl && <Image src={`https://storage.googleapis.com/${props.imgUrl}`}></Image>}
-
-				<S.InputWrapper>
-					<label>사진 첨부</label>
-					<Upload
-						// action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-						listType="picture-card"
-						fileList={props.fileList}
-						onPreview={props.handlePreview}
-						onChange={handleChange}
-					>
-						{props.fileList.length >= 8 ? null : uploadButton}
-					</Upload>
-					<Modal open={props.previewOpen} title={props.previewTitle} footer={null} onCancel={props.handleCancel}>
-						<img alt={props.previewTitle} style={{ width: '100%' }} src={props.previewImage} />
-					</Modal>
+					<div style={{ display: "flex", gap: "10px" }}>
+						{props.imgUrls.map((imgUrl, index) => {
+							return (
+								<CustomUplaod
+									key={imgUrl + index}
+									imgUrl={imgUrl}
+									index={index}
+									onChangeFileUrls={props.onChangeFileUrls}
+								></CustomUplaod>
+							)
+						})}
+					</div>
 				</S.InputWrapper>
 
 				<S.InputWrapper>
@@ -190,7 +169,7 @@ export default function BoardWrite_presenter(
 								name="radios"
 								value="youtube"
 								defaultChecked
-								onChange={props.onChangeImages}
+								onChange={props.onChangeRadio}
 							/>
 							<label htmlFor="youtube">유튜브</label>
 						</span>
@@ -200,7 +179,7 @@ export default function BoardWrite_presenter(
 								id="image"
 								name="radios"
 								value="image"
-								onChange={props.onChangeImages}
+								onChange={props.onChangeRadio}
 							/>
 							<label htmlFor="image">사진</label>
 						</span>
