@@ -28,9 +28,9 @@ export default function BoardWrite_presenter(
 							defaultValue={props.data?.fetchBoard.writer ?? ""}
 							readOnly={!!props.data?.fetchBoard.writer}
 						/>
-						{props.writerError && (
+						{/* {props.writerError && (
 							<p className="alert">이름을 입력해주세요.</p>
-						)}
+						)} */}
 					</S.InputWrapper>
 
 					<S.InputWrapper>
@@ -43,9 +43,9 @@ export default function BoardWrite_presenter(
 							placeholder="비밀번호를 입력해주세요."
 							defaultValue={``}
 						/>
-						{props.passwordError && (
+						{/* {props.passwordError && (
 							<p className="alert">비밀번호를 입력해주세요.</p>
-						)}
+						)} */}
 					</S.InputWrapper>
 				</div>
 
@@ -58,9 +58,9 @@ export default function BoardWrite_presenter(
 						placeholder="제목을 작성해주세요."
 						defaultValue={data?.title}
 					/>
-					{props.titleError && (
+					{/* {props.titleError && (
 						<p className="alert">제목을 작성해주세요.</p>
-					)}
+					)} */}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
@@ -71,9 +71,9 @@ export default function BoardWrite_presenter(
 						placeholder="내용을 작성해주세요."
 						defaultValue={props.data?.fetchBoard.contents}
 					/>
-					{props.contentsError && (
+					{/* {props.contentsError && (
 						<p className="alert">내용을 작성해주세요.</p>
-					)}
+					)} */}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
