@@ -57,6 +57,10 @@ export const Profile = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
+	display: flex;
+	gap:20px;
+	flex-wrap: wrap;
+	justify-content: center;
 `
 
 export const Image = styled.img``

@@ -17,7 +17,6 @@ export default function BoardDetail_presenter(
 	const router = props.router;
 	const data = props.data;
 	const content = <p>{data?.fetchBoard.boardAddress?.address}</p>;
-	console.log(data?.fetchBoard.boardAddress?.address)
 	return (
 		<C.Main>
 			<S.ContentsWrapper>
@@ -65,22 +64,22 @@ export default function BoardDetail_presenter(
 				<S.ContentBody>
 					<C.Title>{data?.fetchBoard.title}</C.Title>
 
-					{data?.fetchBoard.images != null && (
-						<S.ImageBox>
-							<img src="/image.png"></img>
-						</S.ImageBox>
-					)}
-
 					<S.TextBox>{data?.fetchBoard.contents}</S.TextBox>
+
+					<S.ImageWrapper>
+						{props.data?.fetchBoard.images
+							?.filter((el: string) => el)
+							.map((el: string, index) => (
+								<S.Image
+									key={el + index}
+									src={`https://storage.googleapis.com/${el}`}
+								/>
+							))}
+					</S.ImageWrapper>
 
 					{data?.fetchBoard.youtubeUrl != null && (
 						<S.YoutubeBox>
-							{/* <PlayButton>
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle opacity="0.6" cx="24" cy="24" r="24" fill="white"/>
-                            <path d="M34 24L19 32.6603L19 15.3397L34 24Z" fill="black"/>
-                            </svg>
-                        </PlayButton> */}
+
 							<iframe
 								width="100%"
 								height="100%"
@@ -95,16 +94,7 @@ export default function BoardDetail_presenter(
 							></iframe>
 						</S.YoutubeBox>
 					)}
-					<S.ImageWrapper>
-						{props.data?.fetchBoard.images
-							?.filter((el: string) => el)
-							.map((el: string) => (
-								<S.Image
-									key={el}
-									src={`https://storage.googleapis.com/${el}`}
-								/>
-							))}
-					</S.ImageWrapper>
+
 
 					<S.LikeButtons>
 						<S.LikeButton>

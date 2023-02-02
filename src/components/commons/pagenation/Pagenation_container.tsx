@@ -44,7 +44,7 @@ const Pagenation_container = (props: Props) => {
 			onClickPrev={onClickPrev}
 			onClickNext={onClickNext}
 			refetch={props.refetch}
-		></Pagenation_presenter>
+		/>
 	);
 };
 

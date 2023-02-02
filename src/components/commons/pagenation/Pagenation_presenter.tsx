@@ -1,4 +1,5 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Fragment } from 'react';
 import { PageButton, PageButtons } from './Pagenation_styles';
 
 interface Props {
@@ -39,7 +40,7 @@ const Pagenation_presenter = (props: Props) => {
 						</PageButton>
 					);
 				} else {
-					return <div key={String(props.startPage + index)}></div>;
+					return <Fragment key={String(props.startPage + index)}></Fragment>;
 				}
 			})}
 

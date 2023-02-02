@@ -35,11 +35,6 @@ export interface IBoardWrite_presenter_Props {
 	onChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleComplete: any;
 
-	// writerError: boolean;
-	// passwordError: boolean;
-	// titleError: boolean;
-	// contentsError: boolean;
-
 	onSubmit: (e: { preventDefault: () => void }) => void;
 	onUpdate: (e: { preventDefault: () => void }) => void;
 

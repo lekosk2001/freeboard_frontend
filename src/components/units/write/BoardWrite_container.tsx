@@ -48,11 +48,6 @@ export default function BoardWrite_container(
 	const [images, setImages] = useState('youtube');
 	const [isOpen, setIsOpen] = useState(false);
 
-	// const [writerError, setWriterError] = useState(false);
-	// const [passwordError, setPasswordError] = useState(false);
-	// const [titleError, setTitleError] = useState(false);
-	// const [contentsError, setContentsError] = useState(false);
-
 	const [valid, setValid] = useState(false);
 
 	interface ICoreInput {
@@ -106,7 +101,6 @@ export default function BoardWrite_container(
 				AllInputs.push(e.currentTarget.value)
 			}
 		}
-		// console.log("AllInputs : " + AllInputs)
 
 		if (!AllInputs.includes('' && "undefined")) {
 			setValid(true);
@@ -139,18 +133,6 @@ export default function BoardWrite_container(
 
 	const onSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		// if (coreInput.writer === '') {
-		// 	setWriterError(true);
-		// }
-		// if (coreInput.password === '') {
-		// 	setPasswordError(true);
-		// }
-		// if (coreInput.title === '') {
-		// 	setTitleError(true);
-		// }
-		// if (coreInput.contents === '') {
-		// 	setContentsError(true);
-		// }
 
 		if (coreInput.writer && coreInput.password && coreInput.title && coreInput.contents) {
 			try {
@@ -197,16 +179,6 @@ export default function BoardWrite_container(
 			},
 		};
 
-		// if (!coreInput.password) {
-		// 	setPasswordError(true);
-		// }
-		// if (!coreInput.title) {
-		// 	setTitleError(true);
-		// }
-		// if (!coreInput.contents) {
-		// 	setContentsError(true);
-		// }
-
 		try {
 			const result = await updateBoard({ variables: updatedVariables });
 			void router.push(`/boards/${result.data.updateBoard._id}`);
@@ -246,11 +218,6 @@ export default function BoardWrite_container(
 			onChangeCoreInput={onChangeCoreInput}
 
 			onChangeRadio={onChangeRadio}
-
-			// writerError={writerError}
-			// passwordError={passwordError}
-			// titleError={titleError}
-			// contentsError={contentsError}
 
 			zipcode={input.zipcode}
 			address={input.address}
