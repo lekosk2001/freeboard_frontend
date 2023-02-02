@@ -4,11 +4,11 @@ import * as S from './BoardList_styles';
 import { type IBoardList_presenter_Props } from './BoardList_types';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
 import Pagenation from '../../commons/pagenation/Pagenation_container';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 	const onClickBoardDetail = props.onClickBoardDetail;
 	const onClickBoardNew = props.onClickBoardNew;
-
 	return (
 		<Main>
 			<S.BestWrapper>
@@ -56,7 +56,22 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 								<S.Column>
 									{String(list._id).slice(-4).toUpperCase()}
 								</S.Column>
-								<S.Column>{list.title}</S.Column>
+								<S.Column>
+									{list.title
+										.replaceAll(props.search, `%^&${props.search}%^&`)
+										.split(`%^&`)
+										.map((text) => {
+											return <span
+												key={uuidv4()}
+												style={{
+													backgroundColor: props.search === text ? "#ffe59f" : "inherit"
+												}}
+											>
+												{text}
+											</span>
+										}
+										)}
+								</S.Column>
 								<S.Column>{list.writer}</S.Column>
 								<S.Column>
 									{dateFormat(list.createdAt)}

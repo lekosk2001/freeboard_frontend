@@ -7,5 +7,6 @@ export interface IBoardList_presenter_Props {
 	data?: Pick<IQuery, 'fetchBoards'>;
 	refetch: any;
 	count: any;
-	onChangeSearch:(e:ChangeEvent<HTMLInputElement>)=>void
+	onChangeSearch:(e:ChangeEvent<HTMLInputElement>)=>void;
+	search:string;
 }

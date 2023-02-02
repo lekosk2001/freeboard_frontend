@@ -79,7 +79,7 @@ export const Lists = styled.div`
 	border-bottom: 1px solid #000;
 `;
 
-export const Column = styled.p`
+export const Column = styled.span`
 	white-space: nowrap;
 	overflow: hidden;
 	display: flex;

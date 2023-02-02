@@ -52,6 +52,7 @@ export default function BoardList_container() {
 			refetch={refetch}
 			count={totalBoards?.fetchBoardsCount}
 			onChangeSearch={onChangeSearch}
+			search={search}
 		/>
 	);
 }
