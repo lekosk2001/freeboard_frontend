@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ApolloLink, ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import {
 	createUploadLink
@@ -10,8 +10,11 @@ interface Props {
 
 const ApolloSetting = (props: Props) => {
 
+	const [accessToken] = useState('')
+
 	const uplodLink = createUploadLink({
-		uri: "http://backendonline.codebootcamp.co.kr/graphql"
+		uri: "http://backendonline.codebootcamp.co.kr/graphql",
+		headers: { Authorization: `Bearer ${accessToken}` }
 	})
 
 	const client = new ApolloClient({

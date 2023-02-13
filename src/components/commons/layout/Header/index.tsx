@@ -45,8 +45,8 @@ const Header = () => {
 				🚢 FREE BOARD
 			</Logo>
 			<HeaderButtons>
-				<Login>로그인</Login>
-				<Signup>회원가입</Signup>
+				<Login onClick={async () => await router.push(`/login`)}>로그인</Login>
+				<Signup onClick={async () => await router.push(`/signUp`)}>회원가입</Signup>
 			</HeaderButtons>
 		</Header>
 	);
