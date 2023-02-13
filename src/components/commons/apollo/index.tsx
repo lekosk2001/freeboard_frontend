@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ApolloLink, ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import {
 	createUploadLink
 } from 'apollo-upload-client'
+import { useRecoilState } from 'recoil';
+import { accessTokenState } from '@/src/commons/store';
 
 interface Props {
 	children: JSX.Element;
@@ -10,7 +12,7 @@ interface Props {
 
 const ApolloSetting = (props: Props) => {
 
-	const [accessToken] = useState('')
+	const [accessToken] = useRecoilState(accessTokenState)
 
 	const uplodLink = createUploadLink({
 		uri: "http://backendonline.codebootcamp.co.kr/graphql",

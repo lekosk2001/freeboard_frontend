@@ -11,19 +11,10 @@ const Banner = () => {
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		// arrow: true,
 	};
 
-	// const Paging = styled.div`
-	//   width: '8px';
-	//   height: '8px';
-	//   background-color: '#ddd';
-	//   border-radius: '10px';
-	//   padding: '10px';
-	// `;
 
 	const Dots = styled.ul`
-		/* background-color: green; */
 		display: flex;
 		align-items: center;
 		justify-content: center;

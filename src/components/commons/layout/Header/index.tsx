@@ -1,6 +1,10 @@
+import { accessTokenState } from '@/src/commons/store';
+import { type IQuery } from '@/src/commons/types/generated/types';
+import { gql, useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useRecoilState } from 'recoil';
 
 const Header = () => {
 	const router = useRouter();
@@ -23,6 +27,7 @@ const Header = () => {
 	const HeaderButtons = styled.div`
 		display: flex;
 		gap: 5px;
+		align-items: center;
 	`;
 	const Login = styled.button`
 		font-size: 16px;
@@ -38,6 +43,17 @@ const Header = () => {
 		border-radius: 10px;
 		background-color: #ffd600;
 	`;
+	const [accessToken] = useRecoilState(accessTokenState)
+
+
+
+	const FETCH_USER_LOGGED_IN = gql`
+		query fetchUserLoggedIn {
+			fetchUserLoggedIn{picture email name}
+		}
+`;
+
+	const { data } = useQuery<Pick<IQuery, 'fetchUserLoggedIn'>>(FETCH_USER_LOGGED_IN);
 
 	return (
 		<Header>
@@ -45,8 +61,12 @@ const Header = () => {
 				🚢 FREE BOARD
 			</Logo>
 			<HeaderButtons>
-				<Login onClick={async () => await router.push(`/login`)}>로그인</Login>
-				<Signup onClick={async () => await router.push(`/signUp`)}>회원가입</Signup>
+				{<Login onClick={async () => await router.push(`/login`)}>{accessToken ? "로그아웃" : "로그인"}</Login>}
+				{!accessToken && <Signup onClick={async () => await router.push(`/signUp`)}>회원가입</Signup>}
+				{accessToken && <div>{data?.fetchUserLoggedIn.name}</div>}
+				{accessToken && <div>{data?.fetchUserLoggedIn.email}</div>}
+
+				{data?.fetchUserLoggedIn.picture && <img src={data?.fetchUserLoggedIn.picture}></img>}
 			</HeaderButtons>
 		</Header>
 	);
