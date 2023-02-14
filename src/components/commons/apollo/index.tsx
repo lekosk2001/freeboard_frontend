@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ApolloLink, ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import {
 	createUploadLink
@@ -10,9 +10,18 @@ interface Props {
 	children: JSX.Element;
 }
 
-const ApolloSetting = (props: Props) => {
+const GLOBAL_STATE = new InMemoryCache()
 
-	const [accessToken] = useRecoilState(accessTokenState)
+const ApolloSetting = (props: Props) => {
+	const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+	useEffect(() => {
+
+		const result = localStorage.getItem("accessToken")
+		if (result) {
+			setAccessToken(result)
+		}
+	}, [])
+
 
 	const uplodLink = createUploadLink({
 		uri: "http://backendonline.codebootcamp.co.kr/graphql",
@@ -21,7 +30,7 @@ const ApolloSetting = (props: Props) => {
 
 	const client = new ApolloClient({
 		link: ApolloLink.from([uplodLink as unknown as ApolloLink]),
-		cache: new InMemoryCache(),
+		cache: GLOBAL_STATE
 	});
 
 	return <ApolloProvider client={client}>{props.children}</ApolloProvider>;

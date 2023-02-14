@@ -40,7 +40,7 @@ const Login_presenter = () => {
 
                 if (!result.data) { Modal.error({ content: "로그인에 실패하였습니다." }); return }
                 setAccessToken(result.data?.loginUser.accessToken)
-
+                localStorage.setItem("accessToken", result.data?.loginUser.accessToken)
                 void route.push('/')
             } catch (error) {
                 if (error instanceof Error) alert(error.message);

@@ -24,5 +24,6 @@ module.exports = {
 		'@typescript-eslint/restrict-plus-operands': 'off',
 		'@typescript-eslint/strict-boolean-expressions': 'off',
 		'@typescript-eslint/triple-slash-reference': 'off',
+		'react/display-name':'off',
 	},
 };
