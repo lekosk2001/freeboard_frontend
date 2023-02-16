@@ -11,7 +11,7 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 	const onClickBoardNew = props.onClickBoardNew;
 	return (
 		<Main>
-			<S.BestWrapper>
+			{/* <S.BestWrapper>
 				<Title>베스트 게시글</Title>
 				<S.BestCards>
 					<S.Card>카드</S.Card>
@@ -19,7 +19,7 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 					<S.Card>카드</S.Card>
 					<S.Card>카드</S.Card>
 				</S.BestCards>
-			</S.BestWrapper>
+			</S.BestWrapper> */}
 
 			<S.ListsWrapper>
 				<S.ListsHead>

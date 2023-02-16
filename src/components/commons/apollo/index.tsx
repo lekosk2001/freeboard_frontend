@@ -14,13 +14,13 @@ const GLOBAL_STATE = new InMemoryCache()
 
 const ApolloSetting = (props: Props) => {
 	const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
-	useEffect(() => {
 
-		const result = localStorage.getItem("accessToken")
-		if (result) {
-			setAccessToken(result)
+	useEffect(() => {
+		if (localStorage.getItem("accessToken")) {
+			setAccessToken(localStorage.getItem("accessToken") ?? "")
 		}
 	}, [])
+
 
 
 	const uplodLink = createUploadLink({
