@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Header from './Header';
-import Banner from './Banner';
+// import Banner from './Banner';
 import Menu from './Menu';
 import { useRouter } from 'next/router';
 
@@ -14,10 +14,10 @@ const HIDDEN_HEADERS = [
 	"/login",
 ]
 
-const HIDDEN_BANNERS = [
-	"/signUp",
-	"/login",
-]
+// const HIDDEN_BANNERS = [
+// 	"/signUp",
+// 	"/login",
+// ]
 
 const HIDDEN_MENUS = [
 	"/signUp",
@@ -36,7 +36,7 @@ const Layout = (props: Props) => {
 
 	const router = useRouter()
 	const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath)
-	const isHiddenBanner = HIDDEN_BANNERS.includes(router.asPath)
+	// const isHiddenBanner = HIDDEN_BANNERS.includes(router.asPath)
 	const isHiddenMenu = HIDDEN_MENUS.includes(router.asPath)
 
 	const [mounted, setMounted] = useState(false)
@@ -48,7 +48,7 @@ const Layout = (props: Props) => {
 	return (
 		<>
 			{!isHiddenHeader && mounted && <Header />}
-			{!isHiddenBanner && mounted && <Banner />}
+			{/* {!isHiddenBanner && mounted && <Banner />} */}
 			{!isHiddenMenu && mounted && <Menu />}
 			<Main>{props.children}</Main>
 		</>
