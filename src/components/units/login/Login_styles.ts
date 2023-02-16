@@ -43,3 +43,14 @@ export const SubmitButton = styled.button`
     font-weight: 700;
     color: #BDBDBD;
 `
+
+export const BackButton = styled.button`
+    align-self: flex-end;
+    border-radius: 16px;
+    width: 40px;
+    height: 40px;
+    background-color:#4F4F4F;
+    font-size: 14px;
+    font-weight: 700;
+    color: #BDBDBD;
+`

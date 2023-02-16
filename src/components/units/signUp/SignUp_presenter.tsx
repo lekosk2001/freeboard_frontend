@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { ArrowLeftOutlined } from '@ant-design/icons'
 
 interface IFormData {
     email: string
@@ -15,7 +16,6 @@ interface IFormData {
     password: string
     passwordCheck: string
 }
-
 
 const schema = yup.object({
     email: yup.string().email("이메일 형식이 아닙니다.").required("이메일을 입력해주세요."),
@@ -26,7 +26,7 @@ const schema = yup.object({
 
 const SignUp_presenter = () => {
 
-    const route = useRouter()
+    const router = useRouter()
     const [createUser] = useMutation<Pick<IMutation, 'createUser'>, IMutationCreateUserArgs>(CREATE_USER);
 
     const onSubmit = async (data: IFormData) => {
@@ -46,7 +46,7 @@ const SignUp_presenter = () => {
                     }
                 });
                 console.log(result.data)
-                void route.push('/')
+                void router.push('/')
             } catch (error) {
                 if (error instanceof Error) alert(error.message);
             }
@@ -57,7 +57,7 @@ const SignUp_presenter = () => {
 
     return (
         <S.SignUpForm onSubmit={handleSubmit(onSubmit)}>
-
+            <S.BackButton type="button" onClick={() => { router.back() }}><ArrowLeftOutlined /></S.BackButton>
             <Title style={{ color: '#fff', "textAlign": "center", "marginBottom": "20px" }}>회원가입</Title>
             <S.InputContainer>
                 <S.Label htmlFor='email'>이메일</S.Label>

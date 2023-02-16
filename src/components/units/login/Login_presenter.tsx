@@ -10,6 +10,7 @@ import { accessTokenState } from '@/src/commons/store'
 import * as yup from "yup";
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 
 interface IFormData {
     email: string
@@ -30,7 +31,6 @@ const Login_presenter = () => {
     const [loginUser] = useMutation<Pick<IMutation, 'loginUser'>, IMutationLoginUserArgs>(LOGIN_USER);
 
     const onSubmitSignUp = async (data: IFormData) => {
-        // e.preventDefault()
 
         if (!data.email.includes("@") || !data.email.includes(".")) { Modal.error({ content: "이메일이 유효하지 않습니다." }); return }
 
@@ -57,7 +57,6 @@ const Login_presenter = () => {
             } catch (error) {
                 if (error instanceof Error) {
                     alert(error.message);
-                    // void router.reload
                 }
             }
         }
@@ -65,6 +64,7 @@ const Login_presenter = () => {
 
     return (
         <S.LoginForm onSubmit={handleSubmit(onSubmitSignUp)}>
+            <S.BackButton type="button" onClick={() => { void router.push(`/`) }}><ArrowLeftOutlined /></S.BackButton>
             <Title style={{ color: '#fff', "textAlign": "center", "marginBottom": "20px" }}>로그인</Title>
             <S.InputContainer>
                 <S.Label htmlFor='email'>이메일</S.Label>
@@ -77,6 +77,7 @@ const Login_presenter = () => {
                 {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
             </S.InputContainer>
             <S.SubmitButton style={{ "backgroundColor": formState.isValid ? "yellow" : "" }} onClick={handleSubmit(onSubmitSignUp)}>로그인</S.SubmitButton>
+
         </S.LoginForm>
     )
 }

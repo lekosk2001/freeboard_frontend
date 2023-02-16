@@ -40,6 +40,18 @@ export const SubmitButton = styled.button<{ valid: boolean }>`
 	background-color: ${(props) => (props.valid ? '#FFD600' : 'gray')};
 `;
 
+
+export const BackButton = styled.button`
+    align-self: flex-end;
+    border-radius: 16px;
+    width: 40px;
+    height: 40px;
+    background-color:#4F4F4F;
+    font-size: 14px;
+    font-weight: 700;
+    color: #BDBDBD;
+`
+
 export const InputWrapper = styled.div`
 	width: 100%;
 	display: flex;
