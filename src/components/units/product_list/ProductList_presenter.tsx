@@ -2,6 +2,7 @@ import { type IQuery, type IQueryFetchUseditemsArgs } from '@/src/commons/types/
 import { useQuery } from '@apollo/client'
 import { Button, Input } from 'antd'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { FETCH_USED_ITEMS } from './ProductList_queries'
 import * as S from './ProductList_styles'
 
@@ -15,12 +16,18 @@ const ProductList_presenter = () => {
         IQueryFetchUseditemsArgs
     >(FETCH_USED_ITEMS);
 
+    const [tabActive, setTabActive] = useState("onSale")
+
+    const onClickTab = (e: React.MouseEvent<HTMLHeadingElement>) => {
+        setTabActive(e.currentTarget.id)
+    }
+
     return (
         <S.ListsWrapper>
             <S.ListHeader>
                 <S.Tabs>
-                    <S.Tab>판매중상품</S.Tab>
-                    <S.Tab>판매된상품</S.Tab>
+                    <S.Tab id="onSale" active={tabActive} onClick={onClickTab}>판매중상품</S.Tab>
+                    <S.Tab id="soldOut" active={tabActive} onClick={onClickTab}>판매된상품</S.Tab>
                 </S.Tabs>
                 <S.SearchBox>
                     <Input placeholder='제품을 검색해주세요'></Input>
@@ -29,10 +36,11 @@ const ProductList_presenter = () => {
             </S.ListHeader>
             <S.ListBox>
                 {data?.fetchUseditems.map((list) =>
-                    <S.List key={list._id}>
+                    <S.List key={list._id} onClick={() => { void router.push(`/market/${list._id}`) }}>
                         <S.ListContents>
                             <S.ThumbnailBox>
-                                {list.images && <S.Thumbnail src={list.images[0]} />}
+                                {list.images?.[0] && <S.Thumbnail src={`https://storage.googleapis.com/${list.images[0]}`} />}
+                                {!list.images?.[0] && <S.NoImages>No Images</S.NoImages>}
                             </S.ThumbnailBox>
                             <S.ItemInfo>
                                 <S.ItemName>{list.name}</S.ItemName>

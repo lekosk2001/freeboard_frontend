@@ -45,10 +45,14 @@ const CustomUplaod = (props: Props) => {
         <>
             {props.imgUrl &&
                 <>
-                    <img src={`https://storage.googleapis.com/${props.imgUrl}`}
-                        onClick={onClickFile}
-                        style={{ cursor: "pointer", maxWidth: "180px", maxHeight: "180px" }}
-                    />
+                    <div
+                        style={{ border: "1px solid #bdbdbd", cursor: "pointer", maxWidth: "180px", maxHeight: "180px" }}>
+                        <img src={`https://storage.googleapis.com/${props.imgUrl}`}
+                            onClick={onClickFile}
+                            style={{ height: "100%", width: "100%", objectFit: "cover" }}
+                        />
+                    </div>
+
                     <input
                         id={String(props.index)}
                         style={{ display: "none" }}
@@ -61,7 +65,7 @@ const CustomUplaod = (props: Props) => {
             }
             {!props.imgUrl &&
                 <div key={props.imgUrl + props.index}>
-                    <Button onClick={onClickFile}>사진 업로드</Button>
+                    <Button style={{ width: "180px", height: "180px" }} onClick={onClickFile}>사진 업로드</Button>
                     <input
                         id={String(props.index)}
                         style={{ display: "none" }}

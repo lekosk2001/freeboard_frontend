@@ -17,7 +17,6 @@ const index = () => {
             contents: input.contents,
             createdAt: new Date()
         })
-        console.log(board)
     }
 
     const [input, setInput] = useState({
@@ -27,7 +26,6 @@ const index = () => {
     })
     const onChangeInput = (e: any) => {
         setInput({ ...input, [e.target.id]: e.target.value })
-        console.log(e.target.id + " : " + e.target.value)
     }
 
     useEffect(() => {
@@ -40,8 +38,6 @@ const index = () => {
             const items = result.docs.map(item => { return { ...item.data(), id: item.id } });
 
             setData(items)
-
-            console.log(items);
         }
 
         void onFetch()

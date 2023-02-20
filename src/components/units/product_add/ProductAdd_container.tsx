@@ -8,7 +8,7 @@ export default function ProductAdd_container(
 	props: Props
 ) {
 	return (
-		<ProductAdd_presenter isEditing={props.isEditing}></ProductAdd_presenter>
+		<ProductAdd_presenter isEditing={props.isEditing} />
 
 	);
 }

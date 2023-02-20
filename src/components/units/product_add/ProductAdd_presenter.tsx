@@ -6,12 +6,15 @@ import CustomUplaod from '../../commons/upload/CustomUplaod';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CREATE_USED_ITEM } from './ProductAdd_queries';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
+import { type IQuery, type IQueryFetchUseditemArgs } from '@/src/commons/types/generated/types';
+import { FETCH_USED_ITEM } from '../product_detail/ProductDetail_queries';
+import { withAuth } from '../../commons/hocs/withAuth';
 
 interface Props { isEditing: boolean }
 
@@ -42,8 +45,33 @@ const schema = yup.object({
 
 
 export default function ProductAdd_presenter(props: Props) {
-
+	withAuth()
 	const router = useRouter();
+	const useditemId = String(router.query.useditemId)
+
+	const { data } = useQuery<Pick<IQuery, 'fetchUseditem'>, IQueryFetchUseditemArgs>(FETCH_USED_ITEM, {
+		variables: {
+			useditemId,
+		},
+	});
+
+	const [imgUrls, setImgUrls] = useState(["", "", ""])
+
+	useEffect(() => {
+		if (data?.fetchUseditem.images) {
+			setImgUrls([data?.fetchUseditem.images[0], data?.fetchUseditem.images[1], data?.fetchUseditem.images[2]])
+		}
+		if (data?.fetchUseditem.tags) {
+			data?.fetchUseditem.tags.map((tag) =>
+				options?.push({
+					value: tag,
+					label: tag
+				})
+			)
+		}
+	}, [])
+
+	const tags = []
 
 	const {
 		control, register, handleSubmit, formState, formState: { errors }
@@ -60,7 +88,7 @@ export default function ProductAdd_presenter(props: Props) {
 						remarks: data.remarks,
 						contents: data.contents,
 						price: data.price,
-						tags: options,
+						tags: options?.map(tag => tags.push(tag.value)),
 						useditemAddress: {
 							zipcode: data.useditemAddress?.zipcode,
 							address: data.useditemAddress?.address,
@@ -83,16 +111,14 @@ export default function ProductAdd_presenter(props: Props) {
 
 	const options: SelectProps['options'] = [];
 
-	const isEditing = props.isEditing
+	const isEditing = props.isEditing;
 
-	const [imgUrls, setImgUrls] = useState(["", "", ""])
 
 	const onChangeFileUrls = (fileUrl: string, index: number) => {
 		const newFileUrls = [...imgUrls];
 		newFileUrls[index] = fileUrl;
 		setImgUrls(newFileUrls);
 	};
-
 
 	return (
 		<Main>
@@ -104,6 +130,7 @@ export default function ProductAdd_presenter(props: Props) {
 					<input
 						type="text"
 						placeholder="상품명을 입력해주세요."
+						defaultValue={data?.fetchUseditem.name}
 						{...register("name", { required: true })}
 					/>
 					{errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
@@ -114,6 +141,7 @@ export default function ProductAdd_presenter(props: Props) {
 					<input
 						type="text"
 						placeholder="한줄요약을 입력해주세요."
+						defaultValue={data?.fetchUseditem.remarks}
 						{...register("remarks", { required: true })}
 					/>
 					{errors.remarks && <p style={{ color: "red" }}>{errors.remarks.message}</p>}
@@ -122,6 +150,7 @@ export default function ProductAdd_presenter(props: Props) {
 				<S.InputWrapper>
 					<label>상품설명</label>
 					<textarea
+						defaultValue={data?.fetchUseditem.contents}
 						placeholder="상품설명을 작성해주세요."
 						{...register("contents", { required: true })}
 					/>
@@ -132,6 +161,7 @@ export default function ProductAdd_presenter(props: Props) {
 					<label>판매 가격</label>
 					<input
 						type='number'
+						defaultValue={typeof data?.fetchUseditem.price === typeof 0 ? Number(data?.fetchUseditem.price) : 0}
 						placeholder="판매 가격을 입력해주세요."
 						{...register("price", { required: true })}
 					/>
@@ -154,7 +184,6 @@ export default function ProductAdd_presenter(props: Props) {
 								placeholder="태그"
 							/>}
 					/>
-					{errors.tags && <p style={{ color: "red" }}>{errors.tags.message}</p>}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
@@ -171,7 +200,6 @@ export default function ProductAdd_presenter(props: Props) {
 							)
 						})}
 					</div>
-					{errors.images && <p style={{ color: "red" }}>{errors.images.message}</p>}
 				</S.InputWrapper>
 
 				<S.SubmitButton

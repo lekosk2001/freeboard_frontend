@@ -98,7 +98,7 @@ export default function ProductDetail_container() {
 								<S.PickedCount>{data?.fetchUseditem.pickedCount}</S.PickedCount>
 							</S.PickedCountBox>
 						</S.ItemInfoDetail>
-						<S.Price>{data?.fetchUseditem.price}원</S.Price>
+						<S.Price>{data?.fetchUseditem.price?.toLocaleString('ko-KR')}원</S.Price>
 					</S.ItemInfos>
 					<S.ImageWrapper>
 						{data?.fetchUseditem.images
@@ -113,11 +113,9 @@ export default function ProductDetail_container() {
 
 					<S.TextBox>{data?.fetchUseditem.contents}</S.TextBox>
 
-					<S.Tags>{data?.fetchUseditem.tags?.map((tag, i) => {
-						return (
-							<S.Tag key={tag + i}># {tag}</S.Tag>
-						)
-					})}</S.Tags>
+					<S.Tags>{data?.fetchUseditem.tags?.map((tag, i) =>
+						<S.Tag key={tag + i}># {tag}</S.Tag>
+					)}</S.Tags>
 
 					<S.Map />
 
@@ -137,7 +135,7 @@ export default function ProductDetail_container() {
 					구매하기
 				</C.Button>
 				<C.Button
-					onClick={() => { void router.push(`/market`); }}
+					onClick={() => { void router.push(`/market/${data?.fetchUseditem._id}/edit`); }}
 				>
 					수정하기
 				</C.Button>
