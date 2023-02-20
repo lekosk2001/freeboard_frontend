@@ -3,38 +3,85 @@ import { Main, Title } from '../../../commons/styles/emotion';
 import * as S from './ProductAdd_styles';
 
 import CustomUplaod from '../../commons/upload/CustomUplaod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useState } from 'react';
+import { CREATE_USED_ITEM } from './ProductAdd_queries';
+import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
+import { Select } from 'antd';
+import type { SelectProps } from 'antd';
 
-interface IFormData {
+interface Props { isEditing: boolean }
+
+interface IUseditem {
 	name: string
-	intro: string
-	desc: string
+	remarks: string
+	contents: string
 	price: number
-	tags: string
+	tags: string[]
+	useditemAddress?: {
+		zipcode?: string
+		address?: string
+		addressDetail?: string
+		lat?: GLfloat
+		lng?: GLfloat
+	}
+	images: string[]
 }
 
 const schema = yup.object({
 	name: yup.string().required("상품명을 입력해주세요."),
-	intro: yup.string().required("한줄요약을 입력해주세요."),
-	desc: yup.string().required("상품설명을 입력해주세요."),
+	remarks: yup.string().required("한줄요약을 입력해주세요."),
+	contents: yup.string().required("상품설명을 입력해주세요."),
 	price: yup.number().required("상품금액을 입력해주세요."),
+	// tags: yup.array().required("태그를 입력해주세요."),
+	// images: yup.array().required("이미지를 삽입해주세요."),
 }).required();
 
 
-interface Props {
-	isEditing: boolean
-}
 export default function ProductAdd_presenter(props: Props) {
 
-	const {
-		register, handleSubmit, formState, formState: { errors }
-	} = useForm<IFormData>({ resolver: yupResolver(schema) });
+	const router = useRouter();
 
-	const onSubmit = () => { }
+	const {
+		control, register, handleSubmit, formState, formState: { errors }
+	} = useForm<IUseditem>({ resolver: yupResolver(schema) });
+
+	const [createUseditem] = useMutation(CREATE_USED_ITEM);
+
+	const onSubmit = async (data: IUseditem) => {
+		try {
+			const result = await createUseditem({
+				variables: {
+					createUseditemInput: {
+						name: data.name,
+						remarks: data.remarks,
+						contents: data.contents,
+						price: data.price,
+						tags: options,
+						useditemAddress: {
+							zipcode: data.useditemAddress?.zipcode,
+							address: data.useditemAddress?.address,
+							addressDetail: data.useditemAddress?.addressDetail,
+							lat: data.useditemAddress?.lat,
+							lng: data.useditemAddress?.lng,
+						},
+						images: imgUrls
+					},
+				},
+			});
+			void router.push(`/market/${result.data.createUseditem._id}`);
+		} catch (error) {
+			if (error instanceof Error) alert(error.message);
+		}
+
+	}
+
 	const onUpdate = () => { }
+
+	const options: SelectProps['options'] = [];
 
 	const isEditing = props.isEditing
 
@@ -67,18 +114,18 @@ export default function ProductAdd_presenter(props: Props) {
 					<input
 						type="text"
 						placeholder="한줄요약을 입력해주세요."
-						{...register("intro", { required: true })}
+						{...register("remarks", { required: true })}
 					/>
-					{errors.intro && <p style={{ color: "red" }}>{errors.intro.message}</p>}
+					{errors.remarks && <p style={{ color: "red" }}>{errors.remarks.message}</p>}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
 					<label>상품설명</label>
 					<textarea
 						placeholder="상품설명을 작성해주세요."
-						{...register("desc", { required: true })}
+						{...register("contents", { required: true })}
 					/>
-					{errors.desc && <p style={{ color: "red" }}>{errors.desc.message}</p>}
+					{errors.contents && <p style={{ color: "red" }}>{errors.contents.message}</p>}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
@@ -91,15 +138,23 @@ export default function ProductAdd_presenter(props: Props) {
 					{errors.price && <p style={{ color: "red" }}>{errors.price.message}</p>}
 				</S.InputWrapper>
 
-
-
 				<S.InputWrapper>
 					<label>태그입력</label>
-					<input
-						type="text"
-						placeholder="#태그"
-						{...register("tags")}
+
+					<Controller
+						name="tags"
+						control={control}
+						rules={{ required: true }}
+						render={({ field }) =>
+							<Select
+								{...field}
+								mode="tags"
+								style={{ width: '100%' }}
+								options={options}
+								placeholder="태그"
+							/>}
 					/>
+					{errors.tags && <p style={{ color: "red" }}>{errors.tags.message}</p>}
 				</S.InputWrapper>
 
 				<S.InputWrapper>
@@ -116,8 +171,8 @@ export default function ProductAdd_presenter(props: Props) {
 							)
 						})}
 					</div>
+					{errors.images && <p style={{ color: "red" }}>{errors.images.message}</p>}
 				</S.InputWrapper>
-
 
 				<S.SubmitButton
 					onClick={isEditing ? handleSubmit(onUpdate) : handleSubmit(onSubmit)}

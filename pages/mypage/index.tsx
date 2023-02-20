@@ -3,9 +3,10 @@ import React from 'react'
 
 
 const index = () => {
+    withAuth()
     return (
         <div>mypage</div>
     )
 }
 
-export default withAuth(index)
+export default index

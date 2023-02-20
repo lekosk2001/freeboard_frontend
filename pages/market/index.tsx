@@ -1,13 +1,11 @@
 import { withAuth } from '@/src/components/commons/hocs/withAuth'
-import { useRouter } from 'next/router'
-import React from 'react'
-
+import ProductList_container from '@/src/components/units/product_list/ProductList_container'
 
 const index = () => {
-    const router = useRouter()
+    withAuth()
     return (
-        <button onClick={() => { void router.push(`/market/add`) }}>상품등록</button>
+        <ProductList_container></ProductList_container>
     )
 }
 
-export default withAuth(index)
+export default index

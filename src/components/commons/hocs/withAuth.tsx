@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 
-export const withAuth = (Component: any) => (props: any) => {
+export const withAuth = () => {
     const router = useRouter();
 
     useEffect(() => {
@@ -11,6 +11,4 @@ export const withAuth = (Component: any) => (props: any) => {
         }
 
     }, [])
-
-    return <Component {...props} />
 }

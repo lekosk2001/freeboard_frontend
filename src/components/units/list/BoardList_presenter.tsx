@@ -1,5 +1,5 @@
 import { dateFormat } from '@/src/commons/utils/utils';
-import { Main, Title } from '@/src/commons/styles/emotion';
+import { Main } from '@/src/commons/styles/emotion';
 import * as S from './BoardList_styles';
 import { type IBoardList_presenter_Props } from './BoardList_types';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';

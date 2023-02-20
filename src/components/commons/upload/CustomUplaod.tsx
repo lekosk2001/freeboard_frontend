@@ -47,7 +47,7 @@ const CustomUplaod = (props: Props) => {
                 <>
                     <img src={`https://storage.googleapis.com/${props.imgUrl}`}
                         onClick={onClickFile}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", maxWidth: "180px", maxHeight: "180px" }}
                     />
                     <input
                         id={String(props.index)}

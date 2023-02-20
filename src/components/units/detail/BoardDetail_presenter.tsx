@@ -49,7 +49,7 @@ export default function BoardDetail_presenter(
 							}}
 							style={{ fontSize: '24px', color: '#FFD600' }}
 						/>
-						{!data?.fetchBoard.boardAddress?.address === undefined || null ? (
+						{data?.fetchBoard.boardAddress?.address === undefined || null ? (
 							<Popover content={content} placement="topRight">
 								<EnvironmentOutlined
 									style={{
