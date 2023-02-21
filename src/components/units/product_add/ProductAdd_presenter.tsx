@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useEffect, useState } from 'react';
-import { CREATE_USED_ITEM } from './ProductAdd_queries';
+import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from './ProductAdd_queries';
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Select } from 'antd';
@@ -15,6 +15,7 @@ import type { SelectProps } from 'antd';
 import { type IQuery, type IQueryFetchUseditemArgs } from '@/src/commons/types/generated/types';
 import { FETCH_USED_ITEM } from '../product_detail/ProductDetail_queries';
 import { withAuth } from '../../commons/hocs/withAuth';
+import KakaoMap from '../../commons/KakaoMap/KakaoMap';
 
 interface Props { isEditing: boolean }
 
@@ -48,7 +49,6 @@ export default function ProductAdd_presenter(props: Props) {
 	withAuth()
 	const router = useRouter();
 	const useditemId = String(router.query.useditemId)
-
 	const { data } = useQuery<Pick<IQuery, 'fetchUseditem'>, IQueryFetchUseditemArgs>(FETCH_USED_ITEM, {
 		variables: {
 			useditemId,
@@ -56,6 +56,13 @@ export default function ProductAdd_presenter(props: Props) {
 	});
 
 	const [imgUrls, setImgUrls] = useState(["", "", ""])
+	const [tags, setTags] = useState();
+
+	const tagsHandleChange = (value: any) => {
+		setTags(value);
+	};
+
+	const options: SelectProps['options'] = [];
 
 	useEffect(() => {
 		if (data?.fetchUseditem.images) {
@@ -71,14 +78,11 @@ export default function ProductAdd_presenter(props: Props) {
 		}
 	}, [])
 
-	const tags = []
-
 	const {
 		control, register, handleSubmit, formState, formState: { errors }
 	} = useForm<IUseditem>({ resolver: yupResolver(schema) });
 
 	const [createUseditem] = useMutation(CREATE_USED_ITEM);
-
 	const onSubmit = async (data: IUseditem) => {
 		try {
 			const result = await createUseditem({
@@ -88,7 +92,7 @@ export default function ProductAdd_presenter(props: Props) {
 						remarks: data.remarks,
 						contents: data.contents,
 						price: data.price,
-						tags: options?.map(tag => tags.push(tag.value)),
+						tags,
 						useditemAddress: {
 							zipcode: data.useditemAddress?.zipcode,
 							address: data.useditemAddress?.address,
@@ -104,12 +108,38 @@ export default function ProductAdd_presenter(props: Props) {
 		} catch (error) {
 			if (error instanceof Error) alert(error.message);
 		}
-
 	}
 
-	const onUpdate = () => { }
 
-	const options: SelectProps['options'] = [];
+	const [updateUseditem] = useMutation(UPDATE_USED_ITEM);
+	const onUpdate = async (data: IUseditem) => {
+
+		try {
+			const result = await updateUseditem({
+				variables: {
+					useditemId,
+					updateUseditemInput: {
+						name: data.name,
+						remarks: data.remarks,
+						contents: data.contents,
+						price: data.price,
+						tags,
+						useditemAddress: {
+							zipcode: data.useditemAddress?.zipcode,
+							address: data.useditemAddress?.address,
+							addressDetail: data.useditemAddress?.addressDetail,
+							lat: data.useditemAddress?.lat,
+							lng: data.useditemAddress?.lng,
+						},
+						images: imgUrls
+					},
+				},
+			});
+			void router.push(`/market/${result.data.createUseditem._id}`);
+		} catch (error) {
+			if (error instanceof Error) alert(error.message);
+		}
+	}
 
 	const isEditing = props.isEditing;
 
@@ -170,7 +200,6 @@ export default function ProductAdd_presenter(props: Props) {
 
 				<S.InputWrapper>
 					<label>태그입력</label>
-
 					<Controller
 						name="tags"
 						control={control}
@@ -181,10 +210,13 @@ export default function ProductAdd_presenter(props: Props) {
 								mode="tags"
 								style={{ width: '100%' }}
 								options={options}
+								onChange={tagsHandleChange}
 								placeholder="태그"
 							/>}
 					/>
 				</S.InputWrapper>
+
+				<KakaoMap />
 
 				<S.InputWrapper>
 					<label>사진업로드</label>

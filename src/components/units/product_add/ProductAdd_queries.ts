@@ -12,14 +12,14 @@ export const CREATE_USED_ITEM = gql`
 	}
 `;
 
-export const UPDATE_BOARD = gql`
+export const UPDATE_USED_ITEM = gql`
 	mutation updateUseditem(
+		$useditemId:ID!
 		$updateUseditemInput: UpdateUseditemInput!
-		$useditemId: ID!
 	) {
 		updateUseditem(
+			useditemId:$useditemId
 			updateUseditemInput: $updateUseditemInput
-			useditemId: $useditemId
 		) {
 			_id
 		}

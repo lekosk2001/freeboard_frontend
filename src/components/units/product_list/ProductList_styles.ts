@@ -73,8 +73,8 @@ export const ListContents = styled.div`
 
 
 export const ThumbnailBox = styled.span`
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
     width: 160px;
     height: 160px;
 `;
@@ -87,15 +87,36 @@ export const Thumbnail = styled.img`
 `;
 
 export const ItemInfo = styled.span`
-
-    overflow: hidden;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
+export const ItemInfoBottom = styled.div`
+    display: flex;
+    gap: 20px;
+`
+
+
+export const ItemSeller = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+`
+
+
+export const PickedCount = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+`
+
+
 export const Price = styled.h2`
-width: 200px;
-display: flex;
-flex-wrap: nowrap;
-justify-content: flex-end;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
 `;
 
 
@@ -106,11 +127,9 @@ export const ItemName = styled.h2`
     word-break: break-all;
     font-weight: 500;
     margin-bottom: 4px;
-    max-width: 800px;
 `;
 
 export const ItemRemarks = styled.h4`
-    max-width: 800px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -121,9 +140,11 @@ export const ItemRemarks = styled.h4`
 `;
 
 export const ItemTags = styled.div`
+    display: flex;
+    gap: 10px;
     color: #4F4F4F;
     font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 30px;
 `;
 
 export const Tag = styled.p`

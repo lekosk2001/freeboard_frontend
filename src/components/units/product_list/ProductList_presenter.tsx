@@ -1,6 +1,7 @@
 import { type IQuery, type IQueryFetchUseditemsArgs } from '@/src/commons/types/generated/types'
+import { HeartFilled, UserOutlined } from '@ant-design/icons'
 import { useQuery } from '@apollo/client'
-import { Button, Input } from 'antd'
+import { Avatar, Button, Input } from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { FETCH_USED_ITEMS } from './ProductList_queries'
@@ -46,12 +47,29 @@ const ProductList_presenter = () => {
                                 <S.ItemName>{list.name}</S.ItemName>
                                 <S.ItemRemarks>{list.remarks}</S.ItemRemarks>
                                 <S.ItemTags>{list.tags?.map((tag, i) =>
-                                    <S.Tag key={tag + i}>{tag}</S.Tag>
+                                    <S.Tag key={tag + i}>#{tag}</S.Tag>
                                 )}</S.ItemTags>
+                                <S.ItemInfoBottom>
+                                    <S.ItemSeller>
+                                        <Avatar
+                                            size={20}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                            icon={<UserOutlined />}
+                                        /> 판매자
+                                    </S.ItemSeller>
+                                    <S.PickedCount>
+                                        <HeartFilled style={{ color: "#ffd600", fontSize: "20px" }} />
+                                        {list.pickedCount}
+                                    </S.PickedCount>
+                                </S.ItemInfoBottom>
                             </S.ItemInfo>
                         </S.ListContents>
                         <S.Price>
-                            {list.price?.toLocaleString('ko-KR')}원
+                            ₩ {list.price?.toLocaleString('ko-KR')}원
                         </S.Price>
                     </S.List>
                 )}
