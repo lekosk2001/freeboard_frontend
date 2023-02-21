@@ -11,30 +11,27 @@ export default function BoardCommentList_presenter(
 	return (
 		<S.CommentsList>
 			{props.CommentsData?.fetchBoardComments.map(
-				(comment: IBoardComment) => {
-					return (
-						<InfiniteScroll
-							pageStart={0}
-							loadMore={props.onLoadMore}
-							key={comment._id}
-							hasMore={true}
-							// loader={
-							//   <div className="loader" key={0}>
-							//     Loading ...
-							//   </div>
-							// }
-						>
-							{
-								<BoardCommentList_item
-									comment={comment}
-									onCLickDeleteBoardComment={
-										props.onCLickDeleteBoardComment
-									}
-								/>
-							}
-						</InfiniteScroll>
-					);
-				}
+				(comment: IBoardComment) =>
+					<InfiniteScroll
+						pageStart={0}
+						loadMore={props.onLoadMore}
+						key={comment._id}
+						hasMore={true}
+					// loader={
+					//   <div className="loader" key={0}>
+					//     Loading ...
+					//   </div>
+					// }
+					>
+						{
+							<BoardCommentList_item
+								comment={comment}
+								onCLickDeleteBoardComment={
+									props.onCLickDeleteBoardComment
+								}
+							/>
+						}
+					</InfiniteScroll>
 			)}
 		</S.CommentsList>
 	);

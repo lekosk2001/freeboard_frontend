@@ -21,8 +21,6 @@ const ApolloSetting = (props: Props) => {
 		}
 	}, [])
 
-
-
 	const uplodLink = createUploadLink({
 		uri: "http://backendonline.codebootcamp.co.kr/graphql",
 		headers: { Authorization: `Bearer ${accessToken}` }
@@ -30,7 +28,8 @@ const ApolloSetting = (props: Props) => {
 
 	const client = new ApolloClient({
 		link: ApolloLink.from([uplodLink as unknown as ApolloLink]),
-		cache: GLOBAL_STATE
+		cache: GLOBAL_STATE,
+		connectToDevTools: true
 	});
 
 	return <ApolloProvider client={client}>{props.children}</ApolloProvider>;

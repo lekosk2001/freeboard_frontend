@@ -11,10 +11,9 @@ const FETCH_USER_LOGGED_IN = gql`
 		fetchUserLoggedIn{picture email name}
 	}
 `;
+
 const MUTATION_USER_LOG_OUT = gql`
-	mutation logoutUser {
-		logoutUser{Boolean}
-	}
+	mutation logoutUser {logoutUser	}
 `;
 
 
@@ -31,13 +30,14 @@ const Header = () => {
 		setIsMounted(true)
 	}, [])
 
-	const onClickLogout = () => {
+	const onClickLogout = async () => {
 		try {
-			void logoutUser()
+			// await logoutUser()
 			localStorage.removeItem("accessToken")
+			await router.push(`/`)
 			router.reload()
 		} catch (error) {
-
+			if (error instanceof Error) alert(error.message);
 		}
 
 	}

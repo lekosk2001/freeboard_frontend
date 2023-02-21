@@ -69,14 +69,11 @@ export default function ProductAdd_presenter(props: Props) {
 		if (data?.fetchUseditem.images) {
 			setImgUrls([data?.fetchUseditem.images[0], data?.fetchUseditem.images[1], data?.fetchUseditem.images[2]])
 		}
-		if (data?.fetchUseditem.tags) {
-			data?.fetchUseditem.tags.map((tag) =>
-				options?.push({
-					value: tag,
-					label: tag
-				})
-			)
-		}
+
+		data?.fetchUseditem.tags?.map((tag) =>
+			options.push({ value: tag, label: tag })
+		)
+
 	}, [])
 
 	const {

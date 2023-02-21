@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import { Avatar, Button, Input } from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import Pagenation_container from '../../commons/pagenation/Pagenation_container'
 import { FETCH_USED_ITEMS } from './ProductList_queries'
 import * as S from './ProductList_styles'
 
@@ -12,7 +13,7 @@ const ProductList_presenter = () => {
     const router = useRouter()
 
 
-    const { data } = useQuery<
+    const { data, refetch } = useQuery<
         Pick<IQuery, 'fetchUseditems'>,
         IQueryFetchUseditemsArgs
     >(FETCH_USED_ITEMS);
@@ -74,6 +75,7 @@ const ProductList_presenter = () => {
                     </S.List>
                 )}
             </S.ListBox>
+            <Pagenation_container count={100} refetch={refetch} />
             <Button onClick={() => { void router.push(`/market/add`) }}>상품등록</Button>
         </S.ListsWrapper>
     )
