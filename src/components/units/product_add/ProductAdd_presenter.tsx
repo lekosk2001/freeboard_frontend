@@ -29,8 +29,8 @@ interface IUseditem {
 		zipcode?: string
 		address?: string
 		addressDetail?: string
-		lat?: GLfloat
-		lng?: GLfloat
+		lat: GLfloat
+		lng: GLfloat
 	}
 	images: string[]
 }
@@ -79,7 +79,7 @@ export default function ProductAdd_presenter(props: Props) {
 	}, [])
 
 	const {
-		control, register, handleSubmit, formState, formState: { errors }
+		control, watch, register, handleSubmit, formState, formState: { errors }
 	} = useForm<IUseditem>({ resolver: yupResolver(schema) });
 
 	const [createUseditem] = useMutation(CREATE_USED_ITEM);
@@ -142,6 +142,8 @@ export default function ProductAdd_presenter(props: Props) {
 	}
 
 	const isEditing = props.isEditing;
+
+	console.log(watch('useditemAddress.lat'))
 
 
 	const onChangeFileUrls = (fileUrl: string, index: number) => {
@@ -216,8 +218,27 @@ export default function ProductAdd_presenter(props: Props) {
 					/>
 				</S.InputWrapper>
 
-				<KakaoMap />
-
+				<div style={{ "display": "flex", gap: "30px" }}>
+					<S.InputWrapper>
+						<label>거래위치</label>
+						<KakaoMap
+							Lat={watch("useditemAddress.lat")}
+							Lng={watch("useditemAddress.lng")}
+						/>
+					</S.InputWrapper>
+					<div style={{ display: "flex", "flexDirection": "column" }}>
+						<S.InputWrapper>
+							<label>GPS</label>
+							<input type='number' placeholder='위도' {...register("useditemAddress.lat")} defaultValue={33.450701} />
+							<input type='number' placeholder='경도'{...register("useditemAddress.lng")} defaultValue={126.570667} />
+						</S.InputWrapper>
+						<S.InputWrapper>
+							<label>주소</label>
+							<input type='text' placeholder='주소'  {...register("useditemAddress.address")} />
+							<input type='text' placeholder='상세주소' {...register("useditemAddress.addressDetail")} />
+						</S.InputWrapper>
+					</div>
+				</div>
 				<S.InputWrapper>
 					<label>사진업로드</label>
 					<div style={{ display: "flex", gap: "10px" }}>
