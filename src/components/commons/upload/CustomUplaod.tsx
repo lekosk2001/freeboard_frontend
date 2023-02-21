@@ -18,7 +18,6 @@ const CustomUplaod = (props: Props) => {
         fileRef.current?.click()
     }
 
-
     const [uploadFile] = useMutation(UPLOAD_FILE);
 
     const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {

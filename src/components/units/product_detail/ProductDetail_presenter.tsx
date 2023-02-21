@@ -12,6 +12,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { type IMutation, type IMutationDeleteUseditemArgs, type IQuery, type IQueryFetchUseditemArgs } from '@/src/commons/types/generated/types';
 import { useRouter } from 'next/router';
 import { DELETE_USED_ITEM, FETCH_USED_ITEM } from './ProductDetail_queries';
+import KakaoMap from '../../commons/KakaoMap/KakaoMap';
 
 export default function ProductDetail_container() {
 	const router = useRouter();
@@ -117,7 +118,14 @@ export default function ProductDetail_container() {
 						<S.Tag key={tag + i}># {tag}</S.Tag>
 					)}</S.Tags>
 
-					<S.Map />
+					<S.Map>
+						{data?.fetchUseditem.useditemAddress?.lat
+							&& data?.fetchUseditem.useditemAddress?.lng
+							? <KakaoMap
+								Lat={data?.fetchUseditem.useditemAddress?.lat}
+								Lng={data?.fetchUseditem.useditemAddress?.lng}
+							/> : "지도가 없습니다."}
+					</S.Map>
 
 				</S.ContentBody>
 			</S.ContentsWrapper>

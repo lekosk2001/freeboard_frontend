@@ -189,6 +189,9 @@ color: #BDBDBD;
 `;
 
 export const Map = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
 height: 360px;
 width: 100%;
 background-color: #BDBDBD;

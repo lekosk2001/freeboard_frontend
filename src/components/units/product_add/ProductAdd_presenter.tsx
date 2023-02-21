@@ -49,6 +49,7 @@ export default function ProductAdd_presenter(props: Props) {
 	withAuth()
 	const router = useRouter();
 	const useditemId = String(router.query.useditemId)
+
 	const { data } = useQuery<Pick<IQuery, 'fetchUseditem'>, IQueryFetchUseditemArgs>(FETCH_USED_ITEM, {
 		variables: {
 			useditemId,
@@ -97,8 +98,8 @@ export default function ProductAdd_presenter(props: Props) {
 							zipcode: data.useditemAddress?.zipcode,
 							address: data.useditemAddress?.address,
 							addressDetail: data.useditemAddress?.addressDetail,
-							lat: data.useditemAddress?.lat,
-							lng: data.useditemAddress?.lng,
+							lat: Number(data.useditemAddress?.lat),
+							lng: Number(data.useditemAddress?.lng),
 						},
 						images: imgUrls
 					},
@@ -115,7 +116,7 @@ export default function ProductAdd_presenter(props: Props) {
 	const onUpdate = async (data: IUseditem) => {
 
 		try {
-			const result = await updateUseditem({
+			await updateUseditem({
 				variables: {
 					useditemId,
 					updateUseditemInput: {
@@ -128,14 +129,14 @@ export default function ProductAdd_presenter(props: Props) {
 							zipcode: data.useditemAddress?.zipcode,
 							address: data.useditemAddress?.address,
 							addressDetail: data.useditemAddress?.addressDetail,
-							lat: data.useditemAddress?.lat,
-							lng: data.useditemAddress?.lng,
+							lat: Number(data.useditemAddress?.lat),
+							lng: Number(data.useditemAddress?.lng),
 						},
 						images: imgUrls
 					},
 				},
 			});
-			void router.push(`/market/${result.data.createUseditem._id}`);
+			void router.push(`/market/${useditemId}`);
 		} catch (error) {
 			if (error instanceof Error) alert(error.message);
 		}
@@ -229,8 +230,8 @@ export default function ProductAdd_presenter(props: Props) {
 					<div style={{ display: "flex", "flexDirection": "column" }}>
 						<S.InputWrapper>
 							<label>GPS</label>
-							<input type='number' placeholder='위도' {...register("useditemAddress.lat")} defaultValue={33.450701} />
-							<input type='number' placeholder='경도'{...register("useditemAddress.lng")} defaultValue={126.570667} />
+							<input type='number' placeholder='위도' {...register("useditemAddress.lat")} defaultValue={watch("useditemAddress.lat")} />
+							<input type='number' placeholder='경도'{...register("useditemAddress.lng")} defaultValue={watch("useditemAddress.lng")} />
 						</S.InputWrapper>
 						<S.InputWrapper>
 							<label>주소</label>

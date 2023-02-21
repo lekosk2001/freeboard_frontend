@@ -46,8 +46,7 @@ export const NoImages = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #F2F2F2;
-    background-color: #4f4f4f; 
+    background-color: #dadada; 
 `
 
 export const List = styled.li`
@@ -87,7 +86,7 @@ export const Thumbnail = styled.img`
 `;
 
 export const ItemInfo = styled.span`
-    max-width: 500px;
+    max-width:500px;
     display: flex;
     flex-direction: column;
     justify-content: center;

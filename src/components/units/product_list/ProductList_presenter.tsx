@@ -59,7 +59,7 @@ const ProductList_presenter = () => {
                                                 alignItems: 'center',
                                             }}
                                             icon={<UserOutlined />}
-                                        /> 판매자
+                                        /> {list.seller?.name ?? "판매자"}
                                     </S.ItemSeller>
                                     <S.PickedCount>
                                         <HeartFilled style={{ color: "#ffd600", fontSize: "20px" }} />
