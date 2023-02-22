@@ -17,6 +17,10 @@ import { FETCH_USED_ITEM } from '../product_detail/ProductDetail_queries';
 import { withAuth } from '../../commons/hocs/withAuth';
 import KakaoMap from '../../commons/KakaoMap/KakaoMap';
 
+import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
+
+
 interface Props { isEditing: boolean }
 
 interface IUseditem {
@@ -40,8 +44,6 @@ const schema = yup.object({
 	remarks: yup.string().required("한줄요약을 입력해주세요."),
 	contents: yup.string().required("상품설명을 입력해주세요."),
 	price: yup.number().required("상품금액을 입력해주세요."),
-	// tags: yup.array().required("태그를 입력해주세요."),
-	// images: yup.array().required("이미지를 삽입해주세요."),
 }).required();
 
 
@@ -55,6 +57,11 @@ export default function ProductAdd_presenter(props: Props) {
 			useditemId,
 		},
 	});
+
+	const ReactQuill = dynamic(async () => await import('react-quill'), {
+		ssr: false,
+		loading: () => <p>Loading ...</p>,
+	})
 
 	const [imgUrls, setImgUrls] = useState(["", "", ""])
 	const [tags, setTags] = useState();
@@ -77,7 +84,7 @@ export default function ProductAdd_presenter(props: Props) {
 	}, [])
 
 	const {
-		control, watch, register, handleSubmit, formState, formState: { errors }
+		control, watch, trigger, register, handleSubmit, setValue, formState, formState: { errors }
 	} = useForm<IUseditem>({ resolver: yupResolver(schema) });
 
 	const [createUseditem] = useMutation(CREATE_USED_ITEM);
@@ -141,14 +148,16 @@ export default function ProductAdd_presenter(props: Props) {
 
 	const isEditing = props.isEditing;
 
-	console.log(watch('useditemAddress.lat'))
-
-
 	const onChangeFileUrls = (fileUrl: string, index: number) => {
 		const newFileUrls = [...imgUrls];
 		newFileUrls[index] = fileUrl;
 		setImgUrls(newFileUrls);
 	};
+
+	const onChangeContents = (value: string) => {
+		setValue("contents", value === "<p><br></p>" ? "" : value)
+		void trigger("contents")
+	}
 
 	return (
 		<Main>
@@ -176,16 +185,17 @@ export default function ProductAdd_presenter(props: Props) {
 					/>
 					{errors.remarks && <p style={{ color: "red" }}>{errors.remarks.message}</p>}
 				</S.InputWrapper>
-
 				<S.InputWrapper>
 					<label>상품설명</label>
-					<textarea
+					<ReactQuill
+						style={{ "height": "480px", "marginBottom": "40px" }}
 						defaultValue={data?.fetchUseditem.contents}
 						placeholder="상품설명을 작성해주세요."
-						{...register("contents", { required: true })}
+						onChange={onChangeContents}
 					/>
 					{errors.contents && <p style={{ color: "red" }}>{errors.contents.message}</p>}
 				</S.InputWrapper>
+
 
 				<S.InputWrapper>
 					<label>판매 가격</label>
@@ -227,8 +237,8 @@ export default function ProductAdd_presenter(props: Props) {
 					<div style={{ display: "flex", "flexDirection": "column" }}>
 						<S.InputWrapper>
 							<label>GPS</label>
-							<input type='number' placeholder='위도' {...register("useditemAddress.lat")} defaultValue={watch("useditemAddress.lat")} />
-							<input type='number' placeholder='경도'{...register("useditemAddress.lng")} defaultValue={watch("useditemAddress.lng")} />
+							<input type='number' placeholder='위도' {...register("useditemAddress.lat")} defaultValue={watch("useditemAddress.lat") ?? 37} />
+							<input type='number' placeholder='경도'{...register("useditemAddress.lng")} defaultValue={watch("useditemAddress.lng") ?? 128} />
 						</S.InputWrapper>
 						<S.InputWrapper>
 							<label>주소</label>

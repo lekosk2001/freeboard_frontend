@@ -165,7 +165,7 @@ export const Remarks = styled.h4`
 
 
 
-export const TextBox = styled.h4`
+export const TextBox = styled.div`
 	font-weight: 500;
 	font-size: 18px;
 	color: #4F4F4F;

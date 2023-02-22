@@ -13,6 +13,8 @@ import { type IMutation, type IMutationDeleteUseditemArgs, type IQuery, type IQu
 import { useRouter } from 'next/router';
 import { DELETE_USED_ITEM, FETCH_USED_ITEM } from './ProductDetail_queries';
 import KakaoMap from '../../commons/KakaoMap/KakaoMap';
+import Dompurify from "dompurify"
+import Payment from '@/src/commons/payment/Payment';
 
 export default function ProductDetail_container() {
 	const router = useRouter();
@@ -112,7 +114,9 @@ export default function ProductDetail_container() {
 							))}
 					</S.ImageWrapper>
 
-					<S.TextBox>{data?.fetchUseditem.contents}</S.TextBox>
+					{typeof window !== "undefined" && data?.fetchUseditem.contents && <S.TextBox dangerouslySetInnerHTML={{
+						__html: Dompurify.sanitize(data?.fetchUseditem.contents)
+					}}></S.TextBox>}
 
 					<S.Tags>{data?.fetchUseditem.tags?.map((tag, i) =>
 						<S.Tag key={tag + i}># {tag}</S.Tag>
@@ -153,6 +157,8 @@ export default function ProductDetail_container() {
 				>
 					삭제하기
 				</C.Button>
+
+				<Payment></Payment>
 			</C.BottomWrapper>
 		</>
 	);
