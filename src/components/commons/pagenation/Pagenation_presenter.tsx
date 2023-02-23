@@ -12,8 +12,8 @@ interface Props {
 	onClickNext: () => void;
 	onClickPrev: () => void;
 }
-
 const Pagenation_presenter = (props: Props) => {
+
 	return (
 		<PageButtons>
 			<LeftOutlined

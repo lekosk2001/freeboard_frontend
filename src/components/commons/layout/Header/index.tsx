@@ -18,7 +18,7 @@ const MUTATION_USER_LOG_OUT = gql`
 
 
 const Header = () => {
-	const [accessToken] = useRecoilState(accessTokenState)
+	const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
 	const [isMounted, setIsMounted] = useState(false)
 	const router = useRouter();
 
@@ -32,10 +32,10 @@ const Header = () => {
 
 	const onClickLogout = async () => {
 		try {
-			// await logoutUser()
-			localStorage.removeItem("accessToken")
-			await router.push(`/`)
+			await logoutUser()
 			router.reload()
+			setAccessToken("")
+			localStorage.removeItem("accessToken")
 		} catch (error) {
 			if (error instanceof Error) alert(error.message);
 		}
@@ -51,9 +51,9 @@ const Header = () => {
 				{!accessToken && <S.Login onClick={() => { void router.push(`/login`) }}>로그인</S.Login>}
 				{!accessToken && <S.Signup onClick={async () => await router.push(`/signUp`)}>회원가입</S.Signup>}
 				{accessToken && <S.Login onClick={onClickLogout}>로그아웃</S.Login>}
-				{data?.fetchUserLoggedIn && <div>{data?.fetchUserLoggedIn.name}</div>}
-				{data?.fetchUserLoggedIn && <div>{data?.fetchUserLoggedIn.email}</div>}
-				{data?.fetchUserLoggedIn.picture && <img src={data?.fetchUserLoggedIn.picture}></img>}
+				{accessToken && data?.fetchUserLoggedIn && <div>{data?.fetchUserLoggedIn.name}</div>}
+				{accessToken && data?.fetchUserLoggedIn && <div>{data?.fetchUserLoggedIn.email}</div>}
+				{accessToken && data?.fetchUserLoggedIn.picture && <img src={data?.fetchUserLoggedIn.picture}></img>}
 			</S.HeaderButtons>}
 		</S.Header>
 	);

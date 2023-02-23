@@ -14,7 +14,6 @@ import { Select } from 'antd';
 import type { SelectProps } from 'antd';
 import { type IQuery, type IQueryFetchUseditemArgs } from '@/src/commons/types/generated/types';
 import { FETCH_USED_ITEM } from '../product_detail/ProductDetail_queries';
-import { withAuth } from '../../commons/hocs/withAuth';
 import KakaoMap from '../../commons/KakaoMap/KakaoMap';
 
 import 'react-quill/dist/quill.snow.css';
@@ -48,7 +47,6 @@ const schema = yup.object({
 
 
 export default function ProductAdd_presenter(props: Props) {
-	withAuth()
 	const router = useRouter();
 	const useditemId = String(router.query.useditemId)
 

@@ -51,7 +51,7 @@ const Login_presenter = () => {
 
                     // 3. 로그인 성공페이지로 이동하기
                     void router.push('/boards')
-                    localStorage.setItem("accessToken", accessToken) // 임시로 사용 나중에 지울예정
+                    localStorage.setItem("accessToken", accessToken)
                 }
 
             } catch (error) {

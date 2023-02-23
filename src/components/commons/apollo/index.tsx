@@ -13,12 +13,13 @@ interface Props { children: JSX.Element; }
 const GLOBAL_STATE = new InMemoryCache()
 
 const ApolloSetting = (props: Props) => {
+
 	const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
 
 	useEffect(() => {
-		if (localStorage.getItem("accessToken")) {
-			setAccessToken(localStorage.getItem("accessToken") ?? "")
-		}
+		void getAccessToken().then((newAccessToken) => {
+			setAccessToken(newAccessToken)
+		})
 	}, [])
 
 	const errorLink = onError(({ graphQLErrors, operation, forward }) => {

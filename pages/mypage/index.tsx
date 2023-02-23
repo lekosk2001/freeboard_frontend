@@ -3,7 +3,7 @@ import React from 'react'
 
 
 const index = () => {
-    withAuth()
+    if (!withAuth()) { return <></> }
     return (
         <div>mypage</div>
     )
