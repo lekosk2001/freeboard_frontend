@@ -1,11 +1,10 @@
 import { type ChangeEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
-import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite_queries';
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite_queries';
 import { useMutation, useQuery } from '@apollo/client';
 import {
 	type IBoardWrite_container_Props,
-	type IUpdatedVariables,
 } from './BoardWrite_types';
 import { type Address } from 'react-daum-postcode/lib/loadPostcode';
 
@@ -20,7 +19,6 @@ export default function BoardWrite_container(
 ) {
 	const router = useRouter();
 	const boardId = router.query.boardId;
-
 
 	if (props.isEditing && !boardId) {
 		return (
@@ -90,7 +88,6 @@ export default function BoardWrite_container(
 		setCoreInputErorr({ ...coreInputErorr, [e.currentTarget.id]: false });
 		const value = (document.getElementById(e.target.id) as HTMLInputElement)?.value;
 
-		console.log(value)
 		const AllInputs: string[] = [];
 
 		for (const prop in coreInput) {
@@ -109,6 +106,7 @@ export default function BoardWrite_container(
 
 
 	const [imgUrls, setImgUrls] = useState(["", "", ""])
+	const [files, setfles] = useState<File[]>([])
 
 	const onChangeFileUrls = (fileUrl: string, index: number) => {
 		const newFileUrls = [...imgUrls];
@@ -131,8 +129,17 @@ export default function BoardWrite_container(
 		setInput({ ...input, [e.target.id]: e.target.value });
 	};
 
+	const [uplaodImages] = useMutation(UPLOAD_FILE);
+
 	const onSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
+
+		const result = await Promise.all(
+			files.map((el) => (el && uplaodImages({ variables: { file: el } })))
+		)
+		const resultUrls = result.map((el) => (el ? el.data?.uploadFile.url : ""))
+
+		console.log(resultUrls)
 
 		if (coreInput.writer && coreInput.password && coreInput.title && coreInput.contents) {
 			try {
@@ -144,7 +151,7 @@ export default function BoardWrite_container(
 							password: coreInput.password,
 							title: coreInput.title,
 							youtubeUrl: input.youtubeUrl,
-							images: imgUrls,
+							images: resultUrls,
 							boardAddress: {
 								zipcode: input.zipcode,
 								address: input.address,
@@ -163,14 +170,20 @@ export default function BoardWrite_container(
 	const onUpdate = async (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 
-		const updatedVariables: IUpdatedVariables = {
+		const updatedVariables = {
 			boardId,
 			password: coreInput.password,
 			updateBoardInput: {
 				contents: coreInput.contents,
 				title: coreInput.title,
 				youtubeUrl: input.youtubeUrl,
-				images: imgUrls,
+				images: (await Promise.all([imgUrls.map(async (el: string) =>
+					await uplaodImages({
+						variables: {
+							file: el
+						}
+					})
+				)])),
 				boardAddress: {
 					zipcode: input.zipcode,
 					address: input.address,
@@ -239,6 +252,9 @@ export default function BoardWrite_container(
 			imgUrls={imgUrls}
 			setImgUrls={setImgUrls}
 			onChangeFileUrls={onChangeFileUrls}
+
+			files={files}
+			setfles={setfles}
 		/>
 	);
 }

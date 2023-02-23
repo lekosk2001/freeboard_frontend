@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Script from 'next/script';
 import React, { useEffect } from 'react'
 import { appKey } from './appKey';
 
@@ -65,9 +65,7 @@ const KakaoMap = (props: Props) => {
 
     return (
         <>
-            <Head>
-                <script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}`}></script>
-            </Head>
+            <Script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false`}></Script>
             <div id="map" style={{ width: "100%", height: "360px" }}></div>
         </>
     )

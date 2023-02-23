@@ -1,40 +1,38 @@
-import { useMutation } from '@apollo/client';
-import { Button, Modal } from 'antd';
-import { type ChangeEvent, useRef } from 'react';
-import { UPLOAD_FILE } from '../../units/write/BoardWrite_queries';
+import { Button } from 'antd';
+import { type ChangeEvent, useRef, type Dispatch, type SetStateAction } from 'react';
 import { checkFileValidation } from '../checkFileValidation';
 
 interface Props {
     imgUrl: string,
     index: number,
     onChangeFileUrls: (fileUrl: string, index: number) => void;
+    files: File[]
+    setfles: Dispatch<SetStateAction<File[]>>
 }
 
 const CustomUplaod = (props: Props) => {
-
     const fileRef = useRef<HTMLInputElement>(null)
 
     const onClickFile = () => {
         fileRef.current?.click()
     }
 
-    const [uploadFile] = useMutation(UPLOAD_FILE);
-
     const onChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
+
         const file = e.target.files?.[0];
+        if (!file) { return }
+
         const isValid = checkFileValidation(file);
         if (!isValid) { return }
+
         if (isValid) {
-            try {
-                const result = await uploadFile({
-                    variables: {
-                        file
-                    }
-                })
-                props.onChangeFileUrls(result.data.uploadFile.url, props.index)
-            } catch (error) {
-                if (error instanceof Error) {
-                    Modal.error({ content: error.message })
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (e) => {
+                if (typeof e.target?.result === "string") {
+                    props.onChangeFileUrls(e.target.result, props.index)
+                    props.setfles([file])
+
                 }
             }
         }
@@ -46,7 +44,7 @@ const CustomUplaod = (props: Props) => {
                 <>
                     <div
                         style={{ border: "1px solid #bdbdbd", cursor: "pointer", maxWidth: "180px", maxHeight: "180px" }}>
-                        <img src={`https://storage.googleapis.com/${props.imgUrl}`}
+                        <img src={props.imgUrl}
                             onClick={onClickFile}
                             style={{ height: "100%", width: "100%", objectFit: "cover" }}
                         />

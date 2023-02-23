@@ -45,7 +45,6 @@ const SignUp_presenter = () => {
                         },
                     }
                 });
-                console.log(result.data)
                 void router.push('/')
             } catch (error) {
                 if (error instanceof Error) alert(error.message);

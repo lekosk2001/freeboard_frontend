@@ -154,7 +154,7 @@ export default function ProductAdd_presenter(props: Props) {
 
 	const onChangeContents = (value: string) => {
 		setValue("contents", value === "<p><br></p>" ? "" : value)
-		void trigger("contents")
+		// void trigger("contents")
 	}
 
 	return (

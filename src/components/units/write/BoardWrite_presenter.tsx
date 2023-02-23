@@ -141,6 +141,8 @@ export default function BoardWrite_presenter(
 						{props.imgUrls.map((imgUrl, index) => {
 							return (
 								<CustomUplaod
+									files={props.files}
+									setfles={props.setfles}
 									key={imgUrl + index}
 									imgUrl={imgUrl}
 									index={index}

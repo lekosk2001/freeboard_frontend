@@ -47,4 +47,7 @@ export interface IBoardWrite_presenter_Props {
 
 	zipcode: string;
 	address: string;
+
+	files:File[]
+	setfles:Dispatch<SetStateAction<File[]>>
 }

@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import Head from 'next/head'
+import Script from 'next/script'
 import React from 'react'
 
 
@@ -51,12 +51,10 @@ const Payment = () => {
 
     return (
         <div>
-            <Head>
-                {/* <!-- jQuery --> */}
-                <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-                {/* <!-- iamport.payment.js --> */}
-                <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-            </Head>
+            {/* <!-- jQuery --> */}
+            <Script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></Script>
+            {/* <!-- iamport.payment.js --> */}
+            <Script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></Script>
             <button onClick={onClickPayment}>결제하기</button>
         </div>
     )
