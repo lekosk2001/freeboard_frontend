@@ -5,10 +5,29 @@ import { type IBoardList_presenter_Props } from './BoardList_types';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
 import Pagenation from '../../commons/pagenation/Pagenation_container';
 import { v4 as uuidv4 } from 'uuid';
+import { FETCH_BOARD } from '../detail/BoardDetail_queries';
+import { useApolloClient } from '@apollo/client';
+import { FETCH_BOARD_COMMENT } from '../BoardCommentList/BoardCommentList_queries';
 
 export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 	const onClickBoardDetail = props.onClickBoardDetail;
 	const onClickBoardNew = props.onClickBoardNew;
+
+	const client = useApolloClient();
+	const prefetchBoard = (boardId: string) => async () => {
+		await client.query({
+			query: FETCH_BOARD,
+			variables: { boardId },
+		});
+
+		await client.query({
+			query: FETCH_BOARD_COMMENT,
+			variables: { boardId },
+		});
+
+
+	};
+
 	return (
 		<Main>
 			{/* <S.BestWrapper>
@@ -49,6 +68,7 @@ export default function BoardList_presenter(props: IBoardList_presenter_Props) {
 						return (
 							<S.Row
 								key={list._id}
+								onMouseOver={prefetchBoard(list._id)}
 								onClick={() => {
 									onClickBoardDetail(list._id);
 								}}
