@@ -24,18 +24,34 @@ export default function BoardDetail_container(
 		IMutationLikeBoardArgs
 	>(LIKEBOARD);
 
-	const onClickLikeBoard = async () => {
+	const onClickLikeBoard = () => {
 		try {
-			await likeBoard({
+			void likeBoard({
 				variables: { boardId: props.boardId },
-				refetchQueries: [
-					{
+				// refetchQueries: [
+				// 	{
+				// 		query: FETCH_BOARD,
+				// 		variables: {
+				// 			boardId: props.boardId,
+				// 		},
+				// 	},
+				// ],
+				optimisticResponse: {
+					likeBoard: data?.fetchBoard.likeCount ?? 0 + 1
+				},
+				update(cache, { data }) {
+					cache.writeQuery({
 						query: FETCH_BOARD,
-						variables: {
-							boardId: props.boardId,
-						},
-					},
-				],
+						variables: { boardId: props.boardId },
+						data: {
+							fetchBoard: {
+								_id: "하드코딩",
+								__typename: "Board",
+								likeCount: data?.likeBoard,
+							}
+						}
+					})
+				}
 			});
 		} catch (error) {
 			if (error instanceof Error) alert(error.message);
