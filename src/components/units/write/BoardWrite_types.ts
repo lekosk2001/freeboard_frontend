@@ -1,5 +1,6 @@
 import { type IQuery } from '@/src/commons/types/generated/types';
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import { type Address } from 'react-daum-postcode';
 
 export interface IBoardWrite_container_Props {
 	isEditing: boolean;
@@ -33,7 +34,7 @@ export interface IBoardWrite_presenter_Props {
 	onChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 
 	onChangeRadio: (e: ChangeEvent<HTMLInputElement>) => void;
-	handleComplete: any;
+	handleComplete: (data: Address)=>void
 
 	onSubmit: (e: { preventDefault: () => void }) => void;
 	onUpdate: (e: { preventDefault: () => void }) => void;

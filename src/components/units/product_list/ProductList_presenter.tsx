@@ -4,14 +4,13 @@ import { useQuery } from '@apollo/client'
 import { Avatar, Button, Input } from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import Pagenation_container from '../../commons/pagenation/Pagenation_container'
+import Pagenation_container from '@/src/components/commons/pagenation/Pagenation_container'
 import { FETCH_USED_ITEMS } from './ProductList_queries'
 import * as S from './ProductList_styles'
 
 const ProductList_presenter = () => {
 
     const router = useRouter()
-
 
     const { data, refetch } = useQuery<
         Pick<IQuery, 'fetchUseditems'>,

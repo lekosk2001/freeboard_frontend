@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
 import { type ChangeEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import BoardWrite_presenter from './BoardWrite_presenter';
@@ -87,6 +88,7 @@ export default function BoardWrite_container(
 		setCoreInput({ ...coreInput, [e.currentTarget.id]: e.currentTarget.value });
 		setCoreInputErorr({ ...coreInputErorr, [e.currentTarget.id]: false });
 		const value = (document.getElementById(e.target.id) as HTMLInputElement)?.value;
+		console.log(value)
 
 		const AllInputs: string[] = [];
 

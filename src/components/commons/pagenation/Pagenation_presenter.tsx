@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { PageButton, PageButtons } from './Pagenation_styles';
 
 interface Props {
-	refetch: (arg0: { page: number }) => any;
+	refetch: (arg0: { page: number }) => void;
 	startPage: number;
 	currentPage: number;
 	pageNumber: number;

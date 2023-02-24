@@ -17,7 +17,7 @@ import Dompurify from "dompurify"
 import Payment from '@/src/commons/payment/Payment';
 
 
-export default function ProductDetail_container(props: any) {
+export default function ProductDetail_container() {
 
 	const router = useRouter();
 	const useditemId = String(router.query.useditemId)

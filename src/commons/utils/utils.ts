@@ -1,6 +1,6 @@
 import { type RcFile } from "antd/es/upload";
 
-export const dateFormat = (createdAt: any) => {
+export const dateFormat = (createdAt: string) => {
 	const date = new Date(createdAt);
 	return new Intl.DateTimeFormat('kr-KO').format(date);
 };

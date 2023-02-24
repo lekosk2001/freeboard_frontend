@@ -4,7 +4,13 @@ import { collection, addDoc, getDocs, getFirestore, query, orderBy, type Documen
 import { useEffect, useState } from 'react'
 // import { v4 as uuidv4 } from 'uuid'
 
-
+interface IITEM {
+    id: string
+    title: string
+    createdAt: string
+    writer: string
+    contents: string
+}
 const index = () => {
     const { TextArea } = Input;
     const [data, setData] = useState<DocumentData>();
@@ -24,7 +30,7 @@ const index = () => {
         title: "",
         contents: ""
     })
-    const onChangeInput = (e: any) => {
+    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setInput({ ...input, [e.target.id]: e.target.value })
     }
 
@@ -47,7 +53,7 @@ const index = () => {
     return (
 
         <div>
-            {data?.map((item: any, i: number) => {
+            {data?.map((item: IITEM, i: number) => {
                 return <Card key={item.createdAt} style={{ marginBottom: "20px" }}
                     title={item.title}>
                     <h4>{item.writer}</h4>

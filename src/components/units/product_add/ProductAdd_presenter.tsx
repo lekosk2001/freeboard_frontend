@@ -6,7 +6,7 @@ import CustomUplaod from '../../commons/upload/CustomUplaod';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useEffect, useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from './ProductAdd_queries';
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -20,7 +20,11 @@ import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 
 
-interface Props { isEditing: boolean }
+interface Props {
+	isEditing: boolean
+	files: File[]
+	setfles: Dispatch<SetStateAction<File[]>>
+}
 
 interface IUseditem {
 	name: string
@@ -154,7 +158,7 @@ export default function ProductAdd_presenter(props: Props) {
 
 	const onChangeContents = (value: string) => {
 		setValue("contents", value === "<p><br></p>" ? "" : value)
-		// void trigger("contents")
+		void trigger("contents")
 	}
 
 	return (
@@ -255,6 +259,8 @@ export default function ProductAdd_presenter(props: Props) {
 									imgUrl={imgUrl}
 									index={index}
 									onChangeFileUrls={onChangeFileUrls}
+									files={props.files}
+									setfles={props.setfles}
 								></CustomUplaod>
 							)
 						})}
