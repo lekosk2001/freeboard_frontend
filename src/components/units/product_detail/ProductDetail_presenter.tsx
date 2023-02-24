@@ -16,7 +16,9 @@ import KakaoMap from '../../commons/KakaoMap/KakaoMap';
 import Dompurify from "dompurify"
 import Payment from '@/src/commons/payment/Payment';
 
-export default function ProductDetail_container() {
+
+export default function ProductDetail_container(props: any) {
+
 	const router = useRouter();
 	const useditemId = String(router.query.useditemId)
 
@@ -47,6 +49,8 @@ export default function ProductDetail_container() {
 
 	return (
 		<>
+
+
 			<S.ContentsWrapper>
 				<S.ContentHead>
 					<S.Profile>
