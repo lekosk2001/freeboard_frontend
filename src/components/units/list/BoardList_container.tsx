@@ -50,7 +50,7 @@ export default function BoardList_container() {
 			onClickBoardNew={onClickBoardNew}
 			onClickBoardDetail={onClickBoardDetail}
 			refetch={refetch}
-			count={totalBoards?.fetchBoardsCount}
+			count={totalBoards?.fetchBoardsCount ?? 0}
 			onChangeSearch={onChangeSearch}
 			search={search}
 		/>
